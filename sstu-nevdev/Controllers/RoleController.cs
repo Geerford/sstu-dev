@@ -3,11 +3,11 @@ using System.Web.Mvc;
 
 namespace sstu_nevdev.Controllers
 {
-    public class HomeController : Controller
+    public class RoleController : Controller
     {
         IRoleService service;
 
-        public HomeController(IRoleService service)
+        public RoleController(IRoleService service)
         {
             this.service = service;
         }

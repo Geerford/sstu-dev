@@ -18,20 +18,20 @@
         </tr>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(i => item.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(i => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(i => item.CreatedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(i => item.UpdatedBy)
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(i => item.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(i => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(i => item.CreatedBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(i => item.UpdatedBy)
+                </td>
+            </tr>
         }
     </table>
 </div>

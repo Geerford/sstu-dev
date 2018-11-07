@@ -37,7 +37,7 @@ namespace Infrastructure.Data.Repository
 
         public CheckpointAdmission FindFirst(Func<CheckpointAdmission, bool> predicate)
         {
-            return database.CheckpointAdmission.Where(predicate).First();
+            return database.CheckpointAdmission.Where(predicate).FirstOrDefault();
         }
 
         public CheckpointAdmission Get(int id)

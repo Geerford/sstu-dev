@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Domain.Core.Role>
+﻿@model IEnumerable<Domain.Core.Activity>
 
 @{
     ViewBag.Title = "Index";
@@ -12,7 +12,19 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.IdentityID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CheckpointID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Mode)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.CreatedBy)
@@ -26,7 +38,19 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Description)
+            @Html.DisplayFor(modelItem => item.IdentityID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CheckpointID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Mode)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CreatedBy)

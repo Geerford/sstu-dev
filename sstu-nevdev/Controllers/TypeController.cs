@@ -4,11 +4,11 @@ using System.Web.Mvc;
 
 namespace sstu_nevdev.Controllers
 {
-    public class RoleController : Controller
+    public class TypeController : Controller
     {
-        IRoleService service;
+        ITypeService service;
 
-        public RoleController(IRoleService service)
+        public TypeController(ITypeService service)
         {
             this.service = service;
         }
@@ -27,14 +27,13 @@ namespace sstu_nevdev.Controllers
         {
             return View();
         }
-
         [HttpPost]
-        public ActionResult Create(Role model)
+        public ActionResult Create(Type model)
         {
             try
             {
                 service.Create(model);
-                return RedirectToAction("Index", "Role", new { });
+                return RedirectToAction("Index", "Type", new { });
             }
             catch
             {
@@ -46,14 +45,13 @@ namespace sstu_nevdev.Controllers
         {
             return View(service.Get(id));
         }
-
         [HttpPost]
-        public ActionResult Edit(Role model)
+        public ActionResult Edit(Type model)
         {
             try
             {
                 service.Edit(model);
-                return RedirectToAction("Index", "Role", new { });
+                return RedirectToAction("Index", "Type", new { });
             }
             catch
             {
@@ -65,14 +63,13 @@ namespace sstu_nevdev.Controllers
         {
             return View(service.Get(id));
         }
-
         [HttpPost]
-        public ActionResult Delete(Role model)
+        public ActionResult Delete(Type model)
         {
             try
             {
                 service.Delete(model);
-                return RedirectToAction("Index", "Role", new { });
+                return RedirectToAction("Index", "Type", new { });
             }
             catch
             {

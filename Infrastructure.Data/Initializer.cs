@@ -4,7 +4,7 @@ using System.Data.Entity;
 
 namespace Infrastructure.Data
 {
-    internal class Initializer : DropCreateDatabaseAlways<Context>
+    internal class Initializer : DropCreateDatabaseIfModelChanges<Context>
     {
         protected override void Seed(Context database)
         {

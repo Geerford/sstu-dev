@@ -1,37 +1,3 @@
-﻿@model IEnumerable<Domain.Core.Role>
-
-<div class="container">
-    <table class="table">
-        <tr>
-            <th style="word-break: break-all">
-                @Html.Label("ID")
-            </th>
-            <th style="word-break: break-all">
-                @Html.Label("Description")
-            </th>
-            <th style="word-break: break-all">
-                @Html.Label("Created By")
-            </th>
-            <th style="word-break: break-all">
-                @Html.Label("Updated By")
-            </th>
-        </tr>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(i => item.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(i => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(i => item.CreatedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(i => item.UpdatedBy)
-            </td>
-        </tr>
-        }
-    </table>
+﻿<div class="container">
+    <p>Hello, World! :)</p>
 </div>

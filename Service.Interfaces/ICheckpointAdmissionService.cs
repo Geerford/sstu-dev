@@ -11,5 +11,6 @@ namespace Service.Interfaces
         void Edit(CheckpointAdmission model);
         void Delete(CheckpointAdmission model);
         void Dispose();
+        bool IsMatch(int checkpoingID, int admissionID);
     }
 }

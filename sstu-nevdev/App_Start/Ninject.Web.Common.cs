@@ -31,7 +31,7 @@ namespace sstu_nevdev.App_Start
 
         private static IKernel CreateKernel()
         {
-            var modules = new INinjectModule[] { new ServiceModule("AppContext") };
+            var modules = new INinjectModule[] { new ServiceModule("Context") };
             var kernel = new StandardKernel(modules);
             try
             {

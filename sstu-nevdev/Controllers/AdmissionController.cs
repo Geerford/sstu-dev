@@ -4,11 +4,11 @@ using System.Web.Mvc;
 
 namespace sstu_nevdev.Controllers
 {
-    public class RoleController : Controller
+    public class AdmissionController : Controller
     {
-        IRoleService service;
+        IAdmissionService service;
 
-        public RoleController(IRoleService service)
+        public AdmissionController(IAdmissionService service)
         {
             this.service = service;
         }
@@ -29,12 +29,12 @@ namespace sstu_nevdev.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Role model)
+        public ActionResult Create(Admission model)
         {
             try
             {
                 service.Create(model);
-                return RedirectToAction("Index", "Role", new { });
+                return RedirectToAction("Index", "Admission", new { });
             }
             catch
             {
@@ -48,12 +48,12 @@ namespace sstu_nevdev.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(Role model)
+        public ActionResult Edit(Admission model)
         {
             try
             {
                 service.Edit(model);
-                return RedirectToAction("Index", "Role", new { });
+                return RedirectToAction("Index", "Admission", new { });
             }
             catch
             {
@@ -67,12 +67,12 @@ namespace sstu_nevdev.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(Role model)
+        public ActionResult Delete(Admission model)
         {
             try
             {
                 service.Delete(model);
-                return RedirectToAction("Index", "Role", new { });
+                return RedirectToAction("Index", "Admission", new { });
             }
             catch
             {

@@ -5,37 +5,37 @@ using System.Web.Http;
 
 namespace sstu_nevdev.Controllers
 {
-    public class RolesController : ApiController
+    public class ActivitiesController : ApiController
     {
-        IRoleService service;
-        
-        public RolesController(IRoleService service)
+        IActivityService service;
+
+        public ActivitiesController(IActivityService service)
         {
             this.service = service;
         }
 
-        // GET api/roles
-        public IEnumerable<Role> Get()
+        // GET api/activities
+        public IEnumerable<Activity> Get()
         {
             return service.GetAll();
         }
 
-        // GET api/roles/5
-        public Role Get(int id)
+        // GET api/activities/5
+        public Activity Get(int id)
         {
             return service.Get(id);
         }
 
-        // POST api/roles
+        // POST api/activities
         [HttpPost]
-        public void Post([FromBody]Role item)
+        public void Post([FromBody]Activity item)
         {
             service.Create(item);
         }
 
-        // PUT api/roles/5
+        // PUT api/activities/5
         [HttpPut]
-        public void Put(int id, [FromBody]Role item)
+        public void Put(int id, [FromBody]Activity item)
         {
             if (id == item.ID)
             {
@@ -43,12 +43,12 @@ namespace sstu_nevdev.Controllers
             }
         }
 
-        // DELETE api/roles/5
+        // DELETE api/activities/5
         [HttpDelete]
         public void Delete(int id)
         {
-            Role item = service.Get(id);
-            if(item != null)
+            Activity item = service.Get(id);
+            if (item != null)
             {
                 service.Delete(item);
             }

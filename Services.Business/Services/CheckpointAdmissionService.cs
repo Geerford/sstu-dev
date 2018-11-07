@@ -1,5 +1,4 @@
-﻿using System;
-using Domain.Core;
+﻿using Domain.Core;
 using Repository.Interfaces;
 using Service.Interfaces;
 using System.Collections.Generic;
@@ -56,6 +55,11 @@ namespace Services.Business.Services
         public IEnumerable<CheckpointAdmission> GetAll()
         {
             return Database.CheckpointAdmission.GetAll().ToList();
+        }
+
+        public bool IsMatch(int checkpoingID, int admissionID)
+        {
+            return (Database.CheckpointAdmission.FindFirst(i => i.CheckpointID == checkpoingID && i.AdmissionID == admissionID) != null) ? true : false;
         }
     }
 }

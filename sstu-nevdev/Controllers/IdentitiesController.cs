@@ -2,7 +2,6 @@
 using Service.Interfaces;
 using sstu_nevdev.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Http;
 
 namespace sstu_nevdev.Controllers
@@ -10,12 +9,10 @@ namespace sstu_nevdev.Controllers
     public class IdentitiesController : ApiController
     {
         IIdentityService identityService;
-        IRoleService roleService;
 
-        public IdentitiesController(IIdentityService identityService, IRoleService roleService)
+        public IdentitiesController(IIdentityService identityService)
         {
             this.identityService = identityService;
-            this.roleService = roleService;
         }
 
         // GET api/identities

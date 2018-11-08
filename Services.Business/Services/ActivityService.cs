@@ -79,5 +79,19 @@ namespace Services.Business.Services
             }
             return false;
         }
+
+        public bool IsPassed(int? identityID)
+        {
+            if (identityID == null)
+            {
+                throw new ValidationException("Не задан ID", "");
+            }
+            Activity activity = Database.Activity.GetAll().Where(x => x.IdentityID == identityID).LastOrDefault();
+            if (activity != null && activity.Mode == "Вход")
+            {
+                return true; //Person in the room
+            }
+            return false;
+        }
     }
 }

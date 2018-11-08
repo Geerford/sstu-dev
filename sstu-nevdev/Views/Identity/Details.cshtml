@@ -9,6 +9,10 @@
 <div>
     <h4>Identity</h4>
     <hr />
+    @if (Model.Picture != null)
+    {
+        <img class="project__author__avatar" src="~/Content/uploads/@Model.Picture" />
+    }
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.RFID)
@@ -64,14 +68,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.Birthdate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Picture)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Picture)
         </dd>
 
         <dt>

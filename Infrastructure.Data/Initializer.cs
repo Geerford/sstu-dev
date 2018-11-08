@@ -14,6 +14,7 @@ namespace Infrastructure.Data
             database.Role.Add(role2);
             Domain.Core.Type type1 = new Domain.Core.Type { Description = "Пропускает через ворота", Status = "Пропускной", CreatedBy = "Создатель" };
             Domain.Core.Type type2 = new Domain.Core.Type { Description = "Отмечает посещаемость", Status = "Лекционный", CreatedBy = "Создатель" };
+            Domain.Core.Type type3 = new Domain.Core.Type { Description = "Собирает статистику", Status = "Статистический", CreatedBy = "Создатель" };
             database.Type.Add(type1);
             database.Type.Add(type2);
             Admission admission1 = new Admission { Description = "Сотрудник", CreatedBy = "Создатель" };
@@ -31,7 +32,7 @@ namespace Infrastructure.Data
                 Midname = "Сидорович",
                 Gender = true,
                 Birthdate = Convert.ToDateTime("2000-01-25"),
-                Picture = "Picture",
+                Picture = "cat.jpg",
                 Country = "Россия",
                 City = "Саратов",
                 Department = "ИнПИТ",
@@ -51,7 +52,7 @@ namespace Infrastructure.Data
                 Midname = "Петрович",
                 Gender = true,
                 Birthdate = Convert.ToDateTime("2000-01-25"),
-                Picture = "Picture",
+                Picture = "cat.jpg",
                 Country = "Россия",
                 City = "Саратов",
                 Department = "ИнПИТ",
@@ -71,7 +72,7 @@ namespace Infrastructure.Data
                 Midname = "Иванович",
                 Gender = true,
                 Birthdate = Convert.ToDateTime("2000-01-25"),
-                Picture = "Picture",
+                Picture = "cat.jpg",
                 Country = "Россия",
                 City = "Саратов",
                 Department = "ИнПИТ",
@@ -86,7 +87,7 @@ namespace Infrastructure.Data
             {
                 Campus = 1,
                 Row = 4,
-                Description = "На 4 этаже около 425",
+                Description = "На 4 этаже, 425 аудитория",
                 Status = "Отметка",
                 Type = type2,
                 CreatedBy = "Создатель"

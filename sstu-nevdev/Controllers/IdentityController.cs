@@ -2,6 +2,8 @@
 using Service.Interfaces;
 using sstu_nevdev.Models;
 using System.Collections.Generic;
+using System.IO;
+using System.Web;
 using System.Web.Mvc;
 using static sstu_nevdev.Models.IdentityModel;
 
@@ -25,7 +27,8 @@ namespace sstu_nevdev.Controllers
 
         public ActionResult Details(int id)
         {
-            return View(identityService.Get(id));
+            Identity identity = identityService.Get(id);
+            return View(identity);
         }
 
         public ActionResult Create()
@@ -47,10 +50,18 @@ namespace sstu_nevdev.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(IdentityModel model, string RoleList)
+        public ActionResult Create(IdentityModel model, string RoleList, HttpPostedFileBase filedata = null)
         {
             try
             {
+                string path = System.Web.HttpContext.Current.Server.MapPath("~/Content/uploads/"), fileName = "";
+                if (filedata != null)
+                {
+                    string fileEx = Path.GetExtension(filedata.FileName);
+                    fileName = System.Guid.NewGuid().ToString() + fileEx;
+                    filedata.SaveAs(path + fileName);
+                }
+
                 identityService.Create(new Identity
                 {
                     RFID = model.RFID,
@@ -60,7 +71,7 @@ namespace sstu_nevdev.Controllers
                     Midname = model.Midname,
                     Gender = model.Gender,
                     Birthdate = model.Birthdate,
-                    Picture = model.Picture,
+                    Picture = fileName,
                     Country = model.Country,
                     City = model.City,
                     Phone = model.Phone,
@@ -76,6 +87,16 @@ namespace sstu_nevdev.Controllers
             }
             catch
             {
+                List<StatusForList> roles = new List<StatusForList>();
+                foreach (Role item in roleService.GetAll())
+                {
+                    roles.Add(new StatusForList
+                    {
+                        Key = item.ID.ToString(),
+                        Display = item.Description
+                    });
+                }
+                model.Role = new SelectList(roles, "Key", "Display");
                 return View(model);
             }
         }

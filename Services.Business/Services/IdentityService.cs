@@ -1,5 +1,4 @@
-﻿using System;
-using Domain.Core;
+﻿using Domain.Core;
 using Repository.Interfaces;
 using Service.Interfaces;
 using System.Collections.Generic;

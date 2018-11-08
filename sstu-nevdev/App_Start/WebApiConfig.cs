@@ -1,5 +1,4 @@
 ﻿using System.Web.Http;
-using Unity.AspNet.WebApi;
 
 namespace sstu_nevdev.App_Start
 {

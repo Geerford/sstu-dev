@@ -232,7 +232,6 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="App_Start\WebApiConfig2.cs" />
     <Compile Include="Controllers\ActivitiesController.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\AdmissionController.cs" />
@@ -249,8 +248,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ActivityModel.cs" />
     <Compile Include="Models\CheckpointModel.cs" />
     <Compile Include="Models\IdentityModel.cs" />
+    <Compile Include="Models\IdentityResponseModel.cs" />
     <Compile Include="Ninject\NinjectDependencyResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

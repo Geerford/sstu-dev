@@ -61,5 +61,23 @@ namespace Services.Business.Services
         {
             return Database.Activity.Find(x => x.Status == status);
         }
+
+        public bool IsAdmission(int? checkpointID, int? roleID)
+        {
+            if (checkpointID == null || roleID == null)
+            {
+                throw new ValidationException("Не задан ID", "");
+            }
+            foreach (CheckpointAdmission item in Database.CheckpointAdmission.GetAll().Where(x => x.CheckpointID == checkpointID))
+            {
+                Admission admission = Database.Admission.Get(item.AdmissionID);
+                Role role = Database.Role.Get((int)roleID);
+                if (admission.Description.Contains(role.Description))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

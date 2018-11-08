@@ -11,6 +11,7 @@ namespace Service.Interfaces
         void Edit(Activity model);
         void Delete(Activity model);
         IEnumerable<Activity> GetByStatus(bool status);
+        bool IsAdmission(int? checkpointID, int? identityID);
         void Dispose();
     }
 }

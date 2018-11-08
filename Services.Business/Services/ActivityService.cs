@@ -56,5 +56,10 @@ namespace Services.Business.Services
         {
             return Database.Activity.GetAll().ToList();
         }
+
+        public IEnumerable<Activity> GetByStatus(bool status)
+        {
+            return Database.Activity.Find(x => x.Status == status);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Repository.Interfaces;
+﻿using Domain.Core;
+using Repository.Interfaces;
 using Service.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,13 +15,13 @@ namespace Services.Business.Services
             Database = uow;
         }
 
-        public void Create(Domain.Core.Type model)
+        public void Create(Type model)
         {
             Database.Type.Create(model);
             Database.Save();
         }
 
-        public void Delete(Domain.Core.Type model)
+        public void Delete(Type model)
         {
             Database.Type.Delete(model.ID);
             Database.Save();
@@ -31,19 +32,19 @@ namespace Services.Business.Services
             Database.Dispose();
         }
 
-        public void Edit(Domain.Core.Type model)
+        public void Edit(Type model)
         {
             Database.Type.Update(model);
             Database.Save();
         }
 
-        public Domain.Core.Type Get(int? id)
+        public Type Get(int? id)
         {
             if (id == null)
             {
                 throw new ValidationException("Не задан ID", "");
             }
-            Domain.Core.Type item = Database.Type.Get(id.Value);
+            Type item = Database.Type.Get(id.Value);
             if (item == null)
             {
                 throw new ValidationException("Сущность не найдена", "");
@@ -51,9 +52,14 @@ namespace Services.Business.Services
             return item;
         }
 
-        public IEnumerable<Domain.Core.Type> GetAll()
+        public IEnumerable<Type> GetAll()
         {
             return Database.Type.GetAll().ToList();
+        }
+
+        public IEnumerable<Type> GetByStatus(string status)
+        {
+            return Database.Type.Find(x => x.Status == status);
         }
     }
 }

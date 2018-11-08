@@ -11,5 +11,6 @@ namespace Service.Interfaces
         void Edit(Checkpoint model);
         void Delete(Checkpoint model);
         void Dispose();
+        IEnumerable<Checkpoint> GetByStatus(string status);
     }
 }

@@ -10,6 +10,7 @@ namespace Service.Interfaces
         void Create(Activity model);
         void Edit(Activity model);
         void Delete(Activity model);
+        IEnumerable<Activity> GetByStatus(bool status);
         void Dispose();
     }
 }

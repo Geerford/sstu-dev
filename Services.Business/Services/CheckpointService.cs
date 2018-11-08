@@ -57,5 +57,10 @@ namespace Services.Business.Services
         {
             return Database.Checkpoint.GetAll().ToList();
         }
+
+        public IEnumerable<Checkpoint> GetByStatus(string status)
+        {
+            return Database.Checkpoint.Find(x => x.Status == status);
+        }
     }
 }

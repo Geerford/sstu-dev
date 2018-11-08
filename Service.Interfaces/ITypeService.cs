@@ -11,5 +11,6 @@ namespace Service.Interfaces
         void Edit(Type model);
         void Delete(Type model);
         void Dispose();
+        IEnumerable<Type> GetByStatus(string status);
     }
 }

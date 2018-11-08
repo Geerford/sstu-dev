@@ -57,5 +57,64 @@ namespace Services.Business.Services
         {
             return Database.Identity.GetAll().ToList();
         }
+
+        public Identity Find(Identity model)
+        {
+            Identity item = Database.Identity.Find(m => m == model).LastOrDefault();
+            return item;
+        }
+
+        public IEnumerable<Identity> GetByStatus(string status)
+        {
+            return Database.Identity.Find(x => x.Status == status);
+        }
+
+        public Identity GetByRFID(string rfid)
+        {
+            return Database.Identity.Find(x => x.RFID == rfid).LastOrDefault();
+        }
+
+        public Identity GetByQR(string qr)
+        {
+            return Database.Identity.Find(x => x.QR == qr).LastOrDefault();
+        }
+
+        public void Deactivate(int? id)
+        {
+            if (id == null)
+            {
+                throw new ValidationException("Не задан ID", "");
+            }
+            Identity item = Database.Identity.Get(id.Value);
+            if (item == null)
+            {
+                throw new ValidationException("Сущность не найдена", "");
+            }
+            else
+            {
+                item.Status = "Деактивирован";
+                Database.Identity.Update(item);
+                Database.Save();
+            }
+        }
+
+        public void Activate(int? id)
+        {
+            if (id == null)
+            {
+                throw new ValidationException("Не задан ID", "");
+            }
+            Identity item = Database.Identity.Get(id.Value);
+            if (item == null)
+            {
+                throw new ValidationException("Сущность не найдена", "");
+            }
+            else
+            {
+                item.Status = "Активирован";
+                Database.Identity.Update(item);
+                Database.Save();
+            }
+        }
     }
 }

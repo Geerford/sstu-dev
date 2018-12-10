@@ -1,29 +1,20 @@
 ﻿@model IEnumerable<Domain.Core.Type>
-
-@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Index</h2>
+<h2>Список типов</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Создать", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.Label("Описание")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Status)
+            @Html.Label("Статус")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CreatedBy)
+            @Html.Label("Действия")
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UpdatedBy)
-        </th>
-        <th></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -35,17 +26,10 @@
             @Html.DisplayFor(modelItem => item.Status)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CreatedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UpdatedBy)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Редактировать", "Edit", new { id = item.ID })
+            @Html.ActionLink("Подробнее", "Details", new { id = item.ID })
+            @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
         </td>
     </tr>
 }
-
 </table>

@@ -4,19 +4,18 @@ using Repository.Interfaces;
 
 namespace Services.Business
 {
-    public class ServiceModule : NinjectModule
+    public class SyncServiceModule : NinjectModule
     {
         private readonly string connectionString;
-
-        public ServiceModule(string connection)
+        
+        public SyncServiceModule(string connection)
         {
             connectionString = connection;
         }
 
         public override void Load()
         {
-            Bind<IUnitOfWork>().To<UnitOfWork>().WithConstructorArgument(connectionString);
-            Bind<ISyncUnitOfWork>().To<SyncUnitOfWork>().WithConstructorArgument("SyncContext");
+            Bind<ISyncUnitOfWork>().To<SyncUnitOfWork>().WithConstructorArgument(connectionString);
         }
     }
 }

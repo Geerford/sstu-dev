@@ -1,33 +1,24 @@
 ﻿@model Domain.Core.Activity
-
-@{
-    ViewBag.Title = "Details";
-}
-
-<h2>Details</h2>
-
 <div>
-    <h4>Activity</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.IdentityID)
+            @Html.Label("Номер пользователя")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.IdentityID)
+            @Html.DisplayFor(model => model.IdentityGUID)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CheckpointID)
+            @Html.Label("Номер датчика")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CheckpointID)
+            @Html.DisplayFor(model => model.CheckpointIP)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Date)
+            @Html.Label("Дата")
         </dt>
 
         <dd>
@@ -35,40 +26,30 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Status)
+            @Html.Label("Статус")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Status)
+            @if (Model.Status)
+            {
+                @Html.DisplayName("Успех")
+            }
+            else
+            {
+                @Html.DisplayName("Неудача")
+            }
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Mode)
+            @Html.Label("Режим")
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Mode)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedBy)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UpdatedBy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UpdatedBy)
-        </dd>
-
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID })
+    @Html.ActionLink("Назад", "Index")
 </p>

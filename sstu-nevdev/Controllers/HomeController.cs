@@ -5,9 +5,9 @@ namespace sstu_nevdev.Controllers
 {
     public class HomeController : Controller
     {
-        IRoleService service;
+        IIdentityService service;
 
-        public HomeController(IRoleService service)
+        public HomeController(IIdentityService service)
         {
             this.service = service;
         }

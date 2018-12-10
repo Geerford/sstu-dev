@@ -1,42 +1,42 @@
-﻿@model IEnumerable<Domain.Core.Checkpoint>
+﻿@model IEnumerable<Service.DTO.CheckpointDTO>
 
-@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Index</h2>
-
+<h2>Список датчиков</h2>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Создать", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Campus)
+            @Html.Label("IP-адрес")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Row)
+            @Html.Label("Корпус")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.Label("Этаж")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Status)
+            @Html.Label("Описание")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CreatedBy)
+            @Html.Label("Статус")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UpdatedBy)
+            @Html.Label("Тип")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TypeID)
+            @Html.Label("Разрешения")
         </th>
-        <th></th>
+        <th>
+            @Html.Label("Действия")
+        </th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.IP)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Campus)
         </td>
@@ -50,20 +50,23 @@
             @Html.DisplayFor(modelItem => item.Status)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CreatedBy)
+            @Html.DisplayFor(modelItem => item.Type.Status)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.UpdatedBy)
+            @foreach (var i in item.Admissions)
+            {
+                <p>
+                    @Html.DisplayFor(modelItem => i.Description)
+                    @Html.DisplayName(" для ")
+                    @Html.DisplayFor(modelItem => i.Role)
+                </p>
+            }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.TypeID)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Редактировать", "Edit", new { id = item.ID })
+            @Html.ActionLink("Подробнее", "Details", new { id = item.ID })
+            @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
         </td>
     </tr>
 }
-
 </table>

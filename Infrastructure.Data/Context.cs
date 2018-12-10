@@ -10,7 +10,6 @@ namespace Infrastructure.Data
         public DbSet<Checkpoint> Checkpoint { get; set; }
         public DbSet<CheckpointAdmission> CheckpointAdmission { get; set; }
         public DbSet<Identity> Identity { get; set; }
-        public DbSet<Role> Role { get; set; }
         public DbSet<Type> Type { get; set; }
 
         static Context()

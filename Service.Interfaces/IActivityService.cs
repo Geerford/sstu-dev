@@ -1,4 +1,5 @@
 ﻿using Domain.Core;
+using Service.DTO;
 using System.Collections.Generic;
 
 namespace Service.Interfaces
@@ -11,8 +12,9 @@ namespace Service.Interfaces
         void Edit(Activity model);
         void Delete(Activity model);
         IEnumerable<Activity> GetByStatus(bool status);
-        bool IsAdmission(int? checkpointID, int? identityID);
-        bool IsPassed(int? identityID);
+        bool IsAdmission(int? checkpointID, string role);
+        bool IsPassed(string IdentityGUID);
+        int IsOk(CheckpointDTO checkpoint, IdentityDTO identity);
         void Dispose();
     }
 }

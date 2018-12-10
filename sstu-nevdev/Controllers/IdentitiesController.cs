@@ -1,6 +1,6 @@
 ﻿using Domain.Core;
+using Service.DTO;
 using Service.Interfaces;
-using sstu_nevdev.Models;
 using System.Collections.Generic;
 using System.Web.Http;
 
@@ -8,132 +8,39 @@ namespace sstu_nevdev.Controllers
 {
     public class IdentitiesController : ApiController
     {
-        IIdentityService identityService;
+        IIdentityService service;
 
-        public IdentitiesController(IIdentityService identityService)
+        public IdentitiesController(IIdentityService service)
         {
-            this.identityService = identityService;
+            this.service = service;
         }
 
         // GET api/identities
-        public IEnumerable<Identity> Get()
+        public IEnumerable<IdentityDTO> Get()
         {
-            return identityService.GetAll();
+            return service.GetAll();
         }
 
         // GET api/identities/5
-        public Identity Get(int id)
+        public IdentityDTO Get(int id)
         {
-            return identityService.Get(id);
+            return service.Get(id);
         }
 
         // POST api/identities
         [HttpPost]
-        public void Post([FromBody]IdentityModel item)
+        public void Post([FromBody]Identity item)
         {
-            identityService.Create(new Identity
-            {
-                RFID = item.RFID,
-                QR = item.QR,
-                Name = item.Name,
-                Surname = item.Surname,
-                Midname = item.Midname,
-                Gender = item.Gender,
-                Birthdate = item.Birthdate,
-                Picture = item.Picture,
-                Country = item.Country,
-                City = item.City,
-                Phone = item.Phone,
-                Email = item.Email,
-                Department = item.Department,
-                Group = item.Group,
-                Status = item.Status,
-                CreatedBy = item.CreatedBy,
-                UpdatedBy = item.UpdatedBy,
-                RoleID = item.RoleID
-            });
+            service.Create(item);
         }
 
         // PUT api/identities/5
         [HttpPut]
-        public void Put(int id, [FromBody]IdentityModel item)
+        public void Put(int id, [FromBody]Identity item)
         {
-            if (id == item.ID)
+            if(id == item.ID)
             {
-                Identity identity = identityService.Get(item.ID);
-                if (item.RFID != null)
-                {
-                    identity.RFID = item.RFID;
-                }
-                if (item.QR != null)
-                {
-                    identity.QR = item.QR;
-                }
-                if (item.Name != null)
-                {
-                    identity.Name = item.Name;
-                }
-                if (item.Surname != null)
-                {
-                    identity.Surname = item.Surname;
-                }
-                if (item.Midname != null)
-                {
-                    identity.Midname = item.Midname;
-                }
-                if (item.Gender != false)
-                {
-                    identity.Gender = item.Gender;
-                }
-                if (item.Birthdate != null)
-                {
-                    identity.Birthdate = item.Birthdate;
-                }
-                if (item.Picture != null)
-                {
-                    identity.Picture = item.Picture;
-                }
-                if (item.Country != null)
-                {
-                    identity.Country = item.Country;
-                }
-                if (item.City != null)
-                {
-                    identity.City = item.City;
-                }
-                if (item.Phone != null)
-                {
-                    identity.Phone = item.Phone;
-                }
-                if (item.Email != null)
-                {
-                    identity.Email = item.Email;
-                }
-                if (item.Department != null)
-                {
-                    identity.Department = item.Department;
-                }
-                if (item.Group != null)
-                {
-                    identity.Group = item.Group;
-                }
-                if (item.Status != null)
-                {
-                    identity.Status = item.Status;
-                }
-                if (item.CreatedBy != null)
-                {
-                    identity.CreatedBy = item.CreatedBy;
-                }
-                if (item.UpdatedBy != null)
-                {
-                    identity.UpdatedBy = item.UpdatedBy;
-                }
-                if (item.RoleID != 0)
-                {
-                    identity.RoleID = item.RoleID;
-                }
-                identityService.Edit(identity);
+                service.Edit(item);
             }
         }
 
@@ -141,10 +48,10 @@ namespace sstu_nevdev.Controllers
         [HttpDelete]
         public void Delete(int id)
         {
-            Identity item = identityService.Get(id);
+            Identity item = service.GetSimple(id);
             if (item != null)
             {
-                identityService.Delete(item);
+                service.Delete(item);
             }
         }
     }

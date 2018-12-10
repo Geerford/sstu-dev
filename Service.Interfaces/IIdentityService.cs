@@ -1,21 +1,34 @@
 ﻿using Domain.Core;
+using Service.DTO;
 using System.Collections.Generic;
+using System.DirectoryServices.AccountManagement;
+using System.Web;
 
 namespace Service.Interfaces
 {
     public interface IIdentityService
     {
-        Identity Get(int? id);
-        IEnumerable<Identity> GetAll();
+        Identity GetSimple(int? id);
+        IdentityDTO Get(int? id);
+        IdentityDTO GetByGUID(string guid);
+        IdentityDTO GetByRFID(string rfid);
+        IdentityDTO GetByQR(string qr);
+        IdentityDTO GetByName(string name, string midname, string surname);
+        IEnumerable<IdentityDTO> GetAll();
+        IEnumerable<IdentityDTO> GetByStatus(string status);
+        IEnumerable<IdentityDTO> GetByDepartment(string department);
+        IEnumerable<IdentityDTO> GetByGroup(string group);
+        IdentityDTO GetFull(string guid);
         void Create(Identity model);
         void Edit(Identity model);
         void Delete(Identity model);
-        Identity Find(Identity model);
-        IEnumerable<Identity> GetByStatus(string status);
-        Identity GetByRFID(string rfid);
-        Identity GetByQR(string qr);
-        void Deactivate(int? id);
-        void Activate(int? id);
+        IdentityDTO Find(Identity model);
+        string SaveImage(HttpPostedFileBase data);
+
+        bool IsUserExist(string identityValue, string domain);
+        bool IsValidUser(string user, string password);
+        UserPrincipal GetUser(string identityValue, string domain);
+
         void Dispose();
     }
 }

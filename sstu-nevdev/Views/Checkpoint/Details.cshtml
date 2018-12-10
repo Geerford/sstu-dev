@@ -1,17 +1,15 @@
-﻿@model Domain.Core.Checkpoint
-
-@{
-    ViewBag.Title = "Details";
-}
-
-<h2>Details</h2>
-
+﻿@model Service.DTO.CheckpointDTO
 <div>
-    <h4>Checkpoint</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Campus)
+            @Html.Label("IP-адрес")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IP)
+        </dd>
+        <dt>
+            @Html.Label("Корпус")
         </dt>
 
         <dd>
@@ -19,7 +17,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Row)
+            @Html.Label("Этаж")
         </dt>
 
         <dd>
@@ -27,7 +25,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.Label("Описание")
         </dt>
 
         <dd>
@@ -35,7 +33,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Status)
+            @Html.Label("Статус")
         </dt>
 
         <dd>
@@ -43,32 +41,26 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CreatedBy)
+            @Html.Label("Тип")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CreatedBy)
+            @Html.DisplayFor(model => model.Type.Status)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.UpdatedBy)
+            @Html.Label("Разрешения")
         </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UpdatedBy)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TypeID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TypeID)
-        </dd>
-
+        @foreach (var item in Model.Admissions)
+        {
+            <dd>
+                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayName(" для ")
+                @Html.DisplayFor(modelItem => item.Role)
+            </dd>
+        }
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID })
+    @Html.ActionLink("Назад", "Index")
 </p>

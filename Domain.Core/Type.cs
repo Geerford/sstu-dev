@@ -12,10 +12,6 @@ namespace Domain.Core
         [Required]
         [StringLength(20)]
         public string Status { get; set; }
-        [StringLength(100)]
-        public string CreatedBy { get; set; }
-        [StringLength(100)]
-        public string UpdatedBy { get; set; }
         public ICollection<Checkpoint> Checkpoints { get; set; }
     }
 }

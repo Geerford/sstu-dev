@@ -16,7 +16,6 @@ namespace Infrastructure.Data
         private CheckpointAdmissionRepository CheckpointAdmissionRepository;
         private CheckpointRepository CheckpointRepository;
         private IdentityRepository IdentityRepository;
-        private RoleRepository RoleRepository;
         private TypeRepository TypeRepository;
 
         public UnitOfWork(string connectionString)
@@ -81,18 +80,6 @@ namespace Infrastructure.Data
                     IdentityRepository = new IdentityRepository(database);
                 }
                 return IdentityRepository;
-            }
-        }
-
-        public IRepository<Role> Role
-        {
-            get
-            {
-                if (RoleRepository == null)
-                {
-                    RoleRepository = new RoleRepository(database);
-                }
-                return RoleRepository;
             }
         }
 

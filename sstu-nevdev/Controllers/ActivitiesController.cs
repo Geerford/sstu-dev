@@ -1,4 +1,5 @@
 ﻿using Domain.Core;
+using Service.DTO;
 using Service.Interfaces;
 using sstu_nevdev.Models;
 using System.Collections.Generic;
@@ -38,8 +39,8 @@ namespace sstu_nevdev.Controllers
         [HttpPost]
         public IHttpActionResult Post([FromBody]ActivityModel model)
         {
-            Checkpoint checkpoint = checkpointService.Get(model.CheckpointID);
-            Identity identity;
+            CheckpointDTO checkpoint = checkpointService.Get(model.CheckpointID);
+            IdentityDTO identity;
             if (model.RFID.Length != 0)
             {
                 identity = identityService.GetByRFID(model.RFID);
@@ -51,100 +52,14 @@ namespace sstu_nevdev.Controllers
             if(identity != null)
             {
                 string picturePath = "/Content/uploads/" + identity.Picture;
-                Type checkpointType = typeService.Get(checkpoint.TypeID);
-                switch (checkpointType.Status)
+                int code = activityService.IsOk(checkpoint, identity);
+                switch (code)
                 {
-                    case "Пропускной":
-                        if (activityService.IsPassed(identity.ID))
-                        {
-                            activityService.Create(new Activity
-                            {
-                                CheckpointID = checkpoint.ID,
-                                CreatedBy = "Checkpoint #" + checkpoint.ID,
-                                Date = System.DateTime.Now,
-                                IdentityID = identity.ID,
-                                Mode = "Выход",
-                                Status = true
-                            });
-                            return Ok();
-                        }
-                        else
-                        {
-                            if (activityService.IsAdmission(checkpoint.ID, identity.RoleID))
-                            {
-                                activityService.Create(new Activity
-                                {
-                                    CheckpointID = checkpoint.ID,
-                                    CreatedBy = "Checkpoint #" + checkpoint.ID,
-                                    Date = System.DateTime.Now,
-                                    IdentityID = identity.ID,
-                                    Mode = "Вход",
-                                    Status = true
-                                });
-                                var test = new IdentityResponseModel
-                                {
-                                    Birthdate = identity.Birthdate,
-                                    City = identity.City,
-                                    Country = identity.Country,
-                                    CreatedBy = identity.CreatedBy,
-                                    Department = identity.Department,
-                                    ID = identity.ID,
-                                    Email = identity.Email,
-                                    Gender = identity.Gender,
-                                    Group = identity.Group,
-                                    RFID = identity.RFID,
-                                    Midname = identity.Midname,
-                                    Name = identity.Name,
-                                    Phone = identity.Phone,
-                                    Picture = picturePath,
-                                    QR = identity.QR,
-                                    Role = identity.Role.Description,
-                                    Status = identity.Status,
-                                    Surname = identity.Surname,
-                                    UpdatedBy = identity.UpdatedBy
-                                };
-                                var response = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(test);
-                                return Json(response);
-                            }
-                            return Json("Permission denied");
-                        }
-                    case "Лекционный":
-                        if (activityService.IsPassed(identity.ID))
-                        {
-                            activityService.Create(new Activity
-                            {
-                                CheckpointID = checkpoint.ID,
-                                CreatedBy = "Checkpoint #" + checkpoint.ID,
-                                Date = System.DateTime.Now,
-                                IdentityID = identity.ID,
-                                Mode = "Выход",
-                                Status = true
-                            });
-                            return Ok();
-                        }
-                        else
-                        {
-                            activityService.Create(new Activity
-                            {
-                                CheckpointID = checkpoint.ID,
-                                CreatedBy = "Checkpoint #" + checkpoint.ID,
-                                Date = System.DateTime.Now,
-                                IdentityID = identity.ID,
-                                Mode = "Вход",
-                                Status = true
-                            });
-                            return Ok();
-                        }
+                    case 200:
+                        return Json(identity);
+                    case 500:
+                        return Json("Permission denied");
                     default:
-                        activityService.Create(new Activity
-                        {
-                            CheckpointID = checkpoint.ID,
-                            CreatedBy = "Checkpoint #" + checkpoint.ID,
-                            Date = System.DateTime.Now,
-                            IdentityID = identity.ID,
-                            Mode = "Проход",
-                            Status = true
-                        });
                         return Ok();
                 }
             }

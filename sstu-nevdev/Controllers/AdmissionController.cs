@@ -1,6 +1,8 @@
 ﻿using Domain.Core;
 using Service.Interfaces;
+using System.Collections.Generic;
 using System.Web.Mvc;
+using static sstu_nevdev.Models.CheckpointModel;
 
 namespace sstu_nevdev.Controllers
 {
@@ -25,16 +27,19 @@ namespace sstu_nevdev.Controllers
 
         public ActionResult Create()
         {
+            ViewBag.Role = new SelectList(new List<StatusForList> { new StatusForList { Key = "Сотрудник", Display = "Сотрудник" },
+                new StatusForList { Key = "Студент", Display = "Студент" } }, "Key", "Display");
             return View();
         }
 
         [HttpPost]
-        public ActionResult Create(Admission model)
+        public ActionResult Create(Admission model, string RoleList)
         {
             try
             {
+                model.Role = RoleList;
                 service.Create(model);
-                return RedirectToAction("Index", "Admission", new { });
+                return RedirectToAction("Index", "Admission");
             }
             catch
             {
@@ -44,20 +49,26 @@ namespace sstu_nevdev.Controllers
 
         public ActionResult Edit(int id)
         {
+            ViewBag.Role = new SelectList(new List<StatusForList> { new StatusForList { Key = "Сотрудник", Display = "Сотрудник" },
+                new StatusForList { Key = "Студент", Display = "Студент" } }, "Key", "Display");
             return View(service.Get(id));
         }
 
         [HttpPost]
-        public ActionResult Edit(Admission model)
+        public ActionResult Edit(Admission model, string RoleList)
         {
             try
             {
+                if (!string.IsNullOrEmpty(RoleList))
+                {
+                    model.Role = RoleList;
+                }
                 service.Edit(model);
-                return RedirectToAction("Index", "Admission", new { });
+                return RedirectToAction("Index", "Admission");
             }
             catch
             {
-                return View();
+                return View(model);
             }
         }
 
@@ -72,11 +83,11 @@ namespace sstu_nevdev.Controllers
             try
             {
                 service.Delete(model);
-                return RedirectToAction("Index", "Admission", new { });
+                return RedirectToAction("Index", "Admission");
             }
             catch
             {
-                return View();
+                return View(model);
             }
         }
 

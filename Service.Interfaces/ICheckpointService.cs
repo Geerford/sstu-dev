@@ -1,16 +1,23 @@
 ﻿using Domain.Core;
+using Service.DTO;
 using System.Collections.Generic;
 
 namespace Service.Interfaces
 {
     public interface ICheckpointService
     {
-        Checkpoint Get(int? id);
-        IEnumerable<Checkpoint> GetAll();
-        void Create(Checkpoint model);
-        void Edit(Checkpoint model);
+        Checkpoint GetSimple(int? id);
+        CheckpointDTO Get(int? id);
+        CheckpointDTO GetByIP(string ip);
+        CheckpointDTO GetFull(int? id);
+        IEnumerable<CheckpointDTO> GetAll();
+        IEnumerable<CheckpointDTO> GetByStatus(string status);
+        IEnumerable<CheckpointDTO> GetByType(string type);
+        void Create(CheckpointDTO model);
+        void Edit(CheckpointDTO model);
         void Delete(Checkpoint model);
+        void Delete(int? checkpointID, int? itemID);
         void Dispose();
-        IEnumerable<Checkpoint> GetByStatus(string status);
+        bool IsMatchAdmission(int checkpoingID, int admissionID);
     }
 }

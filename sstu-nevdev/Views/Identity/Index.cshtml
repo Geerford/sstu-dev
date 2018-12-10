@@ -1,16 +1,15 @@
-﻿@model IEnumerable<Domain.Core.Identity>
+﻿@model IEnumerable<Service.DTO.IdentityDTO>
 
-@{
-    ViewBag.Title = "List";
-}
-
-<h2>List</h2>
+<h2>Список пользователей</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Создать", "Create")
 </p>
 <table class="table">
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.GUID)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.RFID)
         </th>
@@ -18,55 +17,51 @@
             @Html.DisplayNameFor(model => model.QR)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.Label("Имя")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Surname)
+            @Html.Label("Фамилия")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Midname)
+            @Html.Label("Отчество")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Gender)
+            @Html.Label("Пол")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Birthdate)
+            @Html.Label("День рождение")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Country)
+            @Html.Label("Страна")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.City)
+            @Html.Label("Город")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Phone)
+            @Html.Label("Телефон")
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Department)
+            @Html.Label("Факультет")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Group)
+            @Html.Label("Группа")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Status)
+            @Html.Label("Статус")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CreatedBy)
+            @Html.Label("Действия")
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UpdatedBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RoleID)
-        </th>
-        <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.GUID)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.RFID)
         </td>
@@ -83,7 +78,14 @@
             @Html.DisplayFor(modelItem => item.Midname)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Gender)
+            @if (item.Gender)
+            {
+                @Html.DisplayName("Мужской")
+            }
+            else
+            {
+                @Html.DisplayName("Женский")
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Birthdate)
@@ -110,18 +112,9 @@
             @Html.DisplayFor(modelItem => item.Status)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CreatedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UpdatedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RoleID)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Редактировать", "Edit", new { id = item.ID })
+            @Html.ActionLink("Подробнее", "Details", new { id = item.ID })
+            @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
         </td>
     </tr>
 }

@@ -36,6 +36,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,11 +51,10 @@
     <Compile Include="ServiceModule.cs" />
     <Compile Include="Services\ActivityService.cs" />
     <Compile Include="Services\AdmissionService.cs" />
-    <Compile Include="Services\CheckpointAdmissionService.cs" />
     <Compile Include="Services\CheckpointService.cs" />
     <Compile Include="Services\IdentityService.cs" />
-    <Compile Include="Services\RoleService.cs" />
     <Compile Include="Services\TypeService.cs" />
+    <Compile Include="SyncServiceModule.cs" />
     <Compile Include="ValidationException.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -71,6 +73,10 @@
     <ProjectReference Include="..\Repository.Interfaces\Repository.Interfaces.csproj">
       <Project>{1F57A057-950B-4724-83B1-314E69E6BCA9}</Project>
       <Name>Repository.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Service.DTO\Service.DTO.csproj">
+      <Project>{27FA6FDE-7A1A-4837-8144-B9A4172D1A80}</Project>
+      <Name>Service.DTO</Name>
     </ProjectReference>
     <ProjectReference Include="..\Service.Interfaces\Service.Interfaces.csproj">
       <Project>{2B18E559-C288-45E1-9B3E-9ACAC80D7429}</Project>

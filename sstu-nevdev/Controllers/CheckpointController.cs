@@ -1,8 +1,8 @@
 ﻿using Domain.Core;
+using Service.DTO;
 using Service.Interfaces;
 using sstu_nevdev.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 using static sstu_nevdev.Models.CheckpointModel;
 
@@ -13,14 +13,13 @@ namespace sstu_nevdev.Controllers
         ICheckpointService checkpointService;
         ITypeService typeService;
         IAdmissionService admissionService;
-        ICheckpointAdmissionService admissionCheckpointService;
 
-        public CheckpointController(ICheckpointService checkpointService, ITypeService typeService, IAdmissionService admissionService, ICheckpointAdmissionService admissionCheckpointService)
+        public CheckpointController(ICheckpointService checkpointService, ITypeService typeService, 
+            IAdmissionService admissionService)
         {
             this.checkpointService = checkpointService;
             this.typeService = typeService;
             this.admissionService = admissionService;
-            this.admissionCheckpointService = admissionCheckpointService;
         }
 
         public ActionResult Index()
@@ -44,7 +43,6 @@ namespace sstu_nevdev.Controllers
                     Display = item.Description
                 });
             }
-
             List<CheckboxItem> admissions = new List<CheckboxItem>();
             foreach (var item in admissionService.GetAll())
             {
@@ -67,24 +65,24 @@ namespace sstu_nevdev.Controllers
         {
             try
             {
-                checkpointService.Create(new Checkpoint {
-                    Campus = model.Campus,
-                    CreatedBy = model.CreatedBy,
-                    Description = model.Description,
-                    Row = model.Row,
-                    Status = model.Status,
-                    TypeID = System.Convert.ToInt32(TypeList),
-                    UpdatedBy = model.UpdatedBy
-                });
-                int checkpointID = checkpointService.GetAll().Where(d => d.Description == model.Description).Last().ID;
+                List<Admission> admissions = new List<Admission>();
                 foreach (var item in model.Admissions)
                 {
                     if (item.IsChecked)
                     {
-                        admissionCheckpointService.Create(new CheckpointAdmission { AdmissionID = item.ID, CheckpointID = checkpointID });
+                        admissions.Add(admissionService.Get(item.ID));
                     }
                 }
-                return RedirectToAction("Index", "Checkpoint", new { });
+                checkpointService.Create(new CheckpointDTO {
+                    IP = model.IP,
+                    Campus = model.Campus,
+                    Description = model.Description,
+                    Row = model.Row,
+                    Status = model.Status,
+                    Type = typeService.Get(System.Convert.ToInt32(TypeList)),
+                    Admissions = admissions
+                });
+                return RedirectToAction("Index", "Checkpoint");
             }
             catch
             {
@@ -107,7 +105,7 @@ namespace sstu_nevdev.Controllers
             var admissions = new List<CheckboxItem>();
             foreach (var item in admissionService.GetAll())
             {
-                if (admissionCheckpointService.IsMatch(id, item.ID))
+                if (checkpointService.IsMatchAdmission(id, item.ID))
                 {
                     admissions.Add(new CheckboxItem()
                     {
@@ -125,21 +123,18 @@ namespace sstu_nevdev.Controllers
                         IsChecked = false
                     });
                 }
-
             }
-            Checkpoint model = checkpointService.Get(id);
-
+            Checkpoint model = checkpointService.GetSimple(id);
             return View(new CheckpointModel
             {
+                IP = model.IP,
                 Campus = model.Campus,
-                CreatedBy = model.CreatedBy,
                 Description = model.Description,
                 Row = model.Row,
                 Status = model.Status,
-                UpdatedBy = model.UpdatedBy,
                 Admissions = admissions,
                 Type = new SelectList(types, "Key", "Display")
-            });
+        });
         }
 
         [HttpPost]
@@ -147,64 +142,30 @@ namespace sstu_nevdev.Controllers
         {
             try
             {
-                Checkpoint checkpoint = checkpointService.Get(model.ID); 
-                if(model.Row != 0)
-                {
-                    checkpoint.Row = model.Row;
-                }
-                if (model.Status != null)
-                {
-                    checkpoint.Status = model.Status;
-                }
-                if (model.Campus != 0)
-                {
-                    checkpoint.Campus = model.Campus;
-                }
-                if (model.CreatedBy != null)
-                {
-                    checkpoint.CreatedBy = model.CreatedBy;
-                }
-                if (model.Description != null)
-                {
-                    checkpoint.Description = model.Description;
-                }
-                if (TypeList != null)
-                {
-                    checkpoint.TypeID = System.Convert.ToInt32(TypeList);
-                }
-                if (model.UpdatedBy != null)
-                {
-                    checkpoint.UpdatedBy = model.UpdatedBy;
-                }
-
-
-                checkpointService.Edit(checkpoint);
-
-                foreach (var item in model.Admissions)
+                List<Admission> admissions = new List<Admission>();
+                foreach(var item in model.Admissions)
                 {
                     if (item.IsChecked)
                     {
-                        if (!admissionCheckpointService.IsMatch(model.ID, item.ID))
-                        {
-                            admissionCheckpointService.Create(new CheckpointAdmission { AdmissionID = item.ID, CheckpointID = model.ID });
-                        }
-                    }
-                    else
-                    {
-                        if (admissionCheckpointService.IsMatch(model.ID, item.ID))
-                        {
-
-                            CheckpointAdmission tryToDelete = admissionCheckpointService.GetAll().Where(c => (c.CheckpointID == model.ID) && (c.AdmissionID == item.ID)).FirstOrDefault();
-                            admissionCheckpointService.Delete(tryToDelete);
-                        }
+                        admissions.Add(admissionService.Get(item.ID));
                     }
                 }
-
-                return RedirectToAction("Index", "Checkpoint", new { });
+                checkpointService.Edit(new CheckpointDTO
+                {
+                    ID = model.ID,
+                    IP = model.IP,
+                    Campus = model.Campus,
+                    Description = model.Description,
+                    Row = model.Row,
+                    Status = model.Status,
+                    Type = typeService.Get(System.Convert.ToInt32(TypeList)),
+                    Admissions = admissions
+                });
+                return RedirectToAction("Index", "Checkpoint");
             }
-            catch(System.Exception ex)
+            catch
             {
-                return View(ex);
+                return View(model);
             }
         }
 
@@ -214,16 +175,16 @@ namespace sstu_nevdev.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(Checkpoint model)
+        public ActionResult Delete(CheckpointDTO model)
         {
             try
             {
-                checkpointService.Delete(model);
-                return RedirectToAction("Index", "Checkpoint", new { });
+                checkpointService.Delete(checkpointService.GetSimple(model.ID));
+                return RedirectToAction("Index", "Checkpoint");
             }
             catch
             {
-                return View();
+                return View(model);
             }
         }
 
@@ -232,7 +193,6 @@ namespace sstu_nevdev.Controllers
             checkpointService.Dispose();
             typeService.Dispose();
             admissionService.Dispose();
-            admissionCheckpointService.Dispose();
             base.Dispose(disposing);
         }
     }

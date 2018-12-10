@@ -1,34 +1,26 @@
 ﻿@model Domain.Core.Activity
 
-@{
-    ViewBag.Title = "Delete";
-}
-
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+<h3>Вы действительно хотите удалить это?</h3>
 <div>
-    <h4>Activity</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.IdentityID)
+            @Html.Label("Номер пользователя")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.IdentityID)
+            @Html.DisplayFor(model => model.IdentityGUID)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CheckpointID)
+            @Html.Label("Номер датчика")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CheckpointID)
+            @Html.DisplayFor(model => model.CheckpointIP)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Date)
+            @Html.Label("Дата")
         </dt>
 
         <dd>
@@ -36,7 +28,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Status)
+            @Html.Label("Статус")
         </dt>
 
         <dd>
@@ -44,37 +36,22 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Mode)
+            @Html.Label("Режим")
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Mode)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedBy)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UpdatedBy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UpdatedBy)
-        </dd>
-
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("Назад", "Index")
         </div>
     }
 </div>

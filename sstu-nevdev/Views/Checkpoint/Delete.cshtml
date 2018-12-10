@@ -1,18 +1,17 @@
-﻿@model Domain.Core.Checkpoint
+﻿@model Service.DTO.CheckpointDTO
 
-@{
-    ViewBag.Title = "Delete";
-}
-
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+<h3>Вы действительно хотите удалить это?</h3>
 <div>
-    <h4>Checkpoint</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Campus)
+            @Html.Label("IP-адрес")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IP)
+        </dd>
+        <dt>
+            @Html.Label("Корпус")
         </dt>
 
         <dd>
@@ -20,7 +19,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Row)
+            @Html.Label("Этаж")
         </dt>
 
         <dd>
@@ -28,7 +27,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.Label("Описание")
         </dt>
 
         <dd>
@@ -36,7 +35,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Status)
+            @Html.Label("Статус")
         </dt>
 
         <dd>
@@ -44,37 +43,32 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CreatedBy)
+            @Html.Label("Тип")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CreatedBy)
+            @Html.DisplayFor(model => model.Type.Status)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.UpdatedBy)
+            @Html.Label("Разрешения")
         </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UpdatedBy)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TypeID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TypeID)
-        </dd>
-
+        @foreach (var item in Model.Admissions)
+        {
+            <dd>
+                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayName(" для ")
+                @Html.DisplayFor(modelItem => item.Role)
+            </dd>
+        }
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("Назад", "Index")
         </div>
     }
 </div>

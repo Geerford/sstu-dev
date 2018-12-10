@@ -8,9 +8,7 @@ namespace Domain.Core
         [Required]
         [StringLength(100)]
         public string Description { get; set; }
-        [StringLength(100)]
-        public string CreatedBy { get; set; }
-        [StringLength(100)]
-        public string UpdatedBy { get; set; }
+        [Required]
+        public string Role { get; set; }
     }
 }

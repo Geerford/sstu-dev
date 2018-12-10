@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using sstu_nevdev;
 using sstu_nevdev.Controllers;
 
 namespace sstu_nevdev.Tests.Controllers

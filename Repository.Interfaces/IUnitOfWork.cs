@@ -11,7 +11,6 @@ namespace Repository.Interfaces
         IRepository<Checkpoint> Checkpoint { get; }
         IRepository<CheckpointAdmission> CheckpointAdmission { get; }
         IRepository<Identity> Identity { get; }
-        IRepository<Role> Role { get; }
         IRepository<Domain.Core.Type> Type { get; }
         void Save();
     }

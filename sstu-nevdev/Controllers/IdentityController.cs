@@ -1,56 +1,37 @@
 ﻿using Domain.Core;
 using Service.Interfaces;
-using sstu_nevdev.Models;
-using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using System.Web.Mvc;
-using static sstu_nevdev.Models.IdentityModel;
 
 namespace sstu_nevdev.Controllers
 {
     public class IdentityController : Controller
     {
-        IIdentityService identityService;
-        IRoleService roleService;
+        IIdentityService service;
 
-        public IdentityController(IIdentityService identityService, IRoleService roleService)
+        public IdentityController(IIdentityService service)
         {
-            this.identityService = identityService;
-            this.roleService = roleService;
+            this.service = service;
         }
 
         public ActionResult Index()
         {
-            return View(identityService.GetAll());
+            return View(service.GetAll());
         }
 
         public ActionResult Details(int id)
         {
-            Identity identity = identityService.Get(id);
-            return View(identity);
+            return View(service.Get(id));
         }
 
         public ActionResult Create()
         {
-            List<StatusForList> roles = new List<StatusForList>();
-            foreach (Role item in roleService.GetAll())
-            {
-                roles.Add(new StatusForList
-                {
-                    Key = item.ID.ToString(),
-                    Display = item.Description
-                });
-            }
-
-            return View(new IdentityModel
-            {
-                Role = new SelectList(roles, "Key", "Display")
-            });
+            return View();
         }
 
         [HttpPost]
-        public ActionResult Create(IdentityModel model, string RoleList, HttpPostedFileBase filedata = null)
+        public ActionResult Create(Identity model, HttpPostedFileBase filedata = null)
         {
             try
             {
@@ -61,175 +42,56 @@ namespace sstu_nevdev.Controllers
                     fileName = System.Guid.NewGuid().ToString() + fileEx;
                     filedata.SaveAs(path + fileName);
                 }
-
-                identityService.Create(new Identity
-                {
-                    RFID = model.RFID,
-                    QR = model.QR,
-                    Name = model.Name,
-                    Surname = model.Surname,
-                    Midname = model.Midname,
-                    Gender = model.Gender,
-                    Birthdate = model.Birthdate,
-                    Picture = fileName,
-                    Country = model.Country,
-                    City = model.City,
-                    Phone = model.Phone,
-                    Email = model.Email,
-                    Department = model.Department,
-                    Group = model.Group,
-                    Status = model.Status,
-                    CreatedBy = model.CreatedBy,
-                    UpdatedBy = model.UpdatedBy,
-                    RoleID = System.Convert.ToInt32(RoleList)
-                });
-                return RedirectToAction("Index", "Identity", new { });
+                model.Picture = fileName;
+                service.Create(model);
+                return RedirectToAction("Index", "Identity");
             }
             catch
             {
-                List<StatusForList> roles = new List<StatusForList>();
-                foreach (Role item in roleService.GetAll())
-                {
-                    roles.Add(new StatusForList
-                    {
-                        Key = item.ID.ToString(),
-                        Display = item.Description
-                    });
-                }
-                model.Role = new SelectList(roles, "Key", "Display");
                 return View(model);
             }
         }
 
         public ActionResult Edit(int id)
         {
-            List<StatusForList> roles = new List<StatusForList>();
-            foreach (Role item in roleService.GetAll())
-            {
-                roles.Add(new StatusForList
-                {
-                    Key = item.ID.ToString(),
-                    Display = item.Description
-                });
-            }
-
-            Identity model = identityService.Get(id);
-
-            return View(new IdentityModel
-            {
-                RFID = model.RFID,
-                QR = model.QR,
-                Name = model.Name,
-                Surname = model.Surname,
-                Midname = model.Midname,
-                Gender = model.Gender,
-                Birthdate = model.Birthdate,
-                Picture = model.Picture,
-                Country = model.Country,
-                City = model.City,
-                Phone = model.Phone,
-                Email = model.Email,
-                Department = model.Department,
-                Group = model.Group,
-                Status = model.Status,
-                CreatedBy = model.CreatedBy,
-                UpdatedBy = model.UpdatedBy,
-                Role = new SelectList(roles, "Key", "Display")
-            });
+            return View(service.GetSimple(id));
         }
 
         [HttpPost]
-        public ActionResult Edit(IdentityModel model, string RoleList)
+        public ActionResult Edit(Identity model, HttpPostedFileBase filedata = null)
         {
             try
             {
-                Identity identity = identityService.Get(model.ID);
+                Identity result = service.GetSimple(model.ID);
+                if (model.GUID != null)
+                {
+                    result.GUID = model.GUID;
+                }
                 if (model.RFID != null)
                 {
-                    identity.RFID = model.RFID;
+                    result.RFID = model.RFID;
                 }
                 if (model.QR != null)
                 {
-                    identity.QR = model.QR;
+                    result.QR = model.QR;
                 }
-                if (model.Name != null)
+                if (filedata != null)
                 {
-                    identity.Name = model.Name;
+                    result.Picture = service.SaveImage(filedata);
                 }
-                if (model.Surname != null)
-                {
-                    identity.Surname = model.Surname;
-                }
-                if (model.Midname != null)
-                {
-                    identity.Midname = model.Midname;
-                }
-                if (model.Gender != false)
-                {
-                    identity.Gender = model.Gender;
-                }
-                if (model.Birthdate != null)
-                {
-                    identity.Birthdate = model.Birthdate;
-                }
-                if (model.Picture != null)
-                {
-                    identity.Picture = model.Picture;
-                }
-                if (model.Country != null)
-                {
-                    identity.Country = model.Country;
-                }
-                if (model.City != null)
-                {
-                    identity.City = model.City;
-                }
-                if (model.Phone != null)
-                {
-                    identity.Phone = model.Phone;
-                }
-                if (model.Email != null)
-                {
-                    identity.Email = model.Email;
-                }
-                if (model.Department != null)
-                {
-                    identity.Department = model.Department;
-                }
-                if (model.Group != null)
-                {
-                    identity.Group = model.Group;
-                }
-                if (model.Status != null)
-                {
-                    identity.Status = model.Status;
-                }
-                if (model.CreatedBy != null)
-                {
-                    identity.CreatedBy = model.CreatedBy;
-                }
-                if (model.UpdatedBy != null)
-                {
-                    identity.UpdatedBy = model.UpdatedBy;
-                }
-                if (RoleList != null)
-                {
-                    identity.RoleID = System.Convert.ToInt32(RoleList);
-                }
+                service.Edit(result);
 
-                identityService.Edit(identity);
-
-                return RedirectToAction("Index", "Identity", new { });
+                return RedirectToAction("Index", "Identity");
             }
-            catch (System.Exception ex)
+            catch
             {
-                return View(ex);
+                return View(model);
             }
         }
 
         public ActionResult Delete(int id)
         {
-            return View(identityService.Get(id));
+            return View(service.GetSimple(id));
         }
 
         [HttpPost]
@@ -237,19 +99,18 @@ namespace sstu_nevdev.Controllers
         {
             try
             {
-                identityService.Delete(model);
-                return RedirectToAction("Index", "Identity", new { });
+                service.Delete(model);
+                return RedirectToAction("Index", "Identity");
             }
             catch
             {
-                return View();
+                return View(model);
             }
         }
 
         protected override void Dispose(bool disposing)
         {
-            identityService.Dispose();
-            roleService.Dispose();
+            service.Dispose();
             base.Dispose(disposing);
         }
     }

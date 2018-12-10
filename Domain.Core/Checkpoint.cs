@@ -6,6 +6,8 @@ namespace Domain.Core
     {
         public int ID { get; set; }
         [Required]
+        public string IP { get; set; }
+        [Required]
         public int Campus { get; set; }
         [Required]
         public int Row { get; set; }
@@ -15,10 +17,6 @@ namespace Domain.Core
         [Required]
         [StringLength(20)]
         public string Status { get; set; }
-        [StringLength(100)]
-        public string CreatedBy { get; set; }
-        [StringLength(100)]
-        public string UpdatedBy { get; set; }
 
         public int TypeID { get; set; }
         public Type Type { get; set; }

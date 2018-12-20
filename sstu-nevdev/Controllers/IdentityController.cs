@@ -20,6 +20,11 @@ namespace sstu_nevdev.Controllers
             return View(service.GetAll());
         }
 
+        public ActionResult OneC()
+        {
+            return View(service.GetUsers1C());
+        }
+
         public ActionResult Details(int id)
         {
             return View(service.Get(id));

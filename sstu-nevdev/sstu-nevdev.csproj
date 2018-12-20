@@ -315,6 +315,7 @@
     <Content Include="Views\Activity\Delete.cshtml" />
     <Content Include="Views\Activity\Details.cshtml" />
     <Content Include="Views\Activity\Create.cshtml" />
+    <Content Include="Views\Identity\OneC.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -29,6 +29,8 @@ namespace Service.Interfaces
         bool IsValidUser(string user, string password);
         UserPrincipal GetUser(string identityValue, string domain);
 
+        IEnumerable<User> GetUsers1C();
+
         void Dispose();
     }
 }

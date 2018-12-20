@@ -1,6 +1,7 @@
 ﻿using Domain.Core;
 using System;
 using System.Data.Entity;
+using System.IO;
 
 namespace Infrastructure.Data
 {
@@ -61,6 +62,56 @@ namespace Infrastructure.Data
                 Phone = "+79993499334",
                 Role = "Преподаватель"
             });
+
+            string[] lines = File.ReadAllLines("D:\\users.txt");
+            int count = 4;
+
+            foreach (var line in lines)
+            {
+                string surname = "", name = "", midname = "", gender = "";
+                string[] items = line.Split(' ');
+            
+                switch (items.Length)
+                {
+                    case 3:
+                        surname = items[0];
+                        name = items[1];
+                        gender = items[2];
+                        break;
+                    case 4:
+                        surname = items[0];
+                        name = items[1];
+                        midname = items[2];
+                        gender = items[3];
+                        break;
+                    case 5:
+                        surname = items[0];
+                        name = items[1];
+                        midname = items[2] + " " + items[3];
+                        gender = items[4];
+                        break;
+                    default:
+                        break;
+                }
+                database.User.Add(new User
+                {
+                    GUID = count.ToString(),
+                    Name = name,
+                    Surname = surname,
+                    Midname = midname,
+                    Gender = gender == "1" ? true : false,
+                    Birthdate = Convert.ToDateTime("2000-01-25"),
+                    Country = "Россия",
+                    City = "Саратов",
+                    Department = "ИнПИТ",
+                    Group = "ИФСТ",
+                    Status = "Обучающийся",
+                    Email = "email@gmail.com",
+                    Phone = "+79993499334",
+                    Role = "Студент"
+                });
+                ++count;
+            }
         }
     }
 }

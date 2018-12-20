@@ -166,7 +166,7 @@ namespace Services.Business.Services
             if (data != null)
             {
                 string extension = Path.GetExtension(data.FileName);
-                pathName = System.Guid.NewGuid().ToString() + extension;
+                pathName = Guid.NewGuid().ToString() + extension;
                 data.SaveAs(path + pathName);
             }
             return pathName;
@@ -198,6 +198,11 @@ namespace Services.Business.Services
                 UserPrincipal user = UserPrincipal.FindByIdentity(context, identityValue);
                 return user ?? null;
             }
+        }
+
+        public IEnumerable<User> GetUsers1C()
+        {
+            return SyncDatabase.User.GetAll();
         }
     }
 }

@@ -1,20 +1,10 @@
-﻿@model IEnumerable<Service.DTO.IdentityDTO>
+﻿@model IEnumerable<Domain.Core.User>
 
-<h2>Список пользователей</h2>
-
-<p>
-    @Html.ActionLink("Создать", "Create")
-</p>
+<h2>Пользователи из 1С</h2>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.GUID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RFID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.QR)
         </th>
         <th>
             @Html.Label("Имя")
@@ -55,21 +45,12 @@
         <th>
             @Html.Label("Роль")
         </th>
-        <th>
-            @Html.Label("Действия")
-        </th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.GUID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RFID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.QR)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
@@ -117,12 +98,6 @@
         <td>
             @Html.DisplayFor(modelItem => item.Role)
         </td>
-        <td>
-            @Html.ActionLink("Редактировать", "Edit", new { id = item.ID })
-            @Html.ActionLink("Подробнее", "Details", new { id = item.ID })
-            @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
-        </td>
     </tr>
 }
-
 </table>

@@ -79,7 +79,7 @@ namespace sstu_nevdev.Controllers
                     Description = model.Description,
                     Row = model.Row,
                     Status = model.Status,
-                    Type = typeService.Get(System.Convert.ToInt32(TypeList)),
+                    Type = (TypeDTO)typeService.Get(System.Convert.ToInt32(TypeList)),
                     Admissions = admissions
                 });
                 return RedirectToAction("Index", "Checkpoint");
@@ -158,7 +158,7 @@ namespace sstu_nevdev.Controllers
                     Description = model.Description,
                     Row = model.Row,
                     Status = model.Status,
-                    Type = typeService.Get(System.Convert.ToInt32(TypeList)),
+                    Type = (TypeDTO)typeService.Get(System.Convert.ToInt32(TypeList)),
                     Admissions = admissions
                 });
                 return RedirectToAction("Index", "Checkpoint");

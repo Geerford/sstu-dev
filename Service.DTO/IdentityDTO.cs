@@ -44,8 +44,6 @@ namespace Service.DTO
         public IdentityDTO(Identity item)
         {
             ID = item.ID;
-            RFID = item.RFID;
-            QR = item.QR;
             Picture = item.Picture;
             GUID = item.GUID;
         }
@@ -54,8 +52,6 @@ namespace Service.DTO
         {
             ID = identity.ID;
             GUID = identity.GUID;
-            RFID = identity.RFID;
-            QR = identity.QR;
             Picture = identity.Picture;
             Name = user.Name;
             Surname = user.Surname;

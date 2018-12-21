@@ -40,14 +40,10 @@ namespace sstu_nevdev.Controllers
         public IHttpActionResult Post([FromBody]ActivityModel model)
         {
             CheckpointDTO checkpoint = checkpointService.Get(model.CheckpointID);
-            IdentityDTO identity;
-            if (model.RFID.Length != 0)
+            IdentityDTO identity = null;
+            if (model.GUID.Length != 0)
             {
-                identity = identityService.GetByRFID(model.RFID);
-            }
-            else
-            {
-                identity = identityService.GetByQR(model.QR);
+                identity = identityService.GetByGUID(model.GUID);
             }
             if(identity != null)
             {

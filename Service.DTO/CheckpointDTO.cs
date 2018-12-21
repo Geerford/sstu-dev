@@ -18,7 +18,7 @@ namespace Service.DTO
         [Required]
         public string Status { get; set; }
         [Required]
-        public Type Type { get; set; }
+        public TypeDTO Type { get; set; }
         [Required]
         public IEnumerable<Admission> Admissions { get; set; }
 

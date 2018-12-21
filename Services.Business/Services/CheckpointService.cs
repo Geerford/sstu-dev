@@ -124,7 +124,7 @@ namespace Services.Business.Services
                 }
                 admissions.Add(admission);
             }
-            result.Type = type ?? throw new ValidationException("Сущность не найдена", "");
+            result.Type = (TypeDTO)type ?? throw new ValidationException("Сущность не найдена", "");
             result.Admissions = admissions;
             return result;
         }

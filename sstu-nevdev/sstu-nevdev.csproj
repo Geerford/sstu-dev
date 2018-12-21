@@ -84,6 +84,7 @@
       <HintPath>..\packages\System.Configuration.ConfigurationManager.4.4.1\lib\net461\System.Configuration.ConfigurationManager.dll</HintPath>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.6\lib\net45\System.Net.Http.Formatting.dll</HintPath>
@@ -232,6 +233,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\ActivitiesController.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\AdmissionController.cs" />
@@ -246,6 +248,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Models\ActivityModel.cs" />
     <Compile Include="Models\CheckpointModel.cs" />
     <Compile Include="Ninject\NinjectDependencyResolver.cs" />

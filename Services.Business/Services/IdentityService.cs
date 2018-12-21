@@ -55,18 +55,6 @@ namespace Services.Business.Services
             return GetFull(guid);
         }
 
-        public IdentityDTO GetByRFID(string rfid)
-        {
-            Identity item = Database.Identity.Find(x => x.RFID == rfid).FirstOrDefault();
-            return GetFull(item.GUID);
-        }
-
-        public IdentityDTO GetByQR(string qr)
-        {
-            Identity item = Database.Identity.Find(x => x.QR == qr).FirstOrDefault();
-            return GetFull(item.GUID);
-        }
-
         public IdentityDTO GetByName(string name, string midname, string surname)
         {
             User item = SyncDatabase.User.Find(x => (x.Surname == surname) && (x.Name == name) && (x.Midname == midname)).FirstOrDefault();
@@ -134,6 +122,16 @@ namespace Services.Business.Services
 
         public void Create(Identity model)
         {
+            User user = SyncDatabase.User.GetAll().Where(x => x.GUID.Equals(model.GUID)).FirstOrDefault();
+            if (user == null)
+            {
+                throw new ValidationException("Сущность не найдена в синхронизируемой БД", "");
+            }
+            Identity identity = Database.Identity.GetAll().Where(x => x.GUID.Equals(model.GUID)).FirstOrDefault();
+            if (identity != null)
+            {
+                throw new ValidationException("Сущность для данного пользователя уже существует", "");
+            }
             Database.Identity.Create(model);
             Database.Save();
         }

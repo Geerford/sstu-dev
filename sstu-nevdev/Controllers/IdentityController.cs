@@ -72,14 +72,6 @@ namespace sstu_nevdev.Controllers
                 {
                     result.GUID = model.GUID;
                 }
-                if (model.RFID != null)
-                {
-                    result.RFID = model.RFID;
-                }
-                if (model.QR != null)
-                {
-                    result.QR = model.QR;
-                }
                 if (filedata != null)
                 {
                     result.Picture = service.SaveImage(filedata);

@@ -11,8 +11,6 @@ namespace Service.Interfaces
         Identity GetSimple(int? id);
         IdentityDTO Get(int? id);
         IdentityDTO GetByGUID(string guid);
-        IdentityDTO GetByRFID(string rfid);
-        IdentityDTO GetByQR(string qr);
         IdentityDTO GetByName(string name, string midname, string surname);
         IEnumerable<IdentityDTO> GetAll();
         IEnumerable<IdentityDTO> GetByStatus(string status);

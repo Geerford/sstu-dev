@@ -4,7 +4,7 @@ using System.Data.Entity;
 
 namespace Infrastructure.Data
 {
-    internal class Initializer : DropCreateDatabaseIfModelChanges<Context>
+    internal class Initializer : DropCreateDatabaseAlways<Context>
     {
         protected override void Seed(Context database)
         {
@@ -23,22 +23,16 @@ namespace Infrastructure.Data
             database.Identity.Add(new Identity
             {
                 GUID = "1",
-                RFID = "RFID",
-                QR = "QR",
                 Picture = "cat.jpg"
             });
             database.Identity.Add(new Identity
             {
                 GUID = "2",
-                RFID = "RFID",
-                QR = "QR",
                 Picture = "cat.jpg"
             });
             database.Identity.Add(new Identity
             {
                 GUID = "3",
-                RFID = "RFID",
-                QR = "QR",
                 Picture = "cat.jpg"
             });
             database.Checkpoint.Add(new Checkpoint

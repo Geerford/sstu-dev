@@ -1,6 +1,7 @@
 ﻿using Domain.Core;
 using Service.Interfaces;
 using System.Collections.Generic;
+using System.Net;
 using System.Web.Http;
 
 namespace sstu_nevdev.Controllers
@@ -15,43 +16,71 @@ namespace sstu_nevdev.Controllers
         }
 
         // GET api/types
-        public IEnumerable<Type> Get()
+        public IHttpActionResult Get()
         {
-            return service.GetAll();
+            IEnumerable<Type> items = service.GetAll();
+            if (items != null)
+            {
+                return Ok(items);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         // GET api/types/5
-        public Type Get(int id)
+        public IHttpActionResult Get(int id)
         {
-            return service.Get(id);
+            Type item = service.Get(id);
+            if (item != null)
+            {
+                return Ok(item);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         // POST api/types
         [HttpPost]
-        public void Post([FromBody]Type item)
+        public IHttpActionResult Post([FromBody]Type item)
         {
-            service.Create(item);
+            if (item != null)
+            {
+                service.Create(item);
+                return CreatedAtRoute("DefaultApi", new { id = item.ID }, item);
+            }
+            return BadRequest();
         }
 
         // PUT api/types/5
         [HttpPut]
-        public void Put(int id, [FromBody]Type item)
+        public IHttpActionResult Put(int id, [FromBody]Type item)
         {
-            if (id == item.ID)
+            if (item != null)
             {
-                service.Edit(item);
+                if (id == item.ID)
+                {
+                    service.Edit(item);
+                    return Content(HttpStatusCode.OK, item);
+                }
             }
+            return BadRequest();
         }
 
         // DELETE api/types/5
         [HttpDelete]
-        public void Delete(int id)
+        public IHttpActionResult Delete(int id)
         {
             Type item = service.Get(id);
             if (item != null)
             {
                 service.Delete(item);
+                return Content(HttpStatusCode.OK, item);
             }
+            return BadRequest();
         }
     }
 }

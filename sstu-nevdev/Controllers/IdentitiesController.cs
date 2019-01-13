@@ -2,6 +2,7 @@
 using Service.DTO;
 using Service.Interfaces;
 using System.Collections.Generic;
+using System.Net;
 using System.Web.Http;
 
 namespace sstu_nevdev.Controllers
@@ -16,43 +17,71 @@ namespace sstu_nevdev.Controllers
         }
 
         // GET api/identities
-        public IEnumerable<IdentityDTO> Get()
+        public IHttpActionResult Get()
         {
-            return service.GetAll();
+            IEnumerable<IdentityDTO> items = service.GetAll();
+            if (items != null)
+            {
+                return Ok(items);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         // GET api/identities/5
-        public IdentityDTO Get(int id)
+        public IHttpActionResult Get(int id)
         {
-            return service.Get(id);
+            IdentityDTO item = service.Get(id);
+            if (item != null)
+            {
+                return Ok(item);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         // POST api/identities
         [HttpPost]
-        public void Post([FromBody]Identity item)
+        public IHttpActionResult Post([FromBody]Identity item)
         {
-            service.Create(item);
+            if(item != null)
+            {
+                service.Create(item);
+                return CreatedAtRoute("DefaultApi", new { id = item.ID }, item);
+            }
+            return BadRequest();
         }
 
         // PUT api/identities/5
         [HttpPut]
-        public void Put(int id, [FromBody]Identity item)
+        public IHttpActionResult Put(int id, [FromBody]Identity item)
         {
-            if(id == item.ID)
+            if (item != null)
             {
-                service.Edit(item);
+                if (id == item.ID)
+                {
+                    service.Edit(item);
+                    return Content(HttpStatusCode.OK, item);
+                }
             }
+            return BadRequest();
         }
 
         // DELETE api/identities/5
         [HttpDelete]
-        public void Delete(int id)
+        public IHttpActionResult Delete(int id)
         {
             Identity item = service.GetSimple(id);
             if (item != null)
             {
                 service.Delete(item);
+                return Content(HttpStatusCode.OK, item);
             }
+            return BadRequest();
         }
     }
 }

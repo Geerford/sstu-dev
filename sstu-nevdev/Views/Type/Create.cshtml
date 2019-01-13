@@ -1,15 +1,14 @@
-﻿@model Domain.Core.Type
+﻿@model sstu_nevdev.Models.TypeViewModel
 
-<h2>Добавить тип</h2>
+<h2>Добавить</h2>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Type</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(x => x.ID)
         <div class="form-group">
             @Html.Label("Описание", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -22,7 +21,7 @@
             @Html.Label("Статус", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.DropDownList("StatusList", ViewBag.Status as SelectList, new { @class = "form-control", @name = "StatusList", @id = "StatusList" })
+                    @Html.DropDownListFor(x => x.Status, Model.StatusList, "Выберите статус", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
                 </div>
             </div>

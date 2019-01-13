@@ -1,4 +1,5 @@
-﻿@model Domain.Core.Admission
+﻿@model sstu_nevdev.Models.AdmissionViewModel
+
 <h2>Редактировать</h2>
 
 @using (Html.BeginForm())
@@ -21,7 +22,7 @@
             @Html.Label("Роль", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.DropDownList("RoleList", ViewBag.Role as SelectList, new { @class = "form-control", @name = "RoleList", @id = "RoleList" })
+                    @Html.DropDownListFor(x => x.Role, Model.RoleList, "Выберите статус", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
                 </div>
             </div>

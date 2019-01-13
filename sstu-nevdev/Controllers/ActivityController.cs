@@ -1,5 +1,6 @@
 ﻿using Domain.Core;
 using Service.Interfaces;
+using sstu_nevdev.Models;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -26,68 +27,187 @@ namespace sstu_nevdev.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.Status = new SelectList(new List<string> { "Успех", "Неудача" }, "Key", "Display");
-            ViewBag.Mode = new SelectList(new List<string> { "Вход", "Выход" }, "Key", "Display");
-            return View();
+            ActivityViewModel model = new ActivityViewModel
+            {
+                StatusList = new SelectList(new List<StatusForList> {
+                    new StatusForList {
+                        Key = "Успех",
+                        Display = "Успех" },
+                    new StatusForList {
+                        Key = "Неудача",
+                        Display = "Неудача" } },
+                    "Key", "Display"),
+                ModeList = new SelectList(new List<StatusForList> {
+                    new StatusForList {
+                        Key = "Вход",
+                        Display = "Вход" },
+                    new StatusForList {
+                        Key = "Выход",
+                        Display = "Выход" } },
+                    "Key", "Display")
+            };
+            return View(model);
         }
 
         [HttpPost]
-        public ActionResult Create(Activity model, string StatusList, string ModeList)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(ActivityViewModel model)
         {
-            try
+            if (string.IsNullOrEmpty(model.IdentityGUID))
             {
-                if (StatusList.Equals("Успех"))
+                ModelState.AddModelError("IdentityGUID", "GUID пользователя должен быть заполнен");
+            }
+            if (string.IsNullOrEmpty(model.CheckpointIP))
+            {
+                ModelState.AddModelError("CheckpointIP", "IP должен быть заполнен");
+            }
+            if (!model.Date.HasValue)
+            {
+                ModelState.AddModelError("Date", "Выберите дату");
+            }
+            if (string.IsNullOrEmpty(model.Status))
+            {
+                ModelState.AddModelError("Status", "Выберите статус");
+            }
+            if (string.IsNullOrEmpty(model.Mode))
+            {
+                ModelState.AddModelError("Mode", "Выберите режим");
+            }
+            if (ModelState.IsValid)
+            {
+                bool status;
+                if (model.Status.Equals("Успех"))
                 {
-                    model.Status = true;
+                    status = true;
                 }
                 else
                 {
-                    model.Status = false;
+                    status = false;
                 }
-                model.Mode = ModeList;
-
-                service.Create(model);
+                service.Create(new Activity
+                {
+                    IdentityGUID = model.IdentityGUID,
+                    CheckpointIP = model.CheckpointIP,
+                    Date = (System.DateTime)model.Date,
+                    Mode = model.Mode,
+                    Status = status
+                });
                 return RedirectToAction("Index", "Activity");
             }
-            catch
+            else
             {
+                model = new ActivityViewModel
+                {
+                    StatusList = new SelectList(new List<StatusForList> {
+                    new StatusForList {
+                        Key = "Успех",
+                        Display = "Успех" },
+                    new StatusForList {
+                        Key = "Неудача",
+                        Display = "Неудача" } },
+                    "Key", "Display"),
+                    ModeList = new SelectList(new List<StatusForList> {
+                    new StatusForList {
+                        Key = "Вход",
+                        Display = "Вход" },
+                    new StatusForList {
+                        Key = "Выход",
+                        Display = "Выход" } },
+                    "Key", "Display")
+                };
                 return View(model);
             }
         }
 
         public ActionResult Edit(int id)
         {
-            ViewBag.Status = new SelectList(new List<string> { "Успех", "Неудача" }, "Key", "Display");
-            ViewBag.Mode = new SelectList(new List<string> { "Вход", "Выход" }, "Key", "Display");
-            return View(service.Get(id));
+            ActivityViewModel model = (ActivityViewModel)service.Get(id);
+            model.StatusList = new SelectList(new List<StatusForList> {
+                    new StatusForList {
+                        Key = "Успех",
+                        Display = "Успех" },
+                    new StatusForList {
+                        Key = "Неудача",
+                        Display = "Неудача" } },
+                    "Key", "Display");
+            model.ModeList = new SelectList(new List<StatusForList> {
+                    new StatusForList {
+                        Key = "Вход",
+                        Display = "Вход" },
+                    new StatusForList {
+                        Key = "Выход",
+                        Display = "Выход" } },
+                    "Key", "Display");
+            return View(model);
         }
 
         [HttpPost]
-        public ActionResult Edit(Activity model, string StatusList, string ModeList)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(ActivityViewModel model)
         {
-            try
+            if (string.IsNullOrEmpty(model.IdentityGUID))
             {
-                if (!string.IsNullOrEmpty(StatusList))
+                ModelState.AddModelError("IdentityGUID", "GUID пользователя должен быть заполнен");
+            }
+            if (string.IsNullOrEmpty(model.CheckpointIP))
+            {
+                ModelState.AddModelError("CheckpointIP", "IP должен быть заполнен");
+            }
+            if (!model.Date.HasValue)
+            {
+                ModelState.AddModelError("Date", "Выберите дату");
+            }
+            if (string.IsNullOrEmpty(model.Status))
+            {
+                ModelState.AddModelError("Status", "Выберите статус");
+            }
+            if (string.IsNullOrEmpty(model.Mode))
+            {
+                ModelState.AddModelError("Mode", "Выберите режим");
+            }
+            if (ModelState.IsValid)
+            {
+                bool status;
+                if (model.Status.Equals("Успех"))
                 {
-                    if (StatusList.Equals("Успех"))
-                    {
-                        model.Status = true;
-                    }
-                    else
-                    {
-                        model.Status = false;
-                    }
+                    status = true;
                 }
-                if (!string.IsNullOrEmpty(ModeList))
+                else
                 {
-                    model.Mode = ModeList;
+                    status = false;
                 }
-                service.Edit(model);
+                service.Edit(new Activity
+                {
+                    IdentityGUID = model.IdentityGUID,
+                    CheckpointIP = model.CheckpointIP,
+                    Date = (System.DateTime)model.Date,
+                    Mode = model.Mode,
+                    Status = status
+                });
                 return RedirectToAction("Index", "Activity");
             }
-            catch
+            else
             {
-                return View();
+                model = new ActivityViewModel
+                {
+                    StatusList = new SelectList(new List<StatusForList> {
+                    new StatusForList {
+                        Key = "Успех",
+                        Display = "Успех" },
+                    new StatusForList {
+                        Key = "Неудача",
+                        Display = "Неудача" } },
+                    "Key", "Display"),
+                    ModeList = new SelectList(new List<StatusForList> {
+                    new StatusForList {
+                        Key = "Вход",
+                        Display = "Вход" },
+                    new StatusForList {
+                        Key = "Выход",
+                        Display = "Выход" } },
+                    "Key", "Display")
+                };
+                return View(model);
             }
         }
 
@@ -106,7 +226,7 @@ namespace sstu_nevdev.Controllers
             }
             catch
             {
-                return View();
+                return View(model);
             }
         }
 

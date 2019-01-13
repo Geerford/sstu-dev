@@ -1,8 +1,8 @@
 ﻿namespace sstu_nevdev.Models
 {
-    public class ActivityModel
+    public class ActivityAPIModel
     {
-        public int CheckpointID { get; set; }
+        public string CheckpointIP { get; set; }
         public string GUID { get; set; }
     }
 }

@@ -1,11 +1,11 @@
-﻿@model Domain.Core.Activity
+﻿@model sstu_nevdev.Models.ActivityViewModel
 
 <h2>Редактировать</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ID)
@@ -38,16 +38,16 @@
             @Html.Label("Статус", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.DropDownList("StatusList", ViewBag.Status as SelectList, new { @class = "form-control", @name = "StatusList", @id = "StatusList" })
+                    @Html.DropDownListFor(x => x.Status, Model.StatusList, "Выберите статус", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
 
         <div class="form-group">
-            @Html.Label("Мод", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Режим", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("ModeList", ViewBag.Mode as SelectList, new { @class = "form-control", @name = "ModeList", @id = "ModeList" })
+                @Html.DropDownListFor(x => x.Mode, Model.ModeList, "Выберите статус", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Mode, "", new { @class = "text-danger" })
             </div>
         </div>

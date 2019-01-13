@@ -4,7 +4,6 @@ using Service.Interfaces;
 using sstu_nevdev.Models;
 using System.Collections.Generic;
 using System.Web.Mvc;
-using static sstu_nevdev.Models.CheckpointModel;
 
 namespace sstu_nevdev.Controllers
 {
@@ -46,53 +45,121 @@ namespace sstu_nevdev.Controllers
             List<CheckboxItem> admissions = new List<CheckboxItem>();
             foreach (var item in admissionService.GetAll())
             {
+                string display = item.Role + " (" + item.Description + ")";
                 admissions.Add(new CheckboxItem()
                 {
                     ID = item.ID,
-                    Display = item.Description,
+                    Display = display,
                     IsChecked = false
                 });
             }
-
-            return View(new CheckpointModel {
-                Admissions = admissions,
-                Type = new SelectList(types, "Key", "Display")
-            });
+            CheckpointViewModel model = new CheckpointViewModel
+            {
+                StatusList = new SelectList(new List<StatusForList> {
+                    new StatusForList {
+                        Key = "Пропуск",
+                        Display = "Пропуск" },
+                    new StatusForList {
+                        Key = "Отметка",
+                        Display = "Отметка" } },
+                    "Key", "Display"),
+                TypeList = new SelectList(types, "Key", "Display"),
+                AdmissionList = admissions
+            };
+            return View(model);
         }
 
         [HttpPost]
-        public ActionResult Create(CheckpointModel model, string TypeList)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(CheckpointViewModel model)
         {
-            try
+            if (string.IsNullOrEmpty(model.IP))
+            {
+                ModelState.AddModelError("IP", "IP должен быть заполнен");
+            }
+            if (model.Campus == null)
+            {
+                ModelState.AddModelError("Campus", "Корпус должен быть заполнен");
+            }
+            if (model.Row == null)
+            {
+                ModelState.AddModelError("Row", "Этаж должен быть заполнен");
+            }
+            if (string.IsNullOrEmpty(model.Description))
+            {
+                ModelState.AddModelError("Description", "Описание должно быть заполнено");
+            }
+            if (string.IsNullOrEmpty(model.Status))
+            {
+                ModelState.AddModelError("Status", "Выберите статус");
+            }
+            if (string.IsNullOrEmpty(model.TypeID))
+            {
+                ModelState.AddModelError("TypeID", "Выберите тип");
+            }
+            if (ModelState.IsValid)
             {
                 List<Admission> admissions = new List<Admission>();
-                foreach (var item in model.Admissions)
+                foreach (var item in model.AdmissionList)
                 {
                     if (item.IsChecked)
                     {
                         admissions.Add(admissionService.Get(item.ID));
                     }
                 }
-                checkpointService.Create(new CheckpointDTO {
+                model.Admissions = admissions;
+                model.Type = (TypeDTO)typeService.Get(System.Convert.ToInt32(model.TypeID));
+                checkpointService.Create(new CheckpointDTO
+                {
                     IP = model.IP,
-                    Campus = model.Campus,
+                    Campus = (int)model.Campus,
+                    Row = (int)model.Row,
                     Description = model.Description,
-                    Row = model.Row,
                     Status = model.Status,
-                    Type = (TypeDTO)typeService.Get(System.Convert.ToInt32(TypeList)),
-                    Admissions = admissions
+                    Type = model.Type,
+                    Admissions = model.Admissions
                 });
                 return RedirectToAction("Index", "Checkpoint");
             }
-            catch
+            else
             {
+                List<StatusForList> types = new List<StatusForList>();
+                foreach (Type item in typeService.GetAll())
+                {
+                    types.Add(new StatusForList
+                    {
+                        Key = item.ID.ToString(),
+                        Display = item.Description
+                    });
+                }
+                List<CheckboxItem> admissions = new List<CheckboxItem>();
+                foreach (var item in admissionService.GetAll())
+                {
+                    string display = item.Role + " (" + item.Description + ")";
+                    admissions.Add(new CheckboxItem()
+                    {
+                        ID = item.ID,
+                        Display = display,
+                        IsChecked = false
+                    });
+                }
+                model.StatusList = new SelectList(new List<StatusForList> {
+                    new StatusForList {
+                        Key = "Пропуск",
+                        Display = "Пропуск" },
+                    new StatusForList {
+                        Key = "Отметка",
+                        Display = "Отметка" } },
+                        "Key", "Display");
+                model.TypeList = new SelectList(types, "Key", "Display");
+                model.AdmissionList = admissions;
                 return View(model);
             }
         }
 
         public ActionResult Edit(int id)
         {
-            var types = new List<StatusForList>();
+            List<StatusForList> types = new List<StatusForList>();
             foreach (Type item in typeService.GetAll())
             {
                 types.Add(new StatusForList
@@ -101,16 +168,16 @@ namespace sstu_nevdev.Controllers
                     Display = item.Description
                 });
             }
-
-            var admissions = new List<CheckboxItem>();
+            List<CheckboxItem> admissions = new List<CheckboxItem>();
             foreach (var item in admissionService.GetAll())
             {
+                string display = item.Role + " (" + item.Description + ")";
                 if (checkpointService.IsMatchAdmission(id, item.ID))
                 {
                     admissions.Add(new CheckboxItem()
                     {
                         ID = item.ID,
-                        Display = item.Description,
+                        Display = display,
                         IsChecked = true
                     });
                 }
@@ -119,52 +186,128 @@ namespace sstu_nevdev.Controllers
                     admissions.Add(new CheckboxItem()
                     {
                         ID = item.ID,
-                        Display = item.Description,
+                        Display = display,
                         IsChecked = false
                     });
                 }
             }
-            Checkpoint model = checkpointService.GetSimple(id);
-            return View(new CheckpointModel
+            CheckpointViewModel model = new CheckpointViewModel
             {
-                IP = model.IP,
-                Campus = model.Campus,
-                Description = model.Description,
-                Row = model.Row,
-                Status = model.Status,
-                Admissions = admissions,
-                Type = new SelectList(types, "Key", "Display")
-        });
+                ID = id,
+                StatusList = new SelectList(new List<StatusForList> {
+                    new StatusForList {
+                        Key = "Пропуск",
+                        Display = "Пропуск" },
+                    new StatusForList {
+                        Key = "Отметка",
+                        Display = "Отметка" } },
+                    "Key", "Display"),
+                TypeList = new SelectList(types, "Key", "Display"),
+                AdmissionList = admissions
+            };
+            return View(model);
         }
 
         [HttpPost]
-        public ActionResult Edit(CheckpointModel model, string TypeList)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(CheckpointViewModel model)
         {
-            try
+            if (string.IsNullOrEmpty(model.IP))
+            {
+                ModelState.AddModelError("IP", "IP должен быть заполнен");
+            }
+            if (model.Campus == null)
+            {
+                ModelState.AddModelError("Campus", "Корпус должен быть заполнен");
+            }
+            if (model.Row == null)
+            {
+                ModelState.AddModelError("Row", "Этаж должен быть заполнен");
+            }
+            if (string.IsNullOrEmpty(model.Description))
+            {
+                ModelState.AddModelError("Description", "Описание должно быть заполнено");
+            }
+            if (string.IsNullOrEmpty(model.Status))
+            {
+                ModelState.AddModelError("Status", "Выберите статус");
+            }
+            if (string.IsNullOrEmpty(model.TypeID))
+            {
+                ModelState.AddModelError("TypeID", "Выберите тип");
+            }
+            if (ModelState.IsValid)
             {
                 List<Admission> admissions = new List<Admission>();
-                foreach(var item in model.Admissions)
+                foreach (var item in model.AdmissionList)
                 {
                     if (item.IsChecked)
                     {
                         admissions.Add(admissionService.Get(item.ID));
                     }
                 }
+                model.Admissions = admissions;
+                model.Type = (TypeDTO)typeService.Get(System.Convert.ToInt32(model.TypeID));
                 checkpointService.Edit(new CheckpointDTO
                 {
-                    ID = model.ID,
                     IP = model.IP,
-                    Campus = model.Campus,
+                    Campus = (int)model.Campus,
+                    Row = (int)model.Row,
                     Description = model.Description,
-                    Row = model.Row,
                     Status = model.Status,
-                    Type = (TypeDTO)typeService.Get(System.Convert.ToInt32(TypeList)),
-                    Admissions = admissions
+                    Type = model.Type,
+                    Admissions = model.Admissions
                 });
                 return RedirectToAction("Index", "Checkpoint");
             }
-            catch
+            else
             {
+                List<StatusForList> types = new List<StatusForList>();
+                foreach (Type item in typeService.GetAll())
+                {
+                    types.Add(new StatusForList
+                    {
+                        Key = item.ID.ToString(),
+                        Display = item.Description
+                    });
+                }
+                List<CheckboxItem> admissions = new List<CheckboxItem>();
+                foreach (var item in admissionService.GetAll())
+                {
+                    string display = item.Role + " (" + item.Description + ")";
+                    if (checkpointService.IsMatchAdmission(model.ID, item.ID))
+                    {
+                        admissions.Add(new CheckboxItem()
+                        {
+                            ID = item.ID,
+                            Display = display,
+                            IsChecked = true
+                        });
+                    }
+                    else
+                    {
+                        admissions.Add(new CheckboxItem()
+                        {
+                            ID = item.ID,
+                            Display = display,
+                            IsChecked = false
+                        });
+                    }
+                }
+                model = new CheckpointViewModel
+                {
+                    ID = model.ID,
+                    StatusList = new SelectList(new List<StatusForList> {
+                    new StatusForList {
+                        Key = "Пропуск",
+                        Display = "Пропуск" },
+                    new StatusForList {
+                        Key = "Отметка",
+                        Display = "Отметка" } },
+                        "Key", "Display"),
+                    TypeList = new SelectList(types, "Key", "Display"),
+                    AdmissionList = admissions
+                };
                 return View(model);
             }
         }

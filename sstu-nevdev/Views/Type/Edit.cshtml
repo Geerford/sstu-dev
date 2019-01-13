@@ -1,4 +1,4 @@
-﻿@model Domain.Core.Type
+﻿@model sstu_nevdev.Models.TypeViewModel
 
 <h2>Редактировать</h2>
 
@@ -22,7 +22,7 @@
             @Html.Label("Статус", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.DropDownList("StatusList", ViewBag.Status as SelectList, new { @class = "form-control", @name = "StatusList", @id = "StatusList" })
+                    @Html.DropDownListFor(x => x.Status, Model.StatusList, "Выберите статус", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
                 </div>
             </div>

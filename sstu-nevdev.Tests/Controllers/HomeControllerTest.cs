@@ -1,5 +1,9 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
+using Domain.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using Service.Interfaces;
 using sstu_nevdev.Controllers;
 
 namespace sstu_nevdev.Tests.Controllers
@@ -7,20 +11,47 @@ namespace sstu_nevdev.Tests.Controllers
     [TestClass]
     public class HomeControllerTest
     {
+
+
+        [TestInitialize]
+        public void Initialize()
+        {
+
+        }
+
+
+
+
+
+
+
         [TestMethod]
         public void Index()
         {
+
             // Arrange
-            HomeController controller = new HomeController();
+            var mockService = new Mock<IActivityService>();
+            var activities = new List<Activity>() {
+                new Activity()
+            };
+            mockService
+                .Setup(x => x.GetAll())
+                .Returns(activities);
+
+            ActivityController controller = new ActivityController(mockService.Object);
 
             // Act
             ViewResult result = controller.Index() as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);
+            var model = result.Model;
+            Assert.IsNotNull(model);
+            Assert.IsInstanceOfType(model, typeof(List<Activity>));
+            Assert.AreEqual(activities, model);
         }
 
-        [TestMethod]
+     /*   [TestMethod]
         public void About()
         {
             // Arrange
@@ -44,6 +75,6 @@ namespace sstu_nevdev.Tests.Controllers
 
             // Assert
             Assert.IsNotNull(result);
-        }
+        }*/
     }
 }

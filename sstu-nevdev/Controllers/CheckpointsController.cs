@@ -2,6 +2,7 @@
 using Service.DTO;
 using Service.Interfaces;
 using System.Collections.Generic;
+using System.Net;
 using System.Web.Http;
 
 namespace sstu_nevdev.Controllers
@@ -16,43 +17,71 @@ namespace sstu_nevdev.Controllers
         }
 
         // GET api/checkpoints
-        public IEnumerable<CheckpointDTO> Get()
+        public IHttpActionResult Get()
         {
-            return service.GetAll();
+            IEnumerable<CheckpointDTO> items = service.GetAll();
+            if (items != null)
+            {
+                return Ok(items);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         // GET api/checkpoints/5
-        public CheckpointDTO Get(int id)
+        public IHttpActionResult Get(int id)
         {
-            return service.Get(id);
+            CheckpointDTO item = service.Get(id);
+            if (item != null)
+            {
+                return Ok(item);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         // POST api/checkpoints
         [HttpPost]
-        public void Post([FromBody]CheckpointDTO checkpoint)
+        public IHttpActionResult Post([FromBody]CheckpointDTO item)
         {
-            service.Create(checkpoint);
+            if (item != null)
+            {
+                service.Create(item);
+                return CreatedAtRoute("DefaultApi", new { id = item.ID }, item);
+            }
+            return BadRequest();
         }
 
         // PUT api/checkpoints/5
         [HttpPut]
-        public void Put(int id, [FromBody]CheckpointDTO checkpoint)
+        public IHttpActionResult Put(int id, [FromBody]CheckpointDTO item)
         {
-            if (id == checkpoint.ID)
+            if (item != null)
             {
-                service.Edit(checkpoint);
+                if (id == item.ID)
+                {
+                    service.Edit(item);
+                    return Content(HttpStatusCode.OK, item);
+                }
             }
+            return BadRequest();
         }
 
         // DELETE api/checkpoints/5
         [HttpDelete]
-        public void Delete(int id)
+        public IHttpActionResult Delete(int id)
         {
             Checkpoint item = service.GetSimple(id);
             if (item != null)
             {
                 service.Delete(item);
+                return Content(HttpStatusCode.OK, item);
             }
+            return BadRequest();
         }
     }
 }

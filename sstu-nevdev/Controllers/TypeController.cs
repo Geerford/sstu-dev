@@ -1,8 +1,8 @@
 ﻿using Domain.Core;
 using Service.Interfaces;
+using sstu_nevdev.Models;
 using System.Collections.Generic;
 using System.Web.Mvc;
-using static sstu_nevdev.Models.CheckpointModel;
 
 namespace sstu_nevdev.Controllers
 {
@@ -27,51 +27,111 @@ namespace sstu_nevdev.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.Status = new SelectList(new List<StatusForList> {
-                new StatusForList { Key = "Пропускной", Display = "Пропускной" },
-                new StatusForList { Key = "Лекционный", Display = "Лекционный" },
-                new StatusForList { Key = "Статистический", Display = "Статистический" } }, "Key", "Display");
-            return View();
+            TypeViewModel model = new TypeViewModel
+            {
+                StatusList = new SelectList(new List<StatusForList> {
+                    new StatusForList {
+                        Key = "Пропускной",
+                        Display = "Пропускной" },
+                    new StatusForList {
+                        Key = "Лекционный",
+                        Display = "Лекционный" },
+                    new StatusForList {
+                        Key = "Статистический",
+                        Display = "Статистический" } },
+                    "Key", "Display")
+            };
+            return View(model);
         }
 
         [HttpPost]
-        public ActionResult Create(Type model, string StatusList)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(TypeViewModel model)
         {
-            try
+            if (string.IsNullOrEmpty(model.Description))
             {
-                model.Status = StatusList;
-                service.Create(model);
+                ModelState.AddModelError("Description", "Описание должно быть заполнено");
+            }
+            if (string.IsNullOrEmpty(model.Status))
+            {
+                ModelState.AddModelError("Status", "Выберите статус");
+            }
+            if (ModelState.IsValid)
+            {
+                service.Create(new Type {
+                    Description = model.Description,
+                    Status = model.Status
+                });
                 return RedirectToAction("Index", "Type");
             }
-            catch
+            else
             {
+                model.StatusList = new SelectList(new List<StatusForList> {
+                    new StatusForList {
+                        Key = "Пропускной",
+                        Display = "Пропускной" },
+                    new StatusForList {
+                        Key = "Лекционный",
+                        Display = "Лекционный" },
+                    new StatusForList {
+                        Key = "Статистический",
+                        Display = "Статистический" } },
+                    "Key", "Display");
                 return View(model);
             }
         }
 
         public ActionResult Edit(int id)
         {
-            ViewBag.Status = new SelectList(new List<StatusForList> {
-                new StatusForList { Key = "Пропускной", Display = "Пропускной" },
-                new StatusForList { Key = "Лекционный", Display = "Лекционный" },
-                new StatusForList { Key = "Статистический", Display = "Статистический" } }, "Key", "Display");
-            return View(service.Get(id));
+            TypeViewModel model = (TypeViewModel)service.Get(id);
+            model.StatusList = new SelectList(new List<StatusForList> {
+                    new StatusForList {
+                        Key = "Пропускной",
+                        Display = "Пропускной" },
+                    new StatusForList {
+                        Key = "Лекционный",
+                        Display = "Лекционный" },
+                    new StatusForList {
+                        Key = "Статистический",
+                        Display = "Статистический" } },
+                    "Key", "Display");
+            return View(model);
         }
 
         [HttpPost]
-        public ActionResult Edit(Type model, string StatusList)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(TypeViewModel model)
         {
-            try
+            if (string.IsNullOrEmpty(model.Description))
             {
-                if (!string.IsNullOrEmpty(StatusList))
+                ModelState.AddModelError("Description", "Описание должно быть заполнено");
+            }
+            if (string.IsNullOrEmpty(model.Status))
+            {
+                ModelState.AddModelError("Status", "Выберите статус");
+            }
+            if (ModelState.IsValid)
+            {
+                service.Edit(new Type
                 {
-                    model.Status = StatusList;
-                }
-                service.Edit(model);
+                    Description = model.Description,
+                    Status = model.Status
+                });
                 return RedirectToAction("Index", "Type");
             }
-            catch
+            else
             {
+                model.StatusList = model.StatusList = new SelectList(new List<StatusForList> {
+                    new StatusForList {
+                        Key = "Пропускной",
+                        Display = "Пропускной" },
+                    new StatusForList {
+                        Key = "Лекционный",
+                        Display = "Лекционный" },
+                    new StatusForList {
+                        Key = "Статистический",
+                        Display = "Статистический" } },
+                    "Key", "Display");
                 return View(model);
             }
         }

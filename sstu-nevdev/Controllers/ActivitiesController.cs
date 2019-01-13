@@ -3,6 +3,7 @@ using Service.DTO;
 using Service.Interfaces;
 using sstu_nevdev.Models;
 using System.Collections.Generic;
+using System.Net;
 using System.Web.Http;
 
 namespace sstu_nevdev.Controllers
@@ -12,75 +13,107 @@ namespace sstu_nevdev.Controllers
         IActivityService activityService;
         ICheckpointService checkpointService;
         IIdentityService identityService;
-        ITypeService typeService;
 
         public ActivitiesController(IActivityService activityService, ICheckpointService checkpointService, 
-            IIdentityService identityService, ITypeService typeService)
+            IIdentityService identityService)
         {
             this.activityService = activityService;
             this.checkpointService = checkpointService;
             this.identityService = identityService;
-            this.typeService = typeService;
         }
 
         // GET api/activities
-        public IEnumerable<Activity> Get()
+        public IHttpActionResult Get()
         {
-            return activityService.GetAll();
+            IEnumerable<Activity> items = activityService.GetAll();
+            if (items != null)
+            {
+                return Ok(items);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         // GET api/activities/5
-        public Activity Get(int id)
+        public IHttpActionResult Get(int id)
         {
-            return activityService.Get(id);
+            Activity item = activityService.Get(id);
+            if (item != null)
+            {
+                return Ok(item);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         // POST api/activities
         [HttpPost]
-        public IHttpActionResult Post([FromBody]ActivityModel model)
+        public IHttpActionResult Post([FromBody]ActivityAPIModel item)
         {
-            CheckpointDTO checkpoint = checkpointService.Get(model.CheckpointID);
-            IdentityDTO identity = null;
-            if (model.GUID.Length != 0)
+            if (item != null)
             {
-                identity = identityService.GetByGUID(model.GUID);
-            }
-            if(identity != null)
-            {
-                string picturePath = "/Content/uploads/" + identity.Picture;
-                int code = activityService.IsOk(checkpoint, identity);
-                switch (code)
+                CheckpointDTO checkpoint = checkpointService.GetByIP(item.CheckpointIP);
+                IdentityDTO identity = null;
+                if (!string.IsNullOrEmpty(item.GUID))
                 {
-                    case 200:
-                        return Json(identity);
-                    case 500:
-                        return Json("Permission denied");
-                    default:
-                        return Ok();
+                    identity = identityService.GetByGUID(item.GUID);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+                if (identity != null)
+                {
+                    string picturePath = "/Content/uploads/" + identity.Picture;
+                    int code = activityService.IsOk(checkpoint, identity);
+                    switch (code)
+                    {
+                        case 200:
+                            return Json(identity);
+                        case 500:
+                            return Json("Permission denied");
+                        default:
+                            return Ok();
+                    }
+                }
+                else
+                {
+                    return Json("Object does not exist");
                 }
             }
-            return Json("Object does not exist");
+            return BadRequest();
         }
 
         // PUT api/activities/5
         [HttpPut]
-        public void Put(int id, [FromBody]Activity item)
+        public IHttpActionResult Put(int id, [FromBody]Activity item)
         {
-            if (id == item.ID)
+            if (item != null)
             {
-                activityService.Edit(item);
+                if (id == item.ID)
+                {
+                    activityService.Edit(item);
+                    return Content(HttpStatusCode.OK, item);
+                }
             }
+            return BadRequest();
         }
 
         // DELETE api/activities/5
         [HttpDelete]
-        public void Delete(int id)
+        public IHttpActionResult Delete(int id)
         {
             Activity item = activityService.Get(id);
             if (item != null)
             {
                 activityService.Delete(item);
+                return Content(HttpStatusCode.OK, item);
             }
+            return BadRequest();
         }
     }
 }

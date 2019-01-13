@@ -1,6 +1,7 @@
 ﻿using Domain.Core;
 using Service.Interfaces;
 using System.Collections.Generic;
+using System.Net;
 using System.Web.Http;
 
 namespace sstu_nevdev.Controllers
@@ -15,43 +16,71 @@ namespace sstu_nevdev.Controllers
         }
 
         // GET api/admissions
-        public IEnumerable<Admission> Get()
+        public IHttpActionResult Get()
         {
-            return service.GetAll();
+            IEnumerable<Admission> items = service.GetAll();
+            if (items != null)
+            {
+                return Ok(items);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         // GET api/admissions/5
-        public Admission Get(int id)
+        public IHttpActionResult Get(int id)
         {
-            return service.Get(id);
+            Admission item = service.Get(id);
+            if (item != null)
+            {
+                return Ok(item);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         // POST api/admissions
         [HttpPost]
-        public void Post([FromBody]Admission item)
+        public IHttpActionResult Post([FromBody]Admission item)
         {
-            service.Create(item);
+            if (item != null)
+            {
+                service.Create(item);
+                return CreatedAtRoute("DefaultApi", new { id = item.ID }, item);
+            }
+            return BadRequest();
         }
 
         // PUT api/admissions/5
         [HttpPut]
-        public void Put(int id, [FromBody]Admission item)
+        public IHttpActionResult Put(int id, [FromBody]Admission item)
         {
-            if (id == item.ID)
+            if (item != null)
             {
-                service.Edit(item);
+                if (id == item.ID)
+                {
+                    service.Edit(item);
+                    return Content(HttpStatusCode.OK, item);
+                }
             }
+            return BadRequest();
         }
 
         // DELETE api/admissions/5
         [HttpDelete]
-        public void Delete(int id)
+        public IHttpActionResult Delete(int id)
         {
             Admission item = service.Get(id);
             if (item != null)
             {
                 service.Delete(item);
+                return Content(HttpStatusCode.OK, item);
             }
+            return BadRequest();
         }
     }
 }

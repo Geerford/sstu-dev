@@ -1,5 +1,6 @@
 ﻿using Domain.Core;
 using Service.Interfaces;
+using sstu_nevdev.Models;
 using System.IO;
 using System.Web;
 using System.Web.Mvc;
@@ -36,22 +37,31 @@ namespace sstu_nevdev.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Identity model, HttpPostedFileBase filedata = null)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(IdentityViewModel model, HttpPostedFileBase filedata = null)
         {
-            try
+            if (string.IsNullOrEmpty(model.GUID))
             {
-                string path = System.Web.HttpContext.Current.Server.MapPath("~/Content/uploads/"), fileName = "";
+                ModelState.AddModelError("GUID", "GUID должен быть заполнен");
+            }
+            if (ModelState.IsValid)
+            {
+                string fileName = "";
                 if (filedata != null)
                 {
-                    string fileEx = Path.GetExtension(filedata.FileName);
+                    string path = System.Web.HttpContext.Current.Server.MapPath("~/Content/uploads/"), fileEx = Path.GetExtension(filedata.FileName);
                     fileName = System.Guid.NewGuid().ToString() + fileEx;
                     filedata.SaveAs(path + fileName);
                 }
                 model.Picture = fileName;
-                service.Create(model);
-                return RedirectToAction("Index", "Identity");
+                service.Create(new Identity
+                {
+                    GUID = model.GUID,
+                    Picture = model.Picture
+                });
+                return RedirectToAction("Index");
             }
-            catch
+            else
             {
                 return View(model);
             }
@@ -59,28 +69,29 @@ namespace sstu_nevdev.Controllers
 
         public ActionResult Edit(int id)
         {
-            return View(service.GetSimple(id));
+            return View((IdentityViewModel)service.GetSimple(id));
         }
 
         [HttpPost]
-        public ActionResult Edit(Identity model, HttpPostedFileBase filedata = null)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(IdentityViewModel model, HttpPostedFileBase filedata = null)
         {
-            try
+            if (string.IsNullOrEmpty(model.GUID))
+            {
+                ModelState.AddModelError("GUID", "GUID должен быть заполнен");
+            }
+            if (ModelState.IsValid)
             {
                 Identity result = service.GetSimple(model.ID);
-                if (model.GUID != null)
-                {
-                    result.GUID = model.GUID;
-                }
+
                 if (filedata != null)
                 {
                     result.Picture = service.SaveImage(filedata);
                 }
                 service.Edit(result);
-
                 return RedirectToAction("Index", "Identity");
             }
-            catch
+            else
             {
                 return View(model);
             }

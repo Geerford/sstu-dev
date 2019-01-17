@@ -60,7 +60,7 @@ namespace Services.Business.Services
 
         public IEnumerable<Activity> GetByStatus(bool status)
         {
-            return Database.Activity.Find(x => x.Status == status);
+            return Database.Activity.Find(x => x.Status == status).ToList();
         }
 
         public bool IsAdmission(int? checkpointID, string role)

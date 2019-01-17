@@ -26,5 +26,26 @@ namespace Service.DTO
         {
             return new TypeDTO(item);
         }
+
+        public override bool Equals(object obj)
+        {
+            var result = false;
+            if (obj is TypeDTO item)
+            {
+                result = ID == item.ID;
+                result &= Description.Equals(item.Description);
+                result &= Status.Equals(item.Status);
+                return result;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            var hashcode = ID.GetHashCode();
+            hashcode ^= Description.GetHashCode();
+            hashcode ^= Status.GetHashCode();
+            return hashcode;
+        }
     }
 }

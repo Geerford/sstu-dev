@@ -72,5 +72,51 @@ namespace Service.DTO
         {
             return new IdentityDTO(item);
         }
+
+        public override bool Equals(object obj)
+        {
+            var result = false;
+            if (obj is IdentityDTO item)
+            {
+                result = ID == item.ID;
+                result &= GUID.Equals(item.GUID);
+                result &= Name.Equals(item.Name);
+                result &= Surname.Equals(item.Surname);
+                result &= Midname.Equals(item.Midname);
+                result &= Birthdate.Equals(item.Birthdate);
+                result &= Gender.Equals(item.Gender);
+                result &= Country.Equals(item.Country);
+                result &= City.Equals(item.City);
+                result &= Phone.Equals(item.Phone);
+                result &= Email.Equals(item.Email);
+                result &= Department.Equals(item.Department);
+                result &= Group.Equals(item.Group);
+                result &= Status.Equals(item.Status);
+                result &= Role.Equals(item.Role);
+                return result;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            var hashcode = ID.GetHashCode();
+            hashcode ^= GUID.GetHashCode();
+            hashcode ^= Picture.GetHashCode();
+            hashcode ^= Name.GetHashCode();
+            hashcode ^= Surname.GetHashCode();
+            hashcode ^= Midname.GetHashCode();
+            hashcode ^= Birthdate.GetHashCode();
+            hashcode ^= Gender.GetHashCode();
+            hashcode ^= Country.GetHashCode();
+            hashcode ^= City.GetHashCode();
+            hashcode ^= Phone.GetHashCode();
+            hashcode ^= Email.GetHashCode();
+            hashcode ^= Department.GetHashCode();
+            hashcode ^= Group.GetHashCode();
+            hashcode ^= Status.GetHashCode();
+            hashcode ^= Role.GetHashCode();
+            return hashcode;
+        }
     }
 }

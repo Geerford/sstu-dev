@@ -16,6 +16,87 @@ namespace Services.Business.Services
             Database = uow;
         }
 
+        public void Create(CheckpointDTO model)
+        {
+            Database.Checkpoint.Create(new Checkpoint
+            {
+                Campus = model.Campus,
+                Row = model.Row,
+                Description = model.Description,
+                Status = model.Status,
+                TypeID = model.Type.ID,
+                IP = model.IP
+            });
+            Database.Save();
+            Checkpoint checkpoint = Database.Checkpoint.GetAll().Where(d => d.IP == model.IP).FirstOrDefault();
+            if(checkpoint != null)
+            {
+                int checkpointID = checkpoint.ID;
+                foreach (var item in model.Admissions)
+                {
+                    Database.CheckpointAdmission.Create(new CheckpointAdmission
+                    {
+                        AdmissionID = item.ID,
+                        CheckpointID = checkpointID
+                    });
+                }
+            }
+        }
+
+        public void Delete(Checkpoint model)
+        {
+            Database.Checkpoint.Delete(model.ID);
+            Database.Save();
+        }
+
+        public void Delete(int? checkpointID, int? itemID)
+        {
+            Database.CheckpointAdmission.Delete(
+                Database.CheckpointAdmission.GetAll()
+                    .Where(c => (c.CheckpointID == checkpointID) && (c.AdmissionID == itemID))
+                        .FirstOrDefault().ID);
+            Database.Save();
+        }
+
+        public void Dispose()
+        {
+            Database.Dispose();
+        }
+
+        public void Edit(CheckpointDTO model)
+        {
+            Database.Checkpoint.Update(new Checkpoint
+            {
+                ID = model.ID,
+                IP = model.IP,
+                Campus = model.Campus,
+                Description = model.Description,
+                Row = model.Row,
+                Status = model.Status,
+                TypeID = model.Type.ID
+            });
+            Database.Save();
+            Checkpoint checkpoint = Database.Checkpoint.GetAll().Where(d => d.IP == model.IP).FirstOrDefault();
+            if (checkpoint != null)
+            {
+                int checkpointID = checkpoint.ID;
+                foreach (var item in Database.CheckpointAdmission.GetAll().Where(x => x.CheckpointID == model.ID))
+                {
+                    Database.CheckpointAdmission.Delete(item.ID);
+                }
+                Database.Save();
+                foreach (var item in model.Admissions)
+                {
+                    Database.CheckpointAdmission.Create(new CheckpointAdmission
+                    {
+                        AdmissionID = item.ID,
+                        CheckpointID = checkpointID
+                    });
+                }
+                Database.Save();
+            }
+        }
+
         public Checkpoint GetSimple(int? id)
         {
             if (id == null)
@@ -57,11 +138,11 @@ namespace Services.Business.Services
             }
             return GetFull(item.ID);
         }
-        
+
         public IEnumerable<CheckpointDTO> GetAll()
         {
             List<CheckpointDTO> result = new List<CheckpointDTO>();
-            foreach(var item in Database.Checkpoint.GetAll())
+            foreach (var item in Database.Checkpoint.GetAll())
             {
                 result.Add(GetFull(item.ID));
             }
@@ -113,9 +194,9 @@ namespace Services.Business.Services
                 throw new ValidationException("Сущность не найдена", "");
             }
             CheckpointDTO result = (CheckpointDTO)checkpoint;
-            Domain.Core.Type type = Database.Type.Get(checkpoint.TypeID);
+            Type type = Database.Type.Get(checkpoint.TypeID);
             List<Admission> admissions = new List<Admission>();
-            foreach(var item in Database.CheckpointAdmission.GetAll().Where(x => x.CheckpointID == checkpoint.ID))
+            foreach (var item in Database.CheckpointAdmission.GetAll().Where(x => x.CheckpointID == checkpoint.ID))
             {
                 Admission admission = Database.Admission.Get(item.AdmissionID);
                 if (admission == null)
@@ -128,81 +209,10 @@ namespace Services.Business.Services
             result.Admissions = admissions;
             return result;
         }
-
-        public void Create(CheckpointDTO model)
-        {
-            Database.Checkpoint.Create(new Checkpoint
-            {
-                Campus = model.Campus,
-                Description = model.Description,
-                Row = model.Row,
-                Status = model.Status,
-                TypeID = model.Type.ID,
-                IP = model.IP
-            });
-            Database.Save();
-            int checkpointID = Database.Checkpoint.GetAll().Where(d => d.IP == model.IP).First().ID;
-            foreach (var item in model.Admissions)
-            {
-                Database.CheckpointAdmission.Create(new CheckpointAdmission
-                {
-                    AdmissionID = item.ID,
-                    CheckpointID = checkpointID
-                });
-            }
-        }
-
-        public void Edit(CheckpointDTO model)
-        {
-            Database.Checkpoint.Update(new Checkpoint
-            {
-                ID = model.ID,
-                IP = model.IP,
-                Campus = model.Campus,
-                Description = model.Description,
-                Row = model.Row,
-                Status = model.Status,
-                TypeID = model.Type.ID
-            });
-            Database.Save();
-            int checkpointID = Database.Checkpoint.GetAll().Where(d => d.IP == model.IP).First().ID;
-            foreach(var item in Database.CheckpointAdmission.GetAll().Where(x => x.CheckpointID == model.ID))
-            {
-                Database.CheckpointAdmission.Delete(item.ID);
-            }
-            Database.Save();
-            foreach (var item in model.Admissions)
-            {
-                Database.CheckpointAdmission.Create(new CheckpointAdmission
-                {
-                    AdmissionID = item.ID,
-                    CheckpointID = checkpointID
-                });
-            }
-            Database.Save();
-        }
-
-        public void Delete(Checkpoint model)
-        {
-            Database.Checkpoint.Delete(model.ID);
-            Database.Save();
-        }
-
-        public void Delete(int? checkpointID, int? itemID)
-        {
-            Database.CheckpointAdmission.Delete(Database.CheckpointAdmission.GetAll().Where(c => 
-                (c.CheckpointID == checkpointID) && (c.AdmissionID == itemID)).FirstOrDefault().ID);            
-            Database.Save();
-        }
-
-        public void Dispose()
-        {
-            Database.Dispose();
-        }
         
-        public bool IsMatchAdmission(int checkpoingID, int admissionID)
+        public bool IsMatchAdmission(int checkpointID, int admissionID)
         {
-            return (Database.CheckpointAdmission.FindFirst(i => i.CheckpointID == checkpoingID && 
+            return (Database.CheckpointAdmission.FindFirst(i => i.CheckpointID == checkpointID && 
                 i.AdmissionID == admissionID) != null) ? true : false;
         }
     }

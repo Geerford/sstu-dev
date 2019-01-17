@@ -22,6 +22,44 @@ namespace Services.Business.Services
             SyncDatabase = suow;
         }
 
+        public void Create(Identity model)
+        {
+            User user = SyncDatabase.User.GetAll().Where(x => x.GUID.Equals(model.GUID)).FirstOrDefault();
+            if (user == null)
+            {
+                throw new ValidationException("Сущность не найдена в синхронизируемой БД", "");
+            }
+            Identity identity = Database.Identity.GetAll().Where(x => x.GUID.Equals(model.GUID)).FirstOrDefault();
+            if (identity != null)
+            {
+                throw new ValidationException("Сущность для данного пользователя уже существует", "");
+            }
+            Database.Identity.Create(model);
+            Database.Save();
+        }
+
+        public void Delete(Identity model)
+        {
+            Database.Identity.Delete(model.ID);
+            Database.Save();
+        }
+
+        public void Dispose()
+        {
+            Database.Dispose();
+        }
+
+        public void Edit(Identity model)
+        {
+            Database.Identity.Update(model);
+            Database.Save();
+        }
+
+        public IdentityDTO Find(Identity model)
+        {
+            return GetFull(model.GUID);
+        }
+
         public Identity GetSimple(int? id)
         {
             if (id == null)
@@ -48,7 +86,7 @@ namespace Services.Business.Services
                 throw new ValidationException("Сущность не найдена", "");
             }
             return GetFull(item.GUID);
-        }  
+        }
 
         public IdentityDTO GetByGUID(string guid)
         {
@@ -57,14 +95,15 @@ namespace Services.Business.Services
 
         public IdentityDTO GetByName(string name, string midname, string surname)
         {
-            User item = SyncDatabase.User.Find(x => (x.Surname == surname) && (x.Name == name) && (x.Midname == midname)).FirstOrDefault();
+            User item = SyncDatabase.User.Find(x => (x.Surname == surname) && (x.Name == name) 
+                && (x.Midname == midname)).FirstOrDefault();
             return GetFull(item.GUID);
         }
 
         public IEnumerable<IdentityDTO> GetAll()
         {
             List<IdentityDTO> result = new List<IdentityDTO>();
-            foreach(var item in Database.Identity.GetAll())
+            foreach (var item in Database.Identity.GetAll())
             {
                 result.Add(GetFull(item.GUID));
             }
@@ -120,50 +159,13 @@ namespace Services.Business.Services
             return new IdentityDTO(identity, user);
         }
 
-        public void Create(Identity model)
-        {
-            User user = SyncDatabase.User.GetAll().Where(x => x.GUID.Equals(model.GUID)).FirstOrDefault();
-            if (user == null)
-            {
-                throw new ValidationException("Сущность не найдена в синхронизируемой БД", "");
-            }
-            Identity identity = Database.Identity.GetAll().Where(x => x.GUID.Equals(model.GUID)).FirstOrDefault();
-            if (identity != null)
-            {
-                throw new ValidationException("Сущность для данного пользователя уже существует", "");
-            }
-            Database.Identity.Create(model);
-            Database.Save();
-        }
-
-        public void Delete(Identity model)
-        {
-            Database.Identity.Delete(model.ID);
-            Database.Save();
-        }
-
-        public IdentityDTO Find(Identity model)
-        {
-            return GetFull(model.GUID);
-        }
-
-        public void Dispose()
-        {
-            Database.Dispose();
-        }
-
-        public void Edit(Identity model)
-        {
-            Database.Identity.Update(model);
-            Database.Save();
-        }
-
         public string SaveImage(HttpPostedFileBase data)
         {
-            string path = HttpContext.Current.Server.MapPath("~/Content/uploads/"), pathName = "";
+            string pathName = "";
             if (data != null)
             {
-                string extension = Path.GetExtension(data.FileName);
+                string extension = Path.GetExtension(data.FileName),
+                    path = HttpContext.Current.Server.MapPath("~/Content/uploads/");
                 pathName = Guid.NewGuid().ToString() + extension;
                 data.SaveAs(path + pathName);
             }

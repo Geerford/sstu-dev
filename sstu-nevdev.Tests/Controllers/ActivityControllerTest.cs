@@ -185,7 +185,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Activity_Index()
+        public void Index()
         {
             //Arrange
             activityServiceMock.Setup(x => x.GetAll()).Returns(items);
@@ -199,7 +199,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Activity_Get_Details()
+        public void Get_Details()
         {
             //Arrange
             activityServiceMock.Setup(x => x.Get(id)).Returns(items[0]);
@@ -213,7 +213,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Activity_Create_Valid()
+        public void Create_Valid()
         {
             //Arrange
             ActivityViewModel model = new ActivityViewModel() {
@@ -232,7 +232,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Activity_Create_Invalid()
+        public void Create_Invalid()
         {
             // Arrange
             ActivityViewModel model = new ActivityViewModel()
@@ -252,7 +252,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Activity_Edit_Valid()
+        public void Edit_Valid()
         {
             //Arrange
             ActivityViewModel model = new ActivityViewModel()
@@ -272,7 +272,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Activity_Edit_Invalid()
+        public void Edit_Invalid()
         {
             //Arrange
             ActivityViewModel model = new ActivityViewModel() { };
@@ -286,7 +286,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Activity_Delete()
+        public void Delete()
         {
             //Arrange
             Activity model = new Activity()
@@ -307,7 +307,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Activity_Get_All_API()
+        public void Get_All_API()
         {
             //Arrange
             activityServiceMock.Setup(x => x.GetAll()).Returns(items);
@@ -323,7 +323,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Activity_Get_API()
+        public void Get_API()
         {
             //Arrange
             activityServiceMock.Setup(x => x.Get(id)).Returns(items[0]);
@@ -339,17 +339,17 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Activity_Get_Not_Found_API()
+        public void Get_Not_Found_API()
         {
             //Act
-            var result = controllerAPI.Get(100);
+            var result = controllerAPI.Get(int.MaxValue);
 
             //Assert
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
 
         [TestMethod]
-        public void Activity_Post_Statistical_Valid_API()
+        public void Post_Statistical_Valid_API()
         {
             //Arrange
             activityServiceMock.Setup(x => x.GetAll()).Returns(items);
@@ -371,7 +371,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
         
         [TestMethod]
-        public void Activity_Post_Classroom_Valid_API()
+        public void Post_Classroom_Valid_API()
         {
             //Arrange
             activityServiceMock.Setup(x => x.GetAll()).Returns(items);
@@ -393,7 +393,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Activity_Post_Security_Allowed_Valid_API()
+        public void Post_Security_Allowed_Valid_API()
         {
             //Arrange
             activityServiceMock.Setup(x => x.GetAll()).Returns(items);
@@ -417,7 +417,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Activity_Post_Security_Prohibited_Valid_API()
+        public void Post_Security_Prohibited_Valid_API()
         {
             //Arrange
             activityServiceMock.Setup(x => x.GetAll()).Returns(items);
@@ -441,7 +441,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Activity_Post_Invalid_API()
+        public void Post_Invalid_API()
         {
             //Arrange
             ActivityAPIModel item = null;
@@ -455,7 +455,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Activity_Put_Valid_API()
+        public void Put_Valid_API()
         {
             //Arrange
             Activity item = new Activity()
@@ -479,7 +479,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Activity_Put_Invalid_API()
+        public void Put_Invalid_API()
         {
             //Arrange
             int newid = 2;
@@ -502,7 +502,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Activity_Delete_API()
+        public void Delete_API()
         {
             //Arrange
             Activity item = new Activity()

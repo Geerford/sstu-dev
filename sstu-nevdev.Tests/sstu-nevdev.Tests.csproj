@@ -56,6 +56,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
@@ -111,7 +112,11 @@
     <Compile Include="Controllers\IdentityControllerTest.cs" />
     <Compile Include="Controllers\TypeControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controllers\HomeControllerTest.cs" />
+    <Compile Include="Services\ActivityServiceTest.cs" />
+    <Compile Include="Services\AdmissionServiceTest.cs" />
+    <Compile Include="Services\CheckpointServiceTest.cs" />
+    <Compile Include="Services\IdentityServiceTest.cs" />
+    <Compile Include="Services\TypeServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
@@ -128,6 +133,10 @@
       <Project>{D0BED84C-894E-4FB3-919E-04833574991E}</Project>
       <Name>Domain.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Repository.Interfaces\Repository.Interfaces.csproj">
+      <Project>{1F57A057-950B-4724-83B1-314E69E6BCA9}</Project>
+      <Name>Repository.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Service.DTO\Service.DTO.csproj">
       <Project>{27FA6FDE-7A1A-4837-8144-B9A4172D1A80}</Project>
       <Name>Service.DTO</Name>
@@ -136,11 +145,16 @@
       <Project>{2B18E559-C288-45E1-9B3E-9ACAC80D7429}</Project>
       <Name>Service.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Services.Business\Services.Business.csproj">
+      <Project>{8428EEA0-5EAA-4AF9-8046-1E41A981B86C}</Project>
+      <Name>Services.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\sstu-nevdev\sstu-nevdev.csproj">
       <Project>{F7C84F20-69BD-4CF8-A1E6-FAE17D2F5C60}</Project>
       <Name>sstu-nevdev</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

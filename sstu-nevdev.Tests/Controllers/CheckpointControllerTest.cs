@@ -116,7 +116,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Checkpoint_Index()
+        public void Index()
         {
             //Arrange
             checkpointServiceMock.Setup(x => x.GetAll()).Returns(items);
@@ -130,7 +130,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Checkpoint_Get_Details()
+        public void Get_Details()
         {
             //Arrange
             checkpointServiceMock.Setup(x => x.Get(id)).Returns(items[0]);
@@ -144,7 +144,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Checkpoint_Create_Valid()
+        public void Create_Valid()
         {
             //Arrange
             typeServiceMock.Setup(x => x.Get(id)).Returns(types[0]);
@@ -174,7 +174,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Checkpoint_Create_Invalid()
+        public void Create_Invalid()
         {
             // Arrange
             typeServiceMock.Setup(x => x.Get(id)).Returns(types[0]);
@@ -204,7 +204,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Checkpoint_Edit_Valid()
+        public void Edit_Valid()
         {
             //Arrange
             typeServiceMock.Setup(x => x.Get(1)).Returns(types[0]);
@@ -235,7 +235,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Checkpoint_Edit_Invalid()
+        public void Edit_Invalid()
         {
             //Arrange
             typeServiceMock.Setup(x => x.Get(1)).Returns(types[0]);
@@ -251,7 +251,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Checkpoint_Delete()
+        public void Delete()
         {
             //Arrange
             CheckpointDTO model = new CheckpointDTO()
@@ -275,7 +275,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Checkpoint_Get_All_API()
+        public void Get_All_API()
         {
             //Arrange
             checkpointServiceMock.Setup(x => x.GetAll()).Returns(items);
@@ -291,7 +291,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Checkpoint_Get_API()
+        public void Get_API()
         {
             //Arrange
             checkpointServiceMock.Setup(x => x.Get(id)).Returns(items[0]);
@@ -307,17 +307,17 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Checkpoint_Get_Not_Found_API()
+        public void Get_Not_Found_API()
         {
             //Act
-            var result = controllerAPI.Get(100);
+            var result = controllerAPI.Get(int.MaxValue);
 
             //Assert
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
 
         [TestMethod]
-        public void Checkpoint_Post_Valid_API()
+        public void Post_Valid_API()
         {
             //Arrange
             CheckpointDTO item = new CheckpointDTO()
@@ -344,7 +344,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Checkpoint_Post_Invalid_API()
+        public void Post_Invalid_API()
         {
             //Arrange
             CheckpointDTO item = null;
@@ -358,7 +358,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Checkpoint_Put_Valid_API()
+        public void Put_Valid_API()
         {
             //Arrange
             CheckpointDTO item = new CheckpointDTO()
@@ -384,7 +384,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Checkpoint_Put_Invalid_API()
+        public void Put_Invalid_API()
         {
             //Arrange
             int newid = 2;
@@ -409,7 +409,7 @@ namespace sstu_nevdev.Tests.Controllers
         }
 
         [TestMethod]
-        public void Checkpoint_Delete_API()
+        public void Delete_API()
         {
             //Arrange
             Checkpoint item = new Checkpoint()

@@ -59,7 +59,7 @@ namespace Services.Business.Services
 
         public IEnumerable<Type> GetByStatus(string status)
         {
-            return Database.Type.Find(x => x.Status == status);
+            return Database.Type.Find(x => x.Status.Equals(status));
         }
     }
 }

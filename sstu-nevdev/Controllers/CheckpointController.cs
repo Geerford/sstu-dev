@@ -322,6 +322,7 @@ namespace sstu_nevdev.Controllers
         {
             try
             {
+                checkpointService.DeleteAllAdmission(model.ID);
                 checkpointService.Delete(checkpointService.GetSimple(model.ID));
                 return RedirectToAction("Index", "Checkpoint");
             }

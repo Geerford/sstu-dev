@@ -1,4 +1,5 @@
 ﻿using Domain.Core;
+using System.Data.Common;
 using System.Data.Entity;
 
 namespace Infrastructure.Data
@@ -17,5 +18,11 @@ namespace Infrastructure.Data
             Database.SetInitializer(new Initializer());
         }
         public Context(string connectionString) : base(connectionString) { }
+
+        //For unit-test
+        public Context(DbConnection connection) : base(connection, true)
+        {
+            Configuration.LazyLoadingEnabled = false;
+        }
     }
 }

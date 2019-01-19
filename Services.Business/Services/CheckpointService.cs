@@ -58,6 +58,15 @@ namespace Services.Business.Services
             Database.Save();
         }
 
+        public void DeleteAllAdmission(int? checkpointID)
+        {
+            foreach(var item in Database.CheckpointAdmission.GetAll().Where(x => x.CheckpointID == checkpointID))
+            {
+                Database.CheckpointAdmission.Delete(item.ID);
+            }
+            Database.Save();
+        }
+
         public void Dispose()
         {
             Database.Dispose();

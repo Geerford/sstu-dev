@@ -247,6 +247,25 @@ namespace sstu_nevdev.Tests.Services
         }
 
         [TestMethod]
+        public void Delete_All_Admission()
+        {
+            //Arrange
+            int checkpointID = -1;
+            unitWorkMoq.Setup(x => x.CheckpointAdmission.GetAll()).Returns(itemsCheckpointAdmission);
+            unitWorkMoq.Setup(x => x.CheckpointAdmission.Delete(It.IsAny<int>())).Callback((int callbackID) =>
+            {
+                checkpointID = itemsSimple[0].ID;
+            });
+
+            //Act
+            serviceMock.DeleteAllAdmission(itemsSimple[0].ID);
+
+            //Assert
+            Assert.AreNotEqual(-1, checkpointID);
+            Assert.AreEqual(id, checkpointID);
+        }
+
+        [TestMethod]
         public void Edit()
         {
             //Arrange

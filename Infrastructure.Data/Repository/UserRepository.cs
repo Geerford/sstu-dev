@@ -17,7 +17,7 @@ namespace Infrastructure.Data.Repository
 
         public IEnumerable<User> Find(Func<User, bool> predicate)
         {
-            return database.User.Where(predicate).ToList();
+            return database.User.Where(predicate);
         }
 
         public User FindFirst(Func<User, bool> predicate)

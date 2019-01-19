@@ -31,7 +31,7 @@ namespace Infrastructure.Data.Repository
 
         public IEnumerable<Domain.Core.Type> Find(Func<Domain.Core.Type, bool> predicate)
         {
-            return database.Type.Where(predicate).ToList();
+            return database.Type.Where(predicate);
         }
 
         public Domain.Core.Type FindFirst(Func<Domain.Core.Type, bool> predicate)

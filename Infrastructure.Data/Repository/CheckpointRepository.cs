@@ -32,7 +32,7 @@ namespace Infrastructure.Data.Repository
 
         public IEnumerable<Checkpoint> Find(Func<Checkpoint, bool> predicate)
         {
-            return database.Checkpoint.Where(predicate).ToList();
+            return database.Checkpoint.Where(predicate);
         }
 
         public Checkpoint FindFirst(Func<Checkpoint, bool> predicate)

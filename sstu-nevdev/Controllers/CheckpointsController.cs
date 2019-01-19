@@ -78,6 +78,7 @@ namespace sstu_nevdev.Controllers
             Checkpoint item = service.GetSimple(id);
             if (item != null)
             {
+                service.DeleteAllAdmission(id);
                 service.Delete(item);
                 return Content(HttpStatusCode.OK, item);
             }

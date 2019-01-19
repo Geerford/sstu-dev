@@ -32,7 +32,7 @@ namespace Infrastructure.Data.Repository
 
         public IEnumerable<Identity> Find(Func<Identity, bool> predicate)
         {
-            return database.Identity.Where(predicate).ToList();
+            return database.Identity.Where(predicate);
         }
 
         public Identity FindFirst(Func<Identity, bool> predicate)

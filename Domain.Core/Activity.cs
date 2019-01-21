@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Domain.Core.Logs;
+using Newtonsoft.Json.Linq;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Core
 {
-    public class Activity
+    [Auditable(AuditScope.ClassAndProperties)]
+    public class Activity : IDescribable
     {
         public int ID { get; set; }
         [Required]
@@ -18,6 +21,21 @@ namespace Domain.Core
         [Required]
         [StringLength(20)]
         public string Mode { get; set; }
+
+        /// <summary>
+        /// Implements <see cref="IDescribable.Describe()"/>
+        /// </summary>
+        public string Describe()
+        {
+            dynamic json = new JObject();
+            json.ID = ID;
+            json.IdentityGUID = IdentityGUID;
+            json.CheckpointIP = CheckpointIP;
+            json.Date = Date;
+            json.Status = Status;
+            json.Mode = Mode;
+            return json.ToString();
+        }
 
         public override bool Equals(object obj)
         {

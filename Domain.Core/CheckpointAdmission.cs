@@ -1,14 +1,29 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Domain.Core.Logs;
+using Newtonsoft.Json.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Core
 {
-    public class CheckpointAdmission
+    [Auditable(AuditScope.ClassAndProperties)]
+    public class CheckpointAdmission : IDescribable
     {
         public int ID { get; set; }
         [Required]
         public int CheckpointID { get; set; }
         [Required]
         public int AdmissionID { get; set; }
+
+        /// <summary>
+        /// Implements <see cref="IDescribable.Describe()"/>
+        /// </summary>
+        public string Describe()
+        {
+            dynamic json = new JObject();
+            json.ID = ID;
+            json.CheckpointID = CheckpointID;
+            json.AdmissionID = AdmissionID;
+            return json.ToString();
+        }
 
         public override bool Equals(object obj)
         {

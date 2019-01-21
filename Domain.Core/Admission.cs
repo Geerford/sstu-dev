@@ -1,8 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Domain.Core.Logs;
+using Newtonsoft.Json.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Core
 {
-    public class Admission
+    [Auditable(AuditScope.ClassAndProperties)]
+    public class Admission : IDescribable
     {
         public int ID { get; set; }
         [Required]
@@ -10,6 +13,18 @@ namespace Domain.Core
         public string Description { get; set; }
         [Required]
         public string Role { get; set; }
+
+        /// <summary>
+        /// Implements <see cref="IDescribable.Describe()"/>
+        /// </summary>
+        public string Describe()
+        {
+            dynamic json = new JObject();
+            json.ID = ID;
+            json.Description = Description;
+            json.Role = Role;
+            return json.ToString();
+        }
 
         public override bool Equals(object obj)
         {

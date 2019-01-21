@@ -191,6 +191,10 @@ namespace Services.Business.Services
             return result;
         }
 
+        /// <summary>
+        /// Get DTO-model of Checkpoint
+        /// </summary>
+        /// <param name="id">ID of Checkpoint</param>
         public CheckpointDTO GetFull(int? id)
         {
             if (id == null)
@@ -218,7 +222,13 @@ namespace Services.Business.Services
             result.Admissions = admissions;
             return result;
         }
-        
+
+        /// <summary>
+        /// Check existence of admission
+        /// </summary>
+        /// <param name="checkpointID">ID of Checkpoint</param>
+        /// <param name="admissionID">ID of Admission</param>
+        /// <returns></returns>
         public bool IsMatchAdmission(int checkpointID, int admissionID)
         {
             return (Database.CheckpointAdmission.FindFirst(i => i.CheckpointID == checkpointID && 

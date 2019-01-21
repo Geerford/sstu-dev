@@ -63,6 +63,11 @@ namespace Services.Business.Services
             return Database.Activity.Find(x => x.Status == status).ToList();
         }
 
+        /// <summary>
+        /// Check admissions of the user
+        /// </summary>
+        /// <param name="checkpointID">ID of Checkpoint</param>
+        /// <param name="role">Role of User</param>
         public bool IsAdmission(int? checkpointID, string role)
         {
             if (checkpointID == null || string.IsNullOrEmpty(role))
@@ -80,6 +85,10 @@ namespace Services.Business.Services
             return false;
         }
 
+        /// <summary>
+        /// Checks the user in the university or not
+        /// </summary>
+        /// <param name="IdentityGUID">GUID of User</param>
         public bool IsPassed(string IdentityGUID)
         {
             if (string.IsNullOrEmpty(IdentityGUID))
@@ -94,6 +103,15 @@ namespace Services.Business.Services
             return false;
         }
 
+        /// <summary>
+        /// Add new activity and return of codes:
+        /// <para>Codes:</para> 
+        /// <para>-1 -- Ok.No response</para> 
+        /// <para>200 -- Ok.Return response</para> 
+        /// <para>500 -- Fail.Permission denied</para>
+        /// </summary>
+        /// <param name="checkpoint">DTO-model of Checkpoing</param>
+        /// <param name="identity">DTO-model of Identity</param>
         public int IsOk(CheckpointDTO checkpoint, IdentityDTO identity)
         {
             Type checkpointType = Database.Type.Get(checkpoint.Type.ID);

@@ -178,6 +178,7 @@ namespace sstu_nevdev.Controllers
                 }
                 service.Edit(new Activity
                 {
+                    ID = model.ID,
                     IdentityGUID = model.IdentityGUID,
                     CheckpointIP = model.CheckpointIP,
                     Date = (System.DateTime)model.Date,

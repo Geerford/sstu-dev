@@ -27,6 +27,7 @@
                     <li>@Html.ActionLink("Пользователи", "Index", "Identity")</li>
                     <li>@Html.ActionLink("Пользователи 1C", "OneC", "Identity")</li>
                     <li>@Html.ActionLink("Действия", "Index", "Activity")</li>
+                    <li>@Html.ActionLink("Журнал", "Index", "Audit")</li>
                 </ul>
             </div>
         </div>
@@ -35,7 +36,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Nevdev</p>
+            <p>&copy; @DateTime.Now.Year - <a class="dev-link" href="mailto:geerkus@gmail.com">nevdev</a></p>
         </footer>
     </div>
 

@@ -140,6 +140,10 @@ namespace Services.Business.Services
             return result;
         }
 
+        /// <summary>
+        /// Get DTO-model of Identity
+        /// </summary>
+        /// <param name="guid">GUID of Identity</param>
         public IdentityDTO GetFull(string guid)
         {
             if (string.IsNullOrEmpty(guid))
@@ -159,6 +163,9 @@ namespace Services.Business.Services
             return new IdentityDTO(identity, user);
         }
 
+        /// <summary>
+        /// Save HttpPosedFileBase to ~/Content/uploads/
+        /// </summary>
         public string SaveImage(HttpPostedFileBase data)
         {
             string pathName = "";
@@ -172,8 +179,8 @@ namespace Services.Business.Services
             return pathName;
         }
 
-        ///identityValue : "Петр Петров", "ivanov_ivan"...
-        ///domain : "aptech.com"
+        /// <param name="identityValue">Examples: "Петр Петров", "ivanov_ivan", etc</param>
+        /// <param name="domain">Examples: "aptech.com", "sstu.com", etc</param>
         public bool IsUserExist(string identityValue, string domain)
         {
             using (var context = new PrincipalContext(ContextType.Domain, domain))
@@ -191,6 +198,8 @@ namespace Services.Business.Services
             }
         }
 
+        /// <param name="identityValue">Examples: "Петр Петров", "ivanov_ivan", etc</param>
+        /// <param name="domain">Examples: "aptech.com", "sstu.com", etc</param>
         public UserPrincipal GetUser(string identityValue, string domain)
         {
             using (var context = new PrincipalContext(ContextType.Domain, domain))

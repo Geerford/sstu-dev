@@ -250,6 +250,7 @@ namespace sstu_nevdev.Controllers
                 model.Type = (TypeDTO)typeService.Get(System.Convert.ToInt32(model.TypeID));
                 checkpointService.Edit(new CheckpointDTO
                 {
+                    ID = model.ID,
                     IP = model.IP,
                     Campus = (int)model.Campus,
                     Row = (int)model.Row,

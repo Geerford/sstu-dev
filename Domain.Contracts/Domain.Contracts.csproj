@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAuditRepository.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="ISyncRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

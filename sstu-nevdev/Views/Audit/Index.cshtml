@@ -1,0 +1,56 @@
+﻿@model List<Domain.Core.Logs.Audit>
+@using System.Text.RegularExpressions
+
+<div class="container">
+    @foreach (var item in Model)
+    {
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.Label("Аудит №")
+            </dt>
+
+            <dd>
+                @item.ID
+            </dd>
+
+            <dt>
+                @Html.Label("Название сущности")
+            </dt>
+
+            <dd>
+                @item.EntityName
+            </dd>
+            <dt>
+                @Html.Label("Данные")
+            </dt>
+
+            <dd>
+                @MvcHtmlString.Create(Regex.Replace(Html.Encode(item.Logs), @",", "<br />").Replace(@"\r\n", "").Replace(@"\r\n", "<br />").Replace(@"\", "").Replace(@"}", "").Replace(@"{", "").Replace("\"", ""))
+            </dd>
+
+            <dt>
+                @Html.Label("Кем изменено")
+            </dt>
+
+            <dd>
+                @item.ModifiedBy
+            </dd>
+
+            <dt>
+                @Html.Label("Откуда изменено")
+            </dt>
+
+            <dd>
+                @item.ModifiedFrom
+            </dd>
+
+            <dt>
+                @Html.Label("Дата")
+            </dt>
+
+            <dd>
+                @item.ModifiedDate
+            </dd>
+        </dl>
+    }
+</div>

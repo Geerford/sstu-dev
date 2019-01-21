@@ -106,6 +106,7 @@ namespace sstu_nevdev.Controllers
             {
                 service.Edit(new Admission
                 {
+                    ID = model.ID,
                     Description = model.Description,
                     Role = model.Role
                 });

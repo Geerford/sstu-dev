@@ -1,8 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Domain.Core.Logs;
+using Newtonsoft.Json.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Core
 {
-    public class Checkpoint
+    [Auditable(AuditScope.ClassAndProperties)]
+    public class Checkpoint : IDescribable
     {
         public int ID { get; set; }
         [Required]
@@ -20,6 +23,23 @@ namespace Domain.Core
 
         public int TypeID { get; set; }
         public Type Type { get; set; }
+
+        /// <summary>
+        /// Implements <see cref="IDescribable.Describe()"/>
+        /// </summary>
+        public string Describe()
+        {
+            dynamic json = new JObject();
+            json.ID = ID;
+            json.IP = IP;
+            json.Campus = Campus;
+            json.Row = Row;
+            json.Description = Description;
+            json.Status = Status;
+            json.Type = Type;
+            json.TypeID = TypeID;
+            return json.ToString();
+        }
 
         public override bool Equals(object obj)
         {

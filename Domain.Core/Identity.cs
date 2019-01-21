@@ -1,10 +1,26 @@
-﻿namespace Domain.Core
+﻿using Domain.Core.Logs;
+using Newtonsoft.Json.Linq;
+
+namespace Domain.Core
 {
-    public class Identity
+    [Auditable(AuditScope.ClassAndProperties)]
+    public class Identity : IDescribable
     {
         public int ID { get; set; }
         public string GUID { get; set; }
         public string Picture { get; set; }
+
+        /// <summary>
+        /// Implements <see cref="IDescribable.Describe()"/>
+        /// </summary>
+        public string Describe()
+        {
+            dynamic json = new JObject();
+            json.ID = ID;
+            json.GUID = GUID;
+            json.Picture = Picture;
+            return json.ToString();
+        }
 
         public override bool Equals(object obj)
         {

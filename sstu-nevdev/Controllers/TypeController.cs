@@ -114,6 +114,7 @@ namespace sstu_nevdev.Controllers
             {
                 service.Edit(new Type
                 {
+                    ID = model.ID,
                     Description = model.Description,
                     Status = model.Status
                 });

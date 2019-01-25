@@ -203,12 +203,16 @@ namespace Services.Business.Services
 
         /// <param name="identityValue">Examples: "Петр Петров", "ivanov_ivan", etc</param>
         /// /// <param name="domain">Examples: "aptech.com", "sstu.com", etc. Can be used Environment.UserDomainName</param>
-        public UserPrincipal GetUser(string identityValue, string domain)
+        public UserDTO GetUser(string identityValue, string domain)
         {
             using (var context = new PrincipalContext(ContextType.Domain, domain))
             {
                 UserPrincipal user = UserPrincipal.FindByIdentity(context, identityValue);
-                return user ?? null;
+                if(user != null)
+                {
+                    return (UserDTO)user;
+                }
+                return null;
             }
         }
 

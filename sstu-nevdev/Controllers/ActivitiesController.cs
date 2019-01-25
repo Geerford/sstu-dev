@@ -3,6 +3,7 @@ using Service.DTO;
 using Service.Interfaces;
 using sstu_nevdev.Models;
 using System.Collections.Generic;
+using System.Net;
 using System.Web.Http;
 
 namespace sstu_nevdev.Controllers
@@ -72,16 +73,16 @@ namespace sstu_nevdev.Controllers
                     switch (code)
                     {
                         case 200:
-                            return Json(identity);
+                            return Ok(identity);
                         case 500:
-                            return Json("Permission denied");
+                            return Content(HttpStatusCode.BadRequest, "Permission denied");
                         default:
                             return Ok();
                     }
                 }
                 else
                 {
-                    return Json("Object does not exist");
+                    return Content(HttpStatusCode.BadRequest, "Object does not exist");
                 }
             }
             return BadRequest();

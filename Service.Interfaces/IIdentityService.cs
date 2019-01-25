@@ -1,7 +1,6 @@
 ﻿using Domain.Core;
 using Service.DTO;
 using System.Collections.Generic;
-using System.DirectoryServices.AccountManagement;
 using System.Web;
 
 namespace Service.Interfaces
@@ -25,7 +24,7 @@ namespace Service.Interfaces
 
         bool IsUserExist(string identityValue, string domain);
         bool IsValidUser(string user, string password, string domain);
-        UserPrincipal GetUser(string identityValue, string domain);
+        UserDTO GetUser(string identityValue, string domain);
 
         IEnumerable<User> GetUsers1C();
 

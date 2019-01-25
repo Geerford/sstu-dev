@@ -398,5 +398,20 @@ namespace sstu_nevdev.Tests.Services
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(IdentityDTO));
         }
+
+        [TestMethod]
+        public void Get_Users_From_1C()
+        {
+            //Arrange
+            syncUnitOfWork.Setup(x => x.User.GetAll()).Returns(itemsUser);
+
+            //Act
+            var results = serviceMock.GetUsers1C();
+
+            //Assert
+            Assert.IsNotNull(results);
+            Assert.IsInstanceOfType(results, typeof(List<User>));
+            Assert.AreEqual(itemsUser, results);
+        }
     }
 }

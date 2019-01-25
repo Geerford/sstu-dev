@@ -1,6 +1,7 @@
 ﻿using Microsoft.Owin.Security;
 using Service.Interfaces;
 using sstu_nevdev.Models;
+using System.Net;
 using System.Web;
 using System.Web.Http;
 using static Services.Business.Services.IdentityService;
@@ -23,7 +24,7 @@ namespace sstu_nevdev.Controllers
             var user = service.GetUser(identityValue, domain);
             if(user != null)
             {
-                return Json(user);
+                return Ok(user);
             }
             return BadRequest();
         }
@@ -37,12 +38,12 @@ namespace sstu_nevdev.Controllers
             var authenticationResult = authService.SignIn(model.User + "@" + model.Domain, model.Password);
             if (authenticationResult.IsSuccess)
             {
-                var user = service.GetUser(model.User, model.Domain);
+                var user = (UserApiModel)service.GetUser(model.User, model.Domain);
                 return Ok(user);
             }
             else
             {
-                return Json(authenticationResult.ErrorMessage);
+                return Content(HttpStatusCode.BadRequest, authenticationResult.ErrorMessage);
             }
         }
     }

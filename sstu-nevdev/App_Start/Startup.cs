@@ -11,10 +11,10 @@ namespace sstu_nevdev.App_Start
     {
         public void Configuration(IAppBuilder app)
         {
-            app.UseCookieAuthentication(new CookieAuthenticationOptions
+           app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = SSTUAuthentication.ApplicationCookie,
-                LoginPath = new PathString("/Login"),
+                LoginPath = new PathString("/Account"),
                 Provider = new CookieAuthenticationProvider(),
                 CookieName = "SSTU_Security",
                 CookieHttpOnly = true,

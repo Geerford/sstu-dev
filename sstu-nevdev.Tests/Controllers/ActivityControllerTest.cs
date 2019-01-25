@@ -470,12 +470,12 @@ namespace sstu_nevdev.Tests.Controllers
 
             //Act
             var actionResult = controllerAPI.Put(id, item);
-            var contentResult = actionResult as NegotiatedContentResult<Activity>;
+            var contentResult = actionResult as OkNegotiatedContentResult<Activity>;
 
             //Assert
             Assert.IsNotNull(contentResult);
             Assert.IsNotNull(contentResult.Content);
-            Assert.AreEqual(HttpStatusCode.OK, contentResult.StatusCode);
+            Assert.IsInstanceOfType(contentResult.Content, typeof(Activity));
         }
 
         [TestMethod]
@@ -518,12 +518,12 @@ namespace sstu_nevdev.Tests.Controllers
 
             //Act
             var actionResult = controllerAPI.Delete(id);
-            var contentResult = actionResult as NegotiatedContentResult<Activity>;
+            var contentResult = actionResult as OkNegotiatedContentResult<Activity>;
 
             //Assert
             Assert.IsNotNull(contentResult);
             Assert.IsNotNull(contentResult.Content);
-            Assert.AreEqual(HttpStatusCode.OK, contentResult.StatusCode);
+            Assert.IsInstanceOfType(contentResult.Content, typeof(Activity));
             Assert.AreEqual(item, contentResult.Content);
         }
     }

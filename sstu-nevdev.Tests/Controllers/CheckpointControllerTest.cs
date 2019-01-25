@@ -375,12 +375,12 @@ namespace sstu_nevdev.Tests.Controllers
 
             //Act
             var actionResult = controllerAPI.Put(id, item);
-            var contentResult = actionResult as NegotiatedContentResult<CheckpointDTO>;
+            var contentResult = actionResult as OkNegotiatedContentResult<CheckpointDTO>;
 
             //Assert
             Assert.IsNotNull(contentResult);
             Assert.IsNotNull(contentResult.Content);
-            Assert.AreEqual(HttpStatusCode.OK, contentResult.StatusCode);
+            Assert.IsInstanceOfType(contentResult.Content, typeof(CheckpointDTO));
         }
 
         [TestMethod]
@@ -425,12 +425,12 @@ namespace sstu_nevdev.Tests.Controllers
 
             //Act
             var actionResult = controllerAPI.Delete(id);
-            var contentResult = actionResult as NegotiatedContentResult<Checkpoint>;
+            var contentResult = actionResult as OkNegotiatedContentResult<Checkpoint>;
 
             //Assert
             Assert.IsNotNull(contentResult);
             Assert.IsNotNull(contentResult.Content);
-            Assert.AreEqual(HttpStatusCode.OK, contentResult.StatusCode);
+            Assert.IsInstanceOfType(contentResult.Content, typeof(Checkpoint));
             Assert.AreEqual(item, contentResult.Content);
         }
     }

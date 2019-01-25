@@ -1,7 +1,6 @@
 ﻿using Domain.Core;
 using Service.Interfaces;
 using System.Collections.Generic;
-using System.Net;
 using System.Web.Http;
 
 namespace sstu_nevdev.Controllers
@@ -64,7 +63,7 @@ namespace sstu_nevdev.Controllers
                 if (id == item.ID)
                 {
                     service.Edit(item);
-                    return Content(HttpStatusCode.OK, item);
+                    return Ok(item);
                 }
             }
             return BadRequest();
@@ -78,7 +77,7 @@ namespace sstu_nevdev.Controllers
             if (item != null)
             {
                 service.Delete(item);
-                return Content(HttpStatusCode.OK, item);
+                return Ok(item);
             }
             return BadRequest();
         }

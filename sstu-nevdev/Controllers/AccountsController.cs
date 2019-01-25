@@ -1,7 +1,9 @@
-﻿using Service.Interfaces;
+﻿using Microsoft.Owin.Security;
+using Service.Interfaces;
 using sstu_nevdev.Models;
-using System.DirectoryServices.AccountManagement;
+using System.Web;
 using System.Web.Http;
+using static Services.Business.Services.IdentityService;
 
 namespace sstu_nevdev.Controllers
 {
@@ -16,29 +18,31 @@ namespace sstu_nevdev.Controllers
 
         // GET api/accounts/identityValue=5&domain=aptech.com
         [HttpGet]
-        public UserPrincipal Get(string identityValue, string domain)
+        public IHttpActionResult Get(string identityValue, string domain)
         {
-            return service.GetUser(identityValue, domain);
+            var user = service.GetUser(identityValue, domain);
+            if(user != null)
+            {
+                return Json(user);
+            }
+            return BadRequest();
         }
         
         // POST api/accounts
         [HttpPost]
-        public IHttpActionResult Post([FromBody]AccountModel model)
+        public IHttpActionResult Post([FromBody]AccountAPIModel model)
         {
-            if(service.IsUserExist(model.User, model.Domain))
+            IAuthenticationManager authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
+            var authService = new Authentication(authenticationManager);
+            var authenticationResult = authService.SignIn(model.User + "@" + model.Domain, model.Password);
+            if (authenticationResult.IsSuccess)
             {
-                if(service.IsValidUser(model.User, model.Password))
-                {
-                    return Ok();
-                }
-                else
-                {
-                    return Json("Uncorrect username or password");
-                }
+                var user = service.GetUser(model.User, model.Domain);
+                return Ok(user);
             }
             else
             {
-                return Json("Failed");
+                return Json(authenticationResult.ErrorMessage);
             }
         }
     }

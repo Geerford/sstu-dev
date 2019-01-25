@@ -24,7 +24,7 @@ namespace Service.Interfaces
         string SaveImage(HttpPostedFileBase data);
 
         bool IsUserExist(string identityValue, string domain);
-        bool IsValidUser(string user, string password);
+        bool IsValidUser(string user, string password, string domain);
         UserPrincipal GetUser(string identityValue, string domain);
 
         IEnumerable<User> GetUsers1C();

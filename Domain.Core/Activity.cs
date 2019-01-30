@@ -5,19 +5,45 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Core
 {
+    /// <summary>
+    /// Represents a event entity.
+    /// </summary>
     [Auditable(AuditScope.ClassAndProperties)]
     public class Activity : IDescribable
     {
+        /// <summary>
+        /// Gets or sets the ID.
+        /// </summary>
         public int ID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user GUID.
+        /// </summary>
         [Required]
         public string IdentityGUID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the checkpoint IP-address.
+        /// </summary>
         [Required]
         public string CheckpointIP { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date.
+        /// </summary>
         [Required]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
+
+        /// <summary>
+        /// Gets or sets the event status. True equals success and false equals failure.
+        /// </summary>
         [Required]
         public bool Status { get; set; }
+
+        /// <summary>
+        /// Gets or sets the event mode.
+        /// </summary>
         [Required]
         [StringLength(20)]
         public string Mode { get; set; }
@@ -37,6 +63,11 @@ namespace Domain.Core
             return json.ToString();
         }
 
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current object.</param>
+        /// <returns>true if the specified object is equal to the current object; otherwise, false.</returns>
         public override bool Equals(object obj)
         {
             var result = false;
@@ -53,6 +84,10 @@ namespace Domain.Core
             return false;
         }
 
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode()
         {
             var hashcode = ID.GetHashCode();

@@ -7,7 +7,6 @@ using sstu_nevdev.Controllers;
 using sstu_nevdev.Models;
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Web.Http.Results;
 using System.Web.Mvc;
 using RedirectToRouteResult = System.Web.Mvc.RedirectToRouteResult;
@@ -408,7 +407,7 @@ namespace sstu_nevdev.Tests.Controllers
 
             //Act
             var actionResult = controllerAPI.Post(item);
-            var createdResult = actionResult as JsonResult<IdentityDTO>;
+            var createdResult = actionResult as OkNegotiatedContentResult<IdentityDTO>;
 
             //Assert
             Assert.IsNotNull(createdResult);
@@ -432,7 +431,7 @@ namespace sstu_nevdev.Tests.Controllers
 
             //Act
             var actionResult = controllerAPI.Post(item);
-            var createdResult = actionResult as JsonResult<string>;
+            var createdResult = actionResult as NegotiatedContentResult<string>;
 
             //Assert
             Assert.IsNotNull(createdResult);

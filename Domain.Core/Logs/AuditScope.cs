@@ -1,5 +1,8 @@
 ﻿namespace Domain.Core.Logs
 {
+    /// <summary>
+    /// Stores values to define an action.
+    /// </summary>
     public enum AuditScope
     {
         /// <summary>

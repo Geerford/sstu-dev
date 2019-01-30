@@ -13,17 +13,35 @@ using System.Web;
 
 namespace Services.Business.Services
 {
+    /// <summary>
+    /// Implements <see cref="IIdentityService"/>.
+    /// </summary>
     public class IdentityService : IIdentityService
     {
+        /// <summary>
+        /// Gets or sets the repository context.
+        /// </summary>
         IUnitOfWork Database { get; set; }
+
+        /// <summary>
+        /// Gets or sets the repository context.
+        /// </summary>
         ISyncUnitOfWork SyncDatabase { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IdentityService"/> class.
+        /// </summary>
+        /// <param name="uow">The <see cref="IUnitOfWork"/> object.</param>
+        /// /// <param name="suow">The <see cref="ISyncUnitOfWork"/> object.</param>
         public IdentityService(IUnitOfWork uow, ISyncUnitOfWork suow)
         {
             Database = uow;
             SyncDatabase = suow;
         }
 
+        /// <summary>
+        /// Implements <see cref="IIdentityService.Create(Identity)"/>.
+        /// </summary>
         public void Create(Identity model)
         {
             User user = SyncDatabase.User.GetAll().Where(x => x.GUID.Equals(model.GUID)).FirstOrDefault();
@@ -40,42 +58,43 @@ namespace Services.Business.Services
             Database.Save();
         }
 
+        /// <summary>
+        /// Implements <see cref="IIdentityService.Delete(Identity)"/>.
+        /// </summary>
         public void Delete(Identity model)
         {
             Database.Identity.Delete(model.ID);
             Database.Save();
         }
 
+        /// <summary>
+        /// Implements <see cref="IIdentityService.Dispose"/>.
+        /// </summary>
         public void Dispose()
         {
             Database.Dispose();
         }
 
+        /// <summary>
+        /// Implements <see cref="IIdentityService.Edit(Identity)"/>.
+        /// </summary>
         public void Edit(Identity model)
         {
             Database.Identity.Update(model);
             Database.Save();
         }
 
+        /// <summary>
+        /// Implements <see cref="IIdentityService.Find(Identity)"/>.
+        /// </summary>
         public IdentityDTO Find(Identity model)
         {
             return GetFull(model.GUID);
         }
 
-        public Identity GetSimple(int? id)
-        {
-            if (id == null)
-            {
-                throw new ValidationException("Не задан ID", "");
-            }
-            Identity item = Database.Identity.Get(id.Value);
-            if (item == null)
-            {
-                throw new ValidationException("Сущность не найдена", "");
-            }
-            return item;
-        }
-
+        /// <summary>
+        /// Implements <see cref="IIdentityService.Get(int?)"/>.
+        /// </summary>
         public IdentityDTO Get(int? id)
         {
             if (id == null)
@@ -90,18 +109,9 @@ namespace Services.Business.Services
             return GetFull(item.GUID);
         }
 
-        public IdentityDTO GetByGUID(string guid)
-        {
-            return GetFull(guid);
-        }
-
-        public IdentityDTO GetByName(string name, string midname, string surname)
-        {
-            User item = SyncDatabase.User.Find(x => (x.Surname == surname) && (x.Name == name) 
-                && (x.Midname == midname)).FirstOrDefault();
-            return GetFull(item.GUID);
-        }
-
+        /// <summary>
+        /// Implements <see cref="IIdentityService.GetAll"/>.
+        /// </summary>
         public IEnumerable<IdentityDTO> GetAll()
         {
             List<IdentityDTO> result = new List<IdentityDTO>();
@@ -112,16 +122,9 @@ namespace Services.Business.Services
             return result;
         }
 
-        public IEnumerable<IdentityDTO> GetByStatus(string status)
-        {
-            List<IdentityDTO> result = new List<IdentityDTO>();
-            foreach (var item in SyncDatabase.User.GetAll().Where(x => x.Status == status))
-            {
-                result.Add(GetFull(item.GUID));
-            }
-            return result;
-        }
-
+        /// <summary>
+        /// Implements <see cref="IIdentityService.GetByDepartment(string)"/>.
+        /// </summary>
         public IEnumerable<IdentityDTO> GetByDepartment(string department)
         {
             List<IdentityDTO> result = new List<IdentityDTO>();
@@ -132,6 +135,9 @@ namespace Services.Business.Services
             return result;
         }
 
+        /// <summary>
+        /// Implements <see cref="IIdentityService.GetByGroup(string)"/>.
+        /// </summary>
         public IEnumerable<IdentityDTO> GetByGroup(string group)
         {
             List<IdentityDTO> result = new List<IdentityDTO>();
@@ -143,9 +149,39 @@ namespace Services.Business.Services
         }
 
         /// <summary>
-        /// Get DTO-model of Identity
+        /// Implements <see cref="IIdentityService.GetByGUID(string)"/>.
         /// </summary>
-        /// <param name="guid">GUID of Identity</param>
+        public IdentityDTO GetByGUID(string guid)
+        {
+            return GetFull(guid);
+        }
+
+        /// <summary>
+        /// Implements <see cref="IIdentityService.GetByName(string, string, string)"/>.
+        /// </summary>
+        public IdentityDTO GetByName(string name, string midname, string surname)
+        {
+            User item = SyncDatabase.User.Find(x => (x.Surname == surname) && (x.Name == name) 
+                && (x.Midname == midname)).FirstOrDefault();
+            return GetFull(item.GUID);
+        }
+
+        /// <summary>
+        /// Implements <see cref="IIdentityService.GetByStatus(string)"/>.
+        /// </summary>
+        public IEnumerable<IdentityDTO> GetByStatus(string status)
+        {
+            List<IdentityDTO> result = new List<IdentityDTO>();
+            foreach (var item in SyncDatabase.User.GetAll().Where(x => x.Status == status))
+            {
+                result.Add(GetFull(item.GUID));
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Implements <see cref="IIdentityService.GetFull(string)"/>.
+        /// </summary>
         public IdentityDTO GetFull(string guid)
         {
             if (string.IsNullOrEmpty(guid))
@@ -166,7 +202,71 @@ namespace Services.Business.Services
         }
 
         /// <summary>
-        /// Save HttpPosedFileBase to ~/Content/uploads/
+        /// Implements <see cref="IIdentityService.GetSimple(int?)"/>.
+        /// </summary>
+        public Identity GetSimple(int? id)
+        {
+            if (id == null)
+            {
+                throw new ValidationException("Не задан ID", "");
+            }
+            Identity item = Database.Identity.Get(id.Value);
+            if (item == null)
+            {
+                throw new ValidationException("Сущность не найдена", "");
+            }
+            return item;
+        }
+
+        /// <summary>
+        /// Implements <see cref="IIdentityService.GetUser(string, string)"/>.
+        /// </summary>
+        public UserDTO GetUser(string identityValue, string domain)
+        {
+            using (var context = new PrincipalContext(ContextType.Domain, domain))
+            {
+                UserPrincipal user = UserPrincipal.FindByIdentity(context, identityValue);
+                if (user != null)
+                {
+                    return (UserDTO)user;
+                }
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Implements <see cref="IIdentityService.GetUsers1C"/>.
+        /// </summary>
+        public IEnumerable<User> GetUsers1C()
+        {
+            return SyncDatabase.User.GetAll();
+        }
+
+        /// <summary>
+        /// Implements <see cref="IIdentityService.IsUserExist(string, string)"/>.
+        /// </summary>
+        public bool IsUserExist(string identityValue, string domain)
+        {
+            using (var context = new PrincipalContext(ContextType.Domain, domain))
+            {
+                UserPrincipal user = UserPrincipal.FindByIdentity(context, identityValue);
+                return user != null ? true : false;
+            }
+        }
+
+        /// <summary>
+        /// Implements <see cref="IIdentityService.IsValidUser(string, string, string)"/>.
+        /// </summary>
+        public bool IsValidUser(string username, string password, string domain)
+        {
+            using (var context = new PrincipalContext(ContextType.Domain, domain))
+            {
+                return context.ValidateCredentials(username.Trim(), password.Trim());
+            }
+        }
+
+        /// <summary>
+        /// Implements <see cref="IIdentityService.SaveImage(HttpPostedFileBase)"/>.
         /// </summary>
         public string SaveImage(HttpPostedFileBase data)
         {
@@ -181,41 +281,9 @@ namespace Services.Business.Services
             return pathName;
         }
 
-        /// <param name="identityValue">Examples: "Петр Петров", "ivanov_ivan", etc</param>
-        /// <param name="domain">Examples: "aptech.com", "sstu.com", etc. Can be used Environment.UserDomainName</param>
-        public bool IsUserExist(string identityValue, string domain)
-        {
-            using (var context = new PrincipalContext(ContextType.Domain, domain))
-            {
-                UserPrincipal user = UserPrincipal.FindByIdentity(context, identityValue);
-                return user != null ? true : false;
-            }
-        }
-
-        /// <param name="domain">Examples: "aptech.com", "sstu.com", etc. Can be used Environment.UserDomainName</param>
-        public bool IsValidUser(string user, string password, string domain)
-        {
-            using (var context = new PrincipalContext(ContextType.Domain, domain))
-            {
-                return context.ValidateCredentials(user.Trim(), password.Trim());
-            }
-        }
-
-        /// <param name="identityValue">Examples: "Петр Петров", "ivanov_ivan", etc</param>
-        /// /// <param name="domain">Examples: "aptech.com", "sstu.com", etc. Can be used Environment.UserDomainName</param>
-        public UserDTO GetUser(string identityValue, string domain)
-        {
-            using (var context = new PrincipalContext(ContextType.Domain, domain))
-            {
-                UserPrincipal user = UserPrincipal.FindByIdentity(context, identityValue);
-                if(user != null)
-                {
-                    return (UserDTO)user;
-                }
-                return null;
-            }
-        }
-
+        /// <summary>
+        ///  Represents a Owin <see cref="IAuthenticationManager"/>.
+        /// </summary>
         public class Authentication
         {
             private readonly IAuthenticationManager authenticationManager;
@@ -248,16 +316,57 @@ namespace Services.Business.Services
             }
 
             /// <summary>
+            /// Parse username and domain from string
+            /// </summary>
+            private class Parser
+            {
+                public string Username { get; set; }
+                public string Domain { get; set; }
+                private string Input { get; set; }
+
+                public Parser() { }
+
+                public Parser(string input)
+                {
+                    Input = input;
+                }
+
+                public Parser Parse()
+                {
+                    if (Input.Contains('\\'))
+                    {
+                        var parsed = Input.Split('\\');
+                        return new Parser
+                        {
+                            Username = parsed[1],
+                            Domain = parsed[0]
+                        };
+                    }
+                    if (Input.Contains('@'))
+                    {
+                        var parsed = Input.Split('@');
+                        return new Parser
+                        {
+                            Username = parsed[0],
+                            Domain = parsed[1]
+                        };
+                    }
+                    return null;
+                }
+            }
+
+            /// <summary>
             /// Check if username and password matches existing account in ActiveDirectory. 
             /// </summary>
             public AuthenticationResult SignIn(string username, string password)
             {
-                var parsedName = ParseUsername(username);
+                
+                Parser parser = new Parser(username).Parse();
                 string domain, name;
-                if (parsedName != null)
+                if (parser != null)
                 {
-                    domain = parsedName[0];
-                    name = parsedName[1];
+                    domain = parser.Domain;
+                    name = parser.Username;
                 }
                 else
                 {
@@ -301,26 +410,6 @@ namespace Services.Business.Services
             }
 
             /// <summary>
-            /// Parse username and domain from string
-            /// </summary>
-            /// <returns>string[0] -- Domain name; string[1] -- Username</returns>
-            string[] ParseUsername(string username)
-            {
-                if (username.Contains('\\'))
-                {
-                    var usernameParsed = username.Split('\\');
-                    return new string[] { usernameParsed[0].ToString(), usernameParsed[1] };
-                }
-
-                if (username.Contains('@'))
-                {
-                    var logonNameParts = username.Split('@');
-                    return new string[] { logonNameParts[1].ToString(), logonNameParts[0] };
-                }
-                return null;
-            }
-
-            /// <summary>
             /// Create new ClaimsIdentity to save it in cookie
             /// </summary>
             /// <param name="userPrincipal">User from ActiveDirectory</param>
@@ -340,11 +429,6 @@ namespace Services.Business.Services
                 }
                 return identity;
             }
-        }
-
-        public IEnumerable<User> GetUsers1C()
-        {
-            return SyncDatabase.User.GetAll();
         }
     }
 }

@@ -26,6 +26,7 @@ namespace sstu_nevdev.Ninject
         private void AddBindings()
         {
             kernel.Bind<IActivityService>().To<ActivityService>();
+            kernel.Bind<IAuditService>().To<AuditService>();
             kernel.Bind<IAdmissionService>().To<AdmissionService>();
             kernel.Bind<ICheckpointService>().To<CheckpointService>();
             kernel.Bind<IIdentityService>().To<IdentityService>();

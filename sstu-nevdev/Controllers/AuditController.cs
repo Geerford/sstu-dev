@@ -1,20 +1,21 @@
-﻿using Repository.Interfaces;
-using System.Linq;
+﻿using Service.Interfaces;
 using System.Web.Mvc;
 
 namespace sstu_nevdev.Controllers
 {
+    [Authorize(Roles = "SSTU_Administrator")]
     public class AuditController : Controller
     {
-        IUnitOfWork auditRepository;
-        public AuditController(IUnitOfWork auditRepository)
+        IAuditService service;
+
+        public AuditController(IAuditService service)
         {
-            this.auditRepository = auditRepository;
+            this.service = service;
         }
 
         public ActionResult Index()
         {
-            return View(auditRepository.Audit.GetAll().ToList());
+            return View(service.GetAll());
         }
     }
 }

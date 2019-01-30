@@ -1,6 +1,7 @@
 ﻿using Domain.Core;
 using Service.DTO;
 using Service.Interfaces;
+using sstu_nevdev.App_Start;
 using sstu_nevdev.Models;
 using System.Collections.Generic;
 using System.Net;
@@ -23,6 +24,7 @@ namespace sstu_nevdev.Controllers
         }
 
         // GET api/activities
+        [AuthenticationAPI(Roles = "SSTU_Deanery, SSTU_Administrator, SSTU_Inspector, SSTU_Student")]
         public IHttpActionResult Get()
         {
             IEnumerable<Activity> items = activityService.GetAll();
@@ -37,6 +39,7 @@ namespace sstu_nevdev.Controllers
         }
 
         // GET api/activities/5
+        [AuthenticationAPI(Roles = "SSTU_Deanery, SSTU_Administrator, SSTU_Inspector, SSTU_Student")]
         public IHttpActionResult Get(int id)
         {
             Activity item = activityService.Get(id);
@@ -52,6 +55,7 @@ namespace sstu_nevdev.Controllers
 
         // POST api/activities
         [HttpPost]
+        [AllowAnonymous]
         public IHttpActionResult Post([FromBody]ActivityAPIModel item)
         {
             if (item != null)
@@ -90,6 +94,7 @@ namespace sstu_nevdev.Controllers
 
         // PUT api/activities/5
         [HttpPut]
+        [AuthenticationAPI(Roles = "SSTU_Administrator")]
         public IHttpActionResult Put(int id, [FromBody]Activity item)
         {
             if (item != null)
@@ -105,6 +110,7 @@ namespace sstu_nevdev.Controllers
 
         // DELETE api/activities/5
         [HttpDelete]
+        [AuthenticationAPI(Roles = "SSTU_Administrator")]
         public IHttpActionResult Delete(int id)
         {
             Activity item = activityService.Get(id);

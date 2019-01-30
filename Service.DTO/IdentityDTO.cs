@@ -4,43 +4,123 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Service.DTO
 {
+    /// <summary>
+    /// Represents a merged user entity. 
+    /// </summary>
     public class IdentityDTO
     {
+        /// <summary>
+        /// Gets or sets the ID.
+        /// </summary>
         public int ID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the GUID.
+        /// </summary>
         [Required]
         public string GUID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the RFID. Optional field.
+        /// </summary>
         public string RFID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the QR. Optional field.
+        /// </summary>
         public string QR { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
         [Required]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the surname.
+        /// </summary>
         [Required]
         public string Surname { get; set; }
+
+        /// <summary>
+        /// Gets or sets the midname.
+        /// </summary>
         public string Midname { get; set; }
+
+        /// <summary>
+        /// Gets or sets the gender.
+        /// </summary>
         [Required]
         public bool Gender { get; set; }
+
+        /// <summary>
+        /// Gets or sets the birthdate.
+        /// </summary>
         [Required]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Birthdate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the picture.
+        /// </summary>
         public string Picture { get; set; }
+
+        /// <summary>
+        /// Gets or sets the country.
+        /// </summary>
         [Required]
         public string Country { get; set; }
+
+        /// <summary>
+        /// Gets or sets the city or village.
+        /// </summary>
         [Required]
         public string City { get; set; }
+
+        /// <summary>
+        /// Gets or sets the phone number.
+        /// </summary>
         [Phone]
         public string Phone { get; set; }
+
+        /// <summary>
+        /// Gets or sets the email address.
+        /// </summary>
         [EmailAddress]
         public string Email { get; set; }
+
+        /// <summary>
+        /// Gets or sets the department.
+        /// </summary>
         [Required]
         public string Department { get; set; }
+
+        /// <summary>
+        /// Gets or sets the group.
+        /// </summary>
         [Required]
         public string Group { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user status.
+        /// </summary>
         [Required]
         public string Status { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user role.
+        /// </summary>
         [Required]
         public string Role { get; set; }
 
+        /// <summary>
+        /// Initializes a <see cref="IdentityDTO"/> class.
+        /// </summary>
         public IdentityDTO() { }
 
+        /// <summary>
+        /// Initializes a <see cref="IdentityDTO"/> class after cast from <see cref="Identity"/> object.
+        /// </summary>
         public IdentityDTO(Identity item)
         {
             ID = item.ID;
@@ -48,6 +128,10 @@ namespace Service.DTO
             GUID = item.GUID;
         }
 
+        /// <summary>
+        /// Initializes a <see cref="IdentityDTO"/> class after concatenates <see cref="Identity"/> 
+        /// object and <see cref="User"/> object.
+        /// </summary>
         public IdentityDTO(Identity identity, User user)
         {
             ID = identity.ID;
@@ -68,11 +152,21 @@ namespace Service.DTO
             Role = user.Role;
         }
 
+        /// <summary>
+        /// Overrides default type conversion operator to a user-defined type conversion operator 
+        /// that must be invoked with a cast.
+        /// </summary>
+        /// <param name="item">The <see cref="Identity"/> object</param>
         public static explicit operator IdentityDTO(Identity item)
         {
             return new IdentityDTO(item);
         }
 
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current object.</param>
+        /// <returns>true if the specified object is equal to the current object; otherwise, false.</returns>
         public override bool Equals(object obj)
         {
             var result = false;
@@ -98,6 +192,10 @@ namespace Service.DTO
             return false;
         }
 
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode()
         {
             var hashcode = ID.GetHashCode();

@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace sstu_nevdev.Controllers
 {
+    [Authorize(Roles = "SSTU_Deanery, SSTU_Administrator, SSTU_Inspector")]
     public class IdentityController : Controller
     {
         IIdentityService service;
@@ -31,6 +32,7 @@ namespace sstu_nevdev.Controllers
             return View(service.Get(id));
         }
 
+        [Authorize(Roles = "SSTU_Deanery, SSTU_Administrator")]
         public ActionResult Create()
         {
             return View();
@@ -38,6 +40,7 @@ namespace sstu_nevdev.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "SSTU_Deanery, SSTU_Administrator")]
         public ActionResult Create(IdentityViewModel model, HttpPostedFileBase filedata = null)
         {
             if (string.IsNullOrEmpty(model.GUID))
@@ -67,6 +70,7 @@ namespace sstu_nevdev.Controllers
             }
         }
 
+        [Authorize(Roles = "SSTU_Deanery, SSTU_Administrator")]
         public ActionResult Edit(int id)
         {
             return View((IdentityViewModel)service.GetSimple(id));
@@ -74,6 +78,7 @@ namespace sstu_nevdev.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "SSTU_Deanery, SSTU_Administrator")]
         public ActionResult Edit(IdentityViewModel model, HttpPostedFileBase filedata = null)
         {
             if (string.IsNullOrEmpty(model.GUID))
@@ -97,12 +102,14 @@ namespace sstu_nevdev.Controllers
             }
         }
 
+        [Authorize(Roles = "SSTU_Deanery, SSTU_Administrator")]
         public ActionResult Delete(int id)
         {
             return View(service.GetSimple(id));
         }
 
         [HttpPost]
+        [Authorize(Roles = "SSTU_Deanery, SSTU_Administrator")]
         public ActionResult Delete(Identity model)
         {
             try

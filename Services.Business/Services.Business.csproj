@@ -52,7 +52,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -60,10 +59,10 @@
     <Compile Include="ServiceModule.cs" />
     <Compile Include="Services\ActivityService.cs" />
     <Compile Include="Services\AdmissionService.cs" />
+    <Compile Include="Services\AuditService.cs" />
     <Compile Include="Services\CheckpointService.cs" />
     <Compile Include="Services\IdentityService.cs" />
     <Compile Include="Services\TypeService.cs" />
-    <Compile Include="SyncServiceModule.cs" />
     <Compile Include="ValidationException.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -84,7 +83,7 @@
       <Name>Repository.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\Service.DTO\Service.DTO.csproj">
-      <Project>{27FA6FDE-7A1A-4837-8144-B9A4172D1A80}</Project>
+      <Project>{EBEB2CB8-7868-4AE8-AB96-46CB7C5D12C5}</Project>
       <Name>Service.DTO</Name>
     </ProjectReference>
     <ProjectReference Include="..\Service.Interfaces\Service.Interfaces.csproj">
@@ -93,7 +92,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

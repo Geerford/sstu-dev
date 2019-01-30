@@ -7,15 +7,28 @@ using Service.DTO;
 
 namespace Services.Business.Services
 {
+    /// <summary>
+    /// Implements <see cref="ICheckpointService"/>.
+    /// </summary>
     public class CheckpointService : ICheckpointService
     {
+        /// <summary>
+        /// Gets or sets the repository context.
+        /// </summary>
         IUnitOfWork Database { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CheckpointService"/> class.
+        /// </summary>
+        /// <param name="uow">The <see cref="IUnitOfWork"/> object.</param>
         public CheckpointService(IUnitOfWork uow)
         {
             Database = uow;
         }
 
+        /// <summary>
+        /// Implements <see cref="ICheckpointService.Create(CheckpointDTO)"/>.
+        /// </summary>
         public void Create(CheckpointDTO model)
         {
             Database.Checkpoint.Create(new Checkpoint
@@ -43,21 +56,30 @@ namespace Services.Business.Services
             }
         }
 
+        /// <summary>
+        /// Implements <see cref="ICheckpointService.Delete(Checkpoint)"/>.
+        /// </summary>
         public void Delete(Checkpoint model)
         {
             Database.Checkpoint.Delete(model.ID);
             Database.Save();
         }
 
-        public void Delete(int? checkpointID, int? itemID)
+        /// <summary>
+        /// Implements <see cref="ICheckpointService.Delete(int?, int?)"/>.
+        /// </summary>
+        public void Delete(int? checkpointID, int? admissionID)
         {
             Database.CheckpointAdmission.Delete(
                 Database.CheckpointAdmission.GetAll()
-                    .Where(c => (c.CheckpointID == checkpointID) && (c.AdmissionID == itemID))
+                    .Where(c => (c.CheckpointID == checkpointID) && (c.AdmissionID == admissionID))
                         .FirstOrDefault().ID);
             Database.Save();
         }
 
+        /// <summary>
+        /// Implements <see cref="ICheckpointService.DeleteAllAdmission(int?)"/>.
+        /// </summary>
         public void DeleteAllAdmission(int? checkpointID)
         {
             foreach(var item in Database.CheckpointAdmission.GetAll().Where(x => x.CheckpointID == checkpointID))
@@ -67,11 +89,17 @@ namespace Services.Business.Services
             Database.Save();
         }
 
+        /// <summary>
+        /// Implements <see cref="ICheckpointService.Dispose"/>.
+        /// </summary>
         public void Dispose()
         {
             Database.Dispose();
         }
 
+        /// <summary>
+        /// Implements <see cref="ICheckpointService.Edit(CheckpointDTO)"/>.
+        /// </summary>
         public void Edit(CheckpointDTO model)
         {
             Database.Checkpoint.Update(new Checkpoint
@@ -106,20 +134,9 @@ namespace Services.Business.Services
             }
         }
 
-        public Checkpoint GetSimple(int? id)
-        {
-            if (id == null)
-            {
-                throw new ValidationException("Не задан ID", "");
-            }
-            Checkpoint item = Database.Checkpoint.Get(id.Value);
-            if (item == null)
-            {
-                throw new ValidationException("Сущность не найдена", "");
-            }
-            return item;
-        }
-
+        /// <summary>
+        /// Implements <see cref="ICheckpointService.Get(int?)"/>.
+        /// </summary>
         public CheckpointDTO Get(int? id)
         {
             if (id == null)
@@ -134,6 +151,22 @@ namespace Services.Business.Services
             return item;
         }
 
+        /// <summary>
+        /// Implements <see cref="ICheckpointService.GetAll"/>.
+        /// </summary>
+        public IEnumerable<CheckpointDTO> GetAll()
+        {
+            List<CheckpointDTO> result = new List<CheckpointDTO>();
+            foreach (var item in Database.Checkpoint.GetAll())
+            {
+                result.Add(GetFull(item.ID));
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Implements <see cref="ICheckpointService.GetByIP(string)"/>.
+        /// </summary>
         public CheckpointDTO GetByIP(string ip)
         {
             if (string.IsNullOrEmpty(ip))
@@ -148,16 +181,9 @@ namespace Services.Business.Services
             return GetFull(item.ID);
         }
 
-        public IEnumerable<CheckpointDTO> GetAll()
-        {
-            List<CheckpointDTO> result = new List<CheckpointDTO>();
-            foreach (var item in Database.Checkpoint.GetAll())
-            {
-                result.Add(GetFull(item.ID));
-            }
-            return result;
-        }
-
+        /// <summary>
+        /// Implements <see cref="ICheckpointService.GetByStatus(string)"/>.
+        /// </summary>
         public IEnumerable<CheckpointDTO> GetByStatus(string status)
         {
             if (string.IsNullOrEmpty(status))
@@ -172,6 +198,9 @@ namespace Services.Business.Services
             return result;
         }
 
+        /// <summary>
+        /// Implements <see cref="ICheckpointService.GetByType(string)"/>.
+        /// </summary>
         public IEnumerable<CheckpointDTO> GetByType(string type)
         {
             if (string.IsNullOrEmpty(type))
@@ -192,9 +221,8 @@ namespace Services.Business.Services
         }
 
         /// <summary>
-        /// Get DTO-model of Checkpoint
+        /// Implements <see cref="ICheckpointService.GetFull(int?)"/>.
         /// </summary>
-        /// <param name="id">ID of Checkpoint</param>
         public CheckpointDTO GetFull(int? id)
         {
             if (id == null)
@@ -224,11 +252,25 @@ namespace Services.Business.Services
         }
 
         /// <summary>
-        /// Check existence of admission
+        /// Implements <see cref="ICheckpointService.GetSimple(int?)"/>.
         /// </summary>
-        /// <param name="checkpointID">ID of Checkpoint</param>
-        /// <param name="admissionID">ID of Admission</param>
-        /// <returns></returns>
+        public Checkpoint GetSimple(int? id)
+        {
+            if (id == null)
+            {
+                throw new ValidationException("Не задан ID", "");
+            }
+            Checkpoint item = Database.Checkpoint.Get(id.Value);
+            if (item == null)
+            {
+                throw new ValidationException("Сущность не найдена", "");
+            }
+            return item;
+        }
+
+        /// <summary>
+        /// Implements <see cref="ICheckpointService.IsMatchAdmission(int, int)"/>.
+        /// </summary>
         public bool IsMatchAdmission(int checkpointID, int admissionID)
         {
             return (Database.CheckpointAdmission.FindFirst(i => i.CheckpointID == checkpointID && 

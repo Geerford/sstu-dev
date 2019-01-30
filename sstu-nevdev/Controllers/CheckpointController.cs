@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace sstu_nevdev.Controllers
 {
+    [Authorize(Roles = "SSTU_Deanery, SSTU_Administrator, SSTU_Inspector")]
     public class CheckpointController : Controller
     {
         ICheckpointService checkpointService;
@@ -31,6 +32,7 @@ namespace sstu_nevdev.Controllers
             return View(checkpointService.Get(id));
         }
 
+        [Authorize(Roles = "SSTU_Administrator")]
         public ActionResult Create()
         {
             List<StatusForList> types = new List<StatusForList>();
@@ -71,6 +73,7 @@ namespace sstu_nevdev.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "SSTU_Administrator")]
         public ActionResult Create(CheckpointViewModel model)
         {
             if (string.IsNullOrEmpty(model.IP))
@@ -157,6 +160,7 @@ namespace sstu_nevdev.Controllers
             }
         }
 
+        [Authorize(Roles = "SSTU_Administrator")]
         public ActionResult Edit(int id)
         {
             List<StatusForList> types = new List<StatusForList>();
@@ -210,6 +214,7 @@ namespace sstu_nevdev.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "SSTU_Administrator")]
         public ActionResult Edit(CheckpointViewModel model)
         {
             if (string.IsNullOrEmpty(model.IP))
@@ -313,12 +318,14 @@ namespace sstu_nevdev.Controllers
             }
         }
 
+        [Authorize(Roles = "SSTU_Administrator")]
         public ActionResult Delete(int id)
         {
             return View(checkpointService.Get(id));
         }
 
         [HttpPost]
+        [Authorize(Roles = "SSTU_Administrator")]
         public ActionResult Delete(CheckpointDTO model)
         {
             try

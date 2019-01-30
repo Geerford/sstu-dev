@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="IActivityService.cs" />
     <Compile Include="IAdmissionService.cs" />
+    <Compile Include="IAuditService.cs" />
     <Compile Include="ICheckpointService.cs" />
     <Compile Include="IIdentityService.cs" />
     <Compile Include="ITypeService.cs" />
@@ -55,7 +56,7 @@
       <Name>Domain.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Service.DTO\Service.DTO.csproj">
-      <Project>{27FA6FDE-7A1A-4837-8144-B9A4172D1A80}</Project>
+      <Project>{EBEB2CB8-7868-4AE8-AB96-46CB7C5D12C5}</Project>
       <Name>Service.DTO</Name>
     </ProjectReference>
   </ItemGroup>

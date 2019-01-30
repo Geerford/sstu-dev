@@ -1,13 +1,29 @@
 ﻿using Domain.Core.Logs;
 using Newtonsoft.Json.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Core
 {
+    /// <summary>
+    /// Represents a user entity.
+    /// </summary>
     [Auditable(AuditScope.ClassAndProperties)]
     public class Identity : IDescribable
     {
+        /// <summary>
+        /// Gets or sets the ID.
+        /// </summary>
         public int ID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the GUID.
+        /// </summary>
+        [Required]
         public string GUID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user picture.
+        /// </summary>
         public string Picture { get; set; }
 
         /// <summary>
@@ -22,6 +38,11 @@ namespace Domain.Core
             return json.ToString();
         }
 
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current object.</param>
+        /// <returns>true if the specified object is equal to the current object; otherwise, false.</returns>
         public override bool Equals(object obj)
         {
             var result = false;
@@ -35,6 +56,10 @@ namespace Domain.Core
             return false;
         }
 
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode()
         {
             var hashcode = ID.GetHashCode();

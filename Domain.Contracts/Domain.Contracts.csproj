@@ -46,11 +46,5 @@
     <Compile Include="ISyncRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Domain.Core\Domain.Core.csproj">
-      <Project>{D0BED84C-894E-4FB3-919E-04833574991E}</Project>
-      <Name>Domain.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

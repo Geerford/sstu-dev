@@ -11,24 +11,68 @@ using System.Reflection;
 
 namespace Infrastructure.Data
 {
+    /// <summary>
+    /// Implements <see cref="IUnitOfWork"/>.
+    /// </summary>
     public class UnitOfWork : IUnitOfWork
     {
+        /// <summary>
+        /// Store for the <see cref="Context"/> property.
+        /// </summary>
         private Context database;
+
+        /// <summary>
+        /// Store true if states have been cleanup; otherwise, false.
+        /// </summary>
         private bool disposed = false;
 
+        /// <summary>
+        /// Store for the <see cref="ActivityRepository"/> property.
+        /// </summary>
         private ActivityRepository ActivityRepository;
-        private AdmissionRepository AdmissionRepository; 
+
+        /// <summary>
+        /// Store for the <see cref="AdmissionRepository"/> property.
+        /// </summary>
+        private AdmissionRepository AdmissionRepository;
+
+        /// <summary>
+        /// Store for the <see cref="CheckpointAdmissionRepository"/> property.
+        /// </summary>
         private CheckpointAdmissionRepository CheckpointAdmissionRepository;
+
+        /// <summary>
+        /// Store for the <see cref="CheckpointRepository"/> property.
+        /// </summary>
         private CheckpointRepository CheckpointRepository;
+
+        /// <summary>
+        /// Store for the <see cref="IdentityRepository"/> property.
+        /// </summary>
         private IdentityRepository IdentityRepository;
+
+        /// <summary>
+        /// Store for the <see cref="TypeRepository"/> property.
+        /// </summary>
         private TypeRepository TypeRepository;
+
+        /// <summary>
+        /// Store for the <see cref="AuditRepository"/> property.
+        /// </summary>
         private AuditRepository AuditRepository;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UnitOfWork"/> class.
+        /// </summary>
+        /// <param name="connectionString">The connection string.</param>
         public UnitOfWork(string connectionString)
         {
             database = new Context(connectionString);
         }
 
+        /// <summary>
+        /// Implements <see cref="IUnitOfWork.Activity"/>.
+        /// </summary>
         public IRepository<Activity> Activity
         {
             get
@@ -41,6 +85,9 @@ namespace Infrastructure.Data
             }
         }
 
+        /// <summary>
+        /// Implements <see cref="IUnitOfWork.Admission"/>.
+        /// </summary>
         public IRepository<Admission> Admission
         {
             get
@@ -53,6 +100,24 @@ namespace Infrastructure.Data
             }
         }
 
+        /// <summary>
+        /// Implements <see cref="IUnitOfWork.Audit"/>.
+        /// </summary>
+        public IAuditRepository<Audit> Audit
+        {
+            get
+            {
+                if (AuditRepository == null)
+                {
+                    AuditRepository = new AuditRepository(database);
+                }
+                return AuditRepository;
+            }
+        }
+
+        /// <summary>
+        /// Implements <see cref="IUnitOfWork.CheckpointAdmission"/>.
+        /// </summary>
         public IRepository<CheckpointAdmission> CheckpointAdmission
         {
             get
@@ -65,6 +130,9 @@ namespace Infrastructure.Data
             }
         }
 
+        /// <summary>
+        /// Implements <see cref="IUnitOfWork.Checkpoint"/>.
+        /// </summary>
         public IRepository<Checkpoint> Checkpoint
         {
             get
@@ -77,6 +145,9 @@ namespace Infrastructure.Data
             }
         }
 
+        /// <summary>
+        /// Implements <see cref="IUnitOfWork.Identity"/>.
+        /// </summary>
         public IRepository<Identity> Identity
         {
             get
@@ -89,6 +160,9 @@ namespace Infrastructure.Data
             }
         }
 
+        /// <summary>
+        /// Implements <see cref="IUnitOfWork.Type"/>.
+        /// </summary>
         public IRepository<Domain.Core.Type> Type
         {
             get
@@ -101,18 +175,9 @@ namespace Infrastructure.Data
             }
         }
 
-        public IAuditRepository Audit
-        {
-            get
-            {
-                if (AuditRepository == null)
-                {
-                    AuditRepository = new AuditRepository(database);
-                }
-                return AuditRepository;
-            }
-        }
-
+        /// <summary>
+        /// Implements <see cref="IUnitOfWork.Save"/>.
+        /// </summary>
         public void Save()
         {
             Logging();
@@ -120,7 +185,7 @@ namespace Infrastructure.Data
         }
 
         /// <summary>
-        /// Save result of operation in Audit SQL-table
+        /// Saves state change in Audit SQL-table
         /// </summary>
         private void Logging()
         {
@@ -196,6 +261,10 @@ namespace Infrastructure.Data
             }
         }
 
+        /// <summary>
+        /// Overloaded Implementation of Dispose. Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">True if managed resources should be disposed; otherwise, false.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!disposed)
@@ -208,6 +277,10 @@ namespace Infrastructure.Data
             }
         }
 
+        /// <summary>
+        /// Performs all object cleanup. Frees unmanaged resources and indicates that the 
+        /// finalizer, if one is present, doesn't have to run.
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);

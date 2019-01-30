@@ -1,5 +1,6 @@
 ﻿using Microsoft.Owin.Security;
 using Service.Interfaces;
+using sstu_nevdev.App_Start;
 using sstu_nevdev.Models;
 using System.Net;
 using System.Web;
@@ -19,6 +20,7 @@ namespace sstu_nevdev.Controllers
 
         // GET api/accounts/identityValue=5&domain=aptech.com
         [HttpGet]
+        [AuthenticationAPI(Roles = "SSTU_Deanery, SSTU_Administrator")]
         public IHttpActionResult Get(string identityValue, string domain)
         {
             var user = service.GetUser(identityValue, domain);
@@ -31,6 +33,7 @@ namespace sstu_nevdev.Controllers
         
         // POST api/accounts
         [HttpPost]
+        [AllowAnonymous]
         public IHttpActionResult Post([FromBody]AccountAPIModel model)
         {
             IAuthenticationManager authenticationManager = HttpContext.Current.GetOwinContext().Authentication;

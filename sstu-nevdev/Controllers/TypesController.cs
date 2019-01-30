@@ -1,10 +1,12 @@
 ﻿using Domain.Core;
 using Service.Interfaces;
+using sstu_nevdev.App_Start;
 using System.Collections.Generic;
 using System.Web.Http;
 
 namespace sstu_nevdev.Controllers
 {
+    [AuthenticationAPI(Roles = "SSTU_Administrator")]
     public class TypesController : ApiController
     {
         ITypeService service;

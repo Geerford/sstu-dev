@@ -1,9 +1,12 @@
 ﻿namespace Domain.Core.Logs
 {
+    /// <summary>
+    /// Provides method that converts {T} object to JSON format.
+    /// </summary>
     public interface IDescribable
     {
         /// <summary>
-        /// Convert this object to JSON for Audit attachment
+        /// Converts this object to JSON for <see cref="Audit"/> attachment.
         /// </summary>
         string Describe();
     }

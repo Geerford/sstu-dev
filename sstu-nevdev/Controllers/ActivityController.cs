@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace sstu_nevdev.Controllers
 {
+    [Authorize(Roles = "SSTU_Deanery, SSTU_Administrator, SSTU_Inspector, SSTU_Student")]
     public class ActivityController : Controller
     {
         IActivityService service;
@@ -25,6 +26,7 @@ namespace sstu_nevdev.Controllers
             return View(service.Get(id));
         }
 
+        [Authorize(Roles = "SSTU_Administrator")]
         public ActionResult Create()
         {
             ActivityViewModel model = new ActivityViewModel
@@ -51,6 +53,7 @@ namespace sstu_nevdev.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "SSTU_Administrator")]
         public ActionResult Create(ActivityViewModel model)
         {
             if (string.IsNullOrEmpty(model.IdentityGUID))
@@ -119,6 +122,7 @@ namespace sstu_nevdev.Controllers
             }
         }
 
+        [Authorize(Roles = "SSTU_Administrator")]
         public ActionResult Edit(int id)
         {
             ActivityViewModel model = (ActivityViewModel)service.Get(id);
@@ -143,6 +147,7 @@ namespace sstu_nevdev.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "SSTU_Administrator")]
         public ActionResult Edit(ActivityViewModel model)
         {
             if (string.IsNullOrEmpty(model.IdentityGUID))
@@ -212,12 +217,14 @@ namespace sstu_nevdev.Controllers
             }
         }
 
+        [Authorize(Roles = "SSTU_Administrator")]
         public ActionResult Delete(int id)
         {
             return View(service.Get(id));
         }
 
         [HttpPost]
+        [Authorize(Roles = "SSTU_Administrator")]
         public ActionResult Delete(Activity model)
         {
             try

@@ -6,7 +6,6 @@ using Service.Interfaces;
 using sstu_nevdev.Controllers;
 using sstu_nevdev.Models;
 using System.Collections.Generic;
-using System.Net;
 using System.Web.Http.Results;
 using System.Web.Mvc;
 using RedirectToRouteResult = System.Web.Mvc.RedirectToRouteResult;

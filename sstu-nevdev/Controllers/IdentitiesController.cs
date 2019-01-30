@@ -1,11 +1,13 @@
 ﻿using Domain.Core;
 using Service.DTO;
 using Service.Interfaces;
+using sstu_nevdev.App_Start;
 using System.Collections.Generic;
 using System.Web.Http;
 
 namespace sstu_nevdev.Controllers
 {
+    [AuthenticationAPI(Roles = "SSTU_Deanery, SSTU_Administrator, SSTU_Inspector")]
     public class IdentitiesController : ApiController
     {
         IIdentityService service;
@@ -45,6 +47,7 @@ namespace sstu_nevdev.Controllers
 
         // POST api/identities
         [HttpPost]
+        [AuthenticationAPI(Roles = "SSTU_Deanery, SSTU_Administrator")]
         public IHttpActionResult Post([FromBody]Identity item)
         {
             if(item != null)
@@ -57,6 +60,7 @@ namespace sstu_nevdev.Controllers
 
         // PUT api/identities/5
         [HttpPut]
+        [AuthenticationAPI(Roles = "SSTU_Deanery, SSTU_Administrator")]
         public IHttpActionResult Put(int id, [FromBody]Identity item)
         {
             if (item != null)
@@ -72,6 +76,7 @@ namespace sstu_nevdev.Controllers
 
         // DELETE api/identities/5
         [HttpDelete]
+        [AuthenticationAPI(Roles = "SSTU_Deanery, SSTU_Administrator")]
         public IHttpActionResult Delete(int id)
         {
             Identity item = service.GetSimple(id);

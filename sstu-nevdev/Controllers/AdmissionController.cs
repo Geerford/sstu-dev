@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace sstu_nevdev.Controllers
 {
+    [Authorize(Roles = "SSTU_Administrator")]
     public class AdmissionController : Controller
     {
         IAdmissionService service;

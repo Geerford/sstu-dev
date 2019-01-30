@@ -5,6 +5,7 @@ using System;
 using static Services.Business.Services.IdentityService.Authentication;
 
 [assembly: OwinStartup(typeof(sstu_nevdev.App_Start.Startup))]
+
 namespace sstu_nevdev.App_Start
 {
     public partial class Startup

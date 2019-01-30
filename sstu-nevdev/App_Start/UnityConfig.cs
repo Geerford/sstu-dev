@@ -1,4 +1,4 @@
-﻿using Infrastructure.Data;
+using Infrastructure.Data;
 using Repository.Interfaces;
 using Service.Interfaces;
 using Services.Business.Services;
@@ -18,6 +18,7 @@ namespace sstu_nevdev.App_Start
             container.RegisterType<IUnitOfWork, UnitOfWork>(new HierarchicalLifetimeManager(), new InjectionConstructor(connectionString));
             container.RegisterType<ISyncUnitOfWork, SyncUnitOfWork>(new HierarchicalLifetimeManager(), new InjectionConstructor(connectionStringSync));
             container.RegisterType<IActivityService, ActivityService>();
+            container.RegisterType<IAuditService, AuditService>();
             container.RegisterType<IAdmissionService, AdmissionService>();
             container.RegisterType<ICheckpointService, CheckpointService>();
             container.RegisterType<IIdentityService, IdentityService>();

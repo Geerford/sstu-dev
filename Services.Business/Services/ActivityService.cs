@@ -7,38 +7,63 @@ using System.Linq;
 
 namespace Services.Business.Services
 {
+    /// <summary>
+    /// Implements <see cref="IActivityService"/>.
+    /// </summary>
     public class ActivityService : IActivityService
     {
+        /// <summary>
+        /// Gets or sets the repository context.
+        /// </summary>
         IUnitOfWork Database { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ActivityService"/> class.
+        /// </summary>
+        /// <param name="uow">The <see cref="IUnitOfWork"/> object.</param>
         public ActivityService(IUnitOfWork uow)
         {
             Database = uow;
         }
 
+        /// <summary>
+        /// Implements <see cref="IActivityService.Create(Activity)"/>.
+        /// </summary>
         public void Create(Activity model)
         {
             Database.Activity.Create(model);
             Database.Save();
         }
 
+        /// <summary>
+        /// Implements <see cref="IActivityService.Delete(Activity)"/>.
+        /// </summary>
         public void Delete(Activity model)
         {
             Database.Activity.Delete(model.ID);
             Database.Save();
         }
 
+        /// <summary>
+        /// Implements <see cref="IActivityService.Dispose"/>.
+        /// </summary>
         public void Dispose()
         {
             Database.Dispose();
         }
 
+        /// <summary>
+        /// Implements <see cref="IActivityService.Edit(Activity)"/>.
+        /// </summary>
         public void Edit(Activity model)
         {
             Database.Activity.Update(model);
             Database.Save();
         }
 
+        /// <summary>
+        /// Implements <see cref="IActivityService.Get(int?)"/>.
+        /// </summary>
         public Activity Get(int? id)
         {
             if (id == null)
@@ -53,21 +78,25 @@ namespace Services.Business.Services
             return item;
         }
 
+        /// <summary>
+        /// Implements <see cref="IActivityService.GetAll"/>.
+        /// </summary>
         public IEnumerable<Activity> GetAll()
         {
             return Database.Activity.GetAll().ToList();
         }
 
+        /// <summary>
+        /// Implements <see cref="IActivityService.GetByStatus(bool)"/>.
+        /// </summary>
         public IEnumerable<Activity> GetByStatus(bool status)
         {
             return Database.Activity.Find(x => x.Status == status).ToList();
         }
 
         /// <summary>
-        /// Check admissions of the user
+        /// Implements <see cref="IActivityService.IsAdmission()"/>.
         /// </summary>
-        /// <param name="checkpointID">ID of Checkpoint</param>
-        /// <param name="role">Role of User</param>
         public bool IsAdmission(int? checkpointID, string role)
         {
             if (checkpointID == null || string.IsNullOrEmpty(role))
@@ -86,32 +115,8 @@ namespace Services.Business.Services
         }
 
         /// <summary>
-        /// Checks the user in the university or not
+        /// Implements <see cref="IActivityService.IsOk(CheckpointDTO, IdentityDTO)()"/>.
         /// </summary>
-        /// <param name="IdentityGUID">GUID of User</param>
-        public bool IsPassed(string IdentityGUID)
-        {
-            if (string.IsNullOrEmpty(IdentityGUID))
-            {
-                throw new ValidationException("Не задан ID", "");
-            }
-            Activity activity = Database.Activity.GetAll().Where(x => x.IdentityGUID == IdentityGUID).FirstOrDefault();
-            if (activity != null && activity.Mode == "Вход")
-            {
-                return true; //Person in the room
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// Add new activity and return of codes:
-        /// <para>Codes:</para> 
-        /// <para>-1 -- Ok.No response</para> 
-        /// <para>200 -- Ok.Return response</para> 
-        /// <para>500 -- Fail.Permission denied</para>
-        /// </summary>
-        /// <param name="checkpoint">DTO-model of Checkpoing</param>
-        /// <param name="identity">DTO-model of Identity</param>
         public int IsOk(CheckpointDTO checkpoint, IdentityDTO identity)
         {
             Type checkpointType = Database.Type.Get(checkpoint.Type.ID);
@@ -132,7 +137,7 @@ namespace Services.Business.Services
                             Mode = "Выход",
                             Status = true
                         });
-                        return -1; 
+                        return -1;
                     }
                     else
                     {
@@ -146,7 +151,7 @@ namespace Services.Business.Services
                                 Mode = "Вход",
                                 Status = true
                             });
-                            return 200; 
+                            return 200;
                         }
                         return 500;
                     }
@@ -186,6 +191,23 @@ namespace Services.Business.Services
                     });
                     return -1;
             }
+        }
+
+        /// <summary>
+        /// Implements <see cref="IActivityService.IsPassed(string)()"/>.
+        /// </summary>
+        public bool IsPassed(string IdentityGUID)
+        {
+            if (string.IsNullOrEmpty(IdentityGUID))
+            {
+                throw new ValidationException("Не задан ID", "");
+            }
+            Activity activity = Database.Activity.GetAll().Where(x => x.IdentityGUID == IdentityGUID).FirstOrDefault();
+            if (activity != null && activity.Mode == "Вход")
+            {
+                return true; //Person in the room
+            }
+            return false;
         }
     }
 }

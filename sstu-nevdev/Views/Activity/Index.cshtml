@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<Domain.Core.Activity>
+
 <h2>Список событий</h2>
 <p>
-    @Html.ActionLink("Создать", "Create")
+    @Html.ActionLink("Создать", "Create", routeValues: null, htmlAttributes: new { @class = "link" })
 </p>
 <table class="table">
     <tr>
@@ -25,36 +26,39 @@
         </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.IdentityGUID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CheckpointIP)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @if (item.Status)
-            {
-                @Html.DisplayName("Успех")
-            }
-            else
-            {
-                @Html.DisplayName("Неудача")
-            }
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Mode)
-        </td>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.IdentityGUID, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+            </td>
+            <td>
+                @Html.ActionLink(item.CheckpointIP, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+            </td>
+            <td>
+                @Html.ActionLink(item.Date.ToString(), "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+            </td>
+            <td>
+                @if (item.Status)
+                {
+                    @Html.ActionLink("Успех", "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                }
+                else
+                {
+                    @Html.ActionLink("Неудача", "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                }
+            </td>
+            <td>
+                @Html.ActionLink(item.Mode, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+            </td>
 
-        <td>
-            @Html.ActionLink("Редактировать", "Edit", new { id=item.ID })
-            @Html.ActionLink("Подробнее", "Details", new { id=item.ID })
-            @Html.ActionLink("Удалить", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+            <td>
+                @Html.ActionLink("Редактировать", "Edit", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "link" })
+                @Html.ActionLink("Удалить", "Delete", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "link" })
+            </td>
+        </tr>
+    }
 </table>
+<div id="dialog" class="modal fade">
+    <div id="content" class="modal-dialog"></div>
+</div>

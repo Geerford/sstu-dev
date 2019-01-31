@@ -2,10 +2,10 @@
 
 <h2>Редактирование</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Identity", FormMethod.Post, new { model = @Model, enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(model => model.ID)
+
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -24,19 +24,19 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Изображение")
-            <label aria-describedby="imageHelpBlock" for="images" class="btn btn-primary">
+            @Html.Label("Изображение", htmlAttributes: new { @class = "control-label col-md-2" })
+            <label aria-describedby="imageBlock" for="images" class="btn btn-primary images-md">
                 <input class="form-control" id="images" type="file" accept="image/png, image/jpeg"
-                       onchange="$(" #upload-file-info").html($(this).val());" name="FileData">
+                       onchange="$('#upload-file-info').html($(this).val());" name="FileData">
                 <span>Добавить изображения</span>
             </label>
-            <small id="imageHelpBlock" class="form-text text-muted">
-                Допустимый формат изображения: jpg, png.
-            </small>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                @Html.ActionLink("Вернуться", "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-light" })
+            </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Назад", "Index")
-</div>

@@ -1,55 +1,58 @@
 ﻿@model Domain.Core.Activity
-<div>
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.Label("Номер пользователя")
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.IdentityGUID)
-        </dd>
+<div class="modal-content">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+        <h4>Событие №@Html.DisplayFor(model => model.ID)</h4>
+    </div>
+    <div class="modal-body">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.Label("Номер пользователя")
+            </dt>
 
-        <dt>
-            @Html.Label("Номер датчика")
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.IdentityGUID)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.CheckpointIP)
-        </dd>
+            <dt>
+                @Html.Label("Номер датчика")
+            </dt>
 
-        <dt>
-            @Html.Label("Дата")
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CheckpointIP)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
+            <dt>
+                @Html.Label("Дата")
+            </dt>
 
-        <dt>
-            @Html.Label("Статус")
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Date)
+            </dd>
 
-        <dd>
-            @if (Model.Status)
-            {
-                @Html.DisplayName("Успех")
-            }
-            else
-            {
-                @Html.DisplayName("Неудача")
-            }
-        </dd>
+            <dt>
+                @Html.Label("Статус")
+            </dt>
 
-        <dt>
-            @Html.Label("Режим")
-        </dt>
+            <dd>
+                @if (Model.Status)
+                {
+                    @Html.DisplayName("Успех")
+                }
+                else
+                {
+                    @Html.DisplayName("Неудача")
+                }
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Mode)
-        </dd>
-    </dl>
+            <dt>
+                @Html.Label("Режим")
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Mode)
+            </dd>
+        </dl>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID })
-    @Html.ActionLink("Назад", "Index")
-</p>

@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<Domain.Core.Admission>
-<h2>Список полномочий</h2>
 
+<h2>Список полномочий</h2>
 <p>
-    @Html.ActionLink("Создать", "Create")
+    @Html.ActionLink("Создать", "Create", routeValues: null, htmlAttributes: new { @class = "link" })
 </p>
 <table class="table">
     <tr>
@@ -17,20 +17,21 @@
         </th>
     </tr>
 
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Role)
-        </td>
-        <td>
-            @Html.ActionLink("Редактировать", "Edit", new { id = item.ID })
-            @Html.ActionLink("Подробнее", "Details", new { id = item.ID })
-            @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Description, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+            </td>
+            <td>
+                @Html.ActionLink(item.Role, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+            </td>
+            <td>
+                @Html.ActionLink("Редактировать", "Edit", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "link" })
+                @Html.ActionLink("Удалить", "Delete", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "link" })
+            </td>
+        </tr>
+    }
 </table>
+<div id="dialog" class="modal fade">
+    <div id="content" class="modal-dialog"></div>
+</div>

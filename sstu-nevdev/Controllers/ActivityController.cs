@@ -23,7 +23,12 @@ namespace sstu_nevdev.Controllers
 
         public ActionResult Details(int id)
         {
-            return View(service.Get(id));
+            var item = service.Get(id);
+            if (item != null)
+            {
+                return PartialView(item);
+            }
+            return HttpNotFound();
         }
 
         [Authorize(Roles = "SSTU_Administrator")]

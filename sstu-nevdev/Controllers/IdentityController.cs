@@ -29,7 +29,12 @@ namespace sstu_nevdev.Controllers
 
         public ActionResult Details(int id)
         {
-            return View(service.Get(id));
+            var item = service.Get(id);
+            if (item != null)
+            {
+                return PartialView(item);
+            }
+            return HttpNotFound();
         }
 
         [Authorize(Roles = "SSTU_Deanery, SSTU_Administrator")]
@@ -88,7 +93,6 @@ namespace sstu_nevdev.Controllers
             if (ModelState.IsValid)
             {
                 Identity result = service.GetSimple(model.ID);
-
                 if (filedata != null)
                 {
                     result.Picture = service.SaveImage(filedata);

@@ -1,66 +1,71 @@
 ﻿@model Service.DTO.CheckpointDTO
-<div>
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.Label("IP-адрес")
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.IP)
-        </dd>
-        <dt>
-            @Html.Label("Корпус")
-        </dt>
+<div class="modal-content">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+        <h4>Датчик №@Html.DisplayFor(model => model.ID)</h4>
+    </div>
+    <div class="modal-body">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.Label("IP-адрес")
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Campus)
-        </dd>
-
-        <dt>
-            @Html.Label("Этаж")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Row)
-        </dd>
-
-        <dt>
-            @Html.Label("Описание")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.Label("Статус")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-
-        <dt>
-            @Html.Label("Тип")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Type.Status)
-        </dd>
-        <dt>
-            @Html.Label("Разрешения")
-        </dt>
-        @foreach (var item in Model.Admissions)
-        {
             <dd>
-                @Html.DisplayFor(modelItem => item.Description)
-                @Html.DisplayName(" для ")
-                @Html.DisplayFor(modelItem => item.Role)
+                @Html.DisplayFor(model => model.IP)
             </dd>
-        }
-    </dl>
+
+            <dt>
+                @Html.Label("Корпус")
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Campus)
+            </dd>
+
+            <dt>
+                @Html.Label("Этаж")
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Row)
+            </dd>
+
+            <dt>
+                @Html.Label("Описание")
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt>
+                @Html.Label("Статус")
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Status)
+            </dd>
+
+            <dt>
+                @Html.Label("Тип")
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Type.Status)
+            </dd>
+            <dt>
+                @Html.Label("Разрешения")
+            </dt>
+
+            @foreach (var item in Model.Admissions)
+            {
+                <dd>
+                    @Html.DisplayFor(modelItem => item.Description)
+                    @Html.DisplayName(" для ")
+                    @Html.DisplayFor(modelItem => item.Role)
+                </dd>
+            }
+        </dl>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID })
-    @Html.ActionLink("Назад", "Index")
-</p>

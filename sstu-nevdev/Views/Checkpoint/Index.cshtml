@@ -2,7 +2,7 @@
 
 <h2>Список датчиков</h2>
 <p>
-    @Html.ActionLink("Создать", "Create")
+    @Html.ActionLink("Создать", "Create", routeValues: null, htmlAttributes: new { @class = "link" })
 </p>
 <table class="table">
     <tr>
@@ -32,41 +32,41 @@
         </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.IP)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Campus)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Row)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Type.Status)
-        </td>
-        <td>
-            @foreach (var i in item.Admissions)
-            {
-                <p>
-                    @Html.DisplayFor(modelItem => i.Description)
-                    @Html.DisplayName(" для ")
-                    @Html.DisplayFor(modelItem => i.Role)
-                </p>
-            }
-        </td>
-        <td>
-            @Html.ActionLink("Редактировать", "Edit", new { id = item.ID })
-            @Html.ActionLink("Подробнее", "Details", new { id = item.ID })
-            @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.ActionLink(item.IP, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+            </td>
+            <td>
+                @Html.ActionLink(item.Campus.ToString(), "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+            </td>
+            <td>
+                @Html.ActionLink(item.Row.ToString(), "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+            </td>
+            <td>
+                @Html.ActionLink(item.Description, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+            </td>
+            <td>
+                @Html.ActionLink(item.Status, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+            </td>
+            <td>
+                @Html.ActionLink(item.Type.Status, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+            </td>
+            <td>
+                @foreach (var element in item.Admissions)
+                {
+                    <p>
+                        @Html.ActionLink(element.Description + " для " + element.Role, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                    </p>
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Редактировать", "Edit", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "link" })
+                @Html.ActionLink("Удалить", "Delete", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "link" })
+            </td>
+        </tr>
+    }
 </table>
+<div id="dialog" class="modal fade">
+    <div id="content" class="modal-dialog"></div>
+</div>

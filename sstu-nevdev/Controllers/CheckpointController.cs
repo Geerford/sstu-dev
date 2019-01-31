@@ -29,7 +29,12 @@ namespace sstu_nevdev.Controllers
 
         public ActionResult Details(int id)
         {
-            return View(checkpointService.Get(id));
+            var item = checkpointService.Get(id);
+            if (item != null)
+            {
+                return PartialView(item);
+            }
+            return HttpNotFound();
         }
 
         [Authorize(Roles = "SSTU_Administrator")]
@@ -195,20 +200,16 @@ namespace sstu_nevdev.Controllers
                     });
                 }
             }
-            CheckpointViewModel model = new CheckpointViewModel
-            {
-                ID = id,
-                StatusList = new SelectList(new List<StatusForList> {
+            CheckpointViewModel model = (CheckpointViewModel)checkpointService.Get(id);
+            model.StatusList = new SelectList(new List<StatusForList> {
                     new StatusForList {
                         Key = "Пропуск",
                         Display = "Пропуск" },
                     new StatusForList {
                         Key = "Отметка",
-                        Display = "Отметка" } },
-                    "Key", "Display"),
-                TypeList = new SelectList(types, "Key", "Display"),
-                AdmissionList = admissions
-            };
+                        Display = "Отметка" } }, "Key", "Display");
+            model.TypeList = new SelectList(types, "Key", "Display");
+            model.AdmissionList = admissions;
             return View(model);
         }
 

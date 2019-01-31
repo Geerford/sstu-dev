@@ -1,6 +1,6 @@
 ﻿@model sstu_nevdev.Models.ActivityViewModel
 
-<h2>Редактировать</h2>
+<h2>Редактирование</h2>
 
 @using (Html.BeginForm())
 {
@@ -21,7 +21,7 @@
         <div class="form-group">
             @Html.Label("Номер датчика", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CheckpointIP, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.CheckpointIP, new { htmlAttributes = new { @class = "form-control"} })
                 @Html.ValidationMessageFor(model => model.CheckpointIP, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -29,7 +29,7 @@
         <div class="form-group">
             @Html.Label("Дата", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control date-line", @type = "date" } })
                 @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -54,12 +54,9 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Сохранить" class="btn btn-default" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                @Html.ActionLink("Вернуться", "Index", new { }, htmlAttributes: new { @class = "btn btn-light" })
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Назад", "Index")
-</div>

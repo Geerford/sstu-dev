@@ -98,6 +98,7 @@ namespace sstu_nevdev.Models
             Status = item.Status;
             Admissions = item.Admissions;
             Type = item.Type;
+            TypeID = item.Type.ID.ToString();
         }
 
         /// <summary>

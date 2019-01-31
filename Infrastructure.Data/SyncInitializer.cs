@@ -63,7 +63,8 @@ namespace Infrastructure.Data
                 Role = "Преподаватель"
             });
 
-            string[] lines = File.ReadAllLines("D:\\users.txt");
+            string path = AppDomain.CurrentDomain.BaseDirectory + "App_Code\\users.txt";
+            string[] lines = File.ReadAllLines(path);
             int count = 4;
 
             foreach (var line in lines)

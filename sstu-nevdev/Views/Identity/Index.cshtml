@@ -1,9 +1,12 @@
 ﻿@model IEnumerable<Service.DTO.IdentityDTO>
 
 <h2>Список пользователей</h2>
-<p>
-    @Html.ActionLink("Создать", "Create", routeValues: null, htmlAttributes: new { @class = "link" })
-</p>
+@if (User.Identity.IsAuthenticated && (User.IsInRole("SSTU_Deanery") || User.IsInRole("SSTU_Administrator")))
+{
+    <p>
+        @Html.ActionLink("Создать", "Create", routeValues: null, htmlAttributes: new { @class = "link" })
+    </p>
+}
 <table class="table">
     <tr>
         <th>
@@ -48,12 +51,16 @@
         <th>
             @Html.Label("Роль")
         </th>
-        <th>
-            @Html.Label("Действия")
-        </th>
+        @if (User.Identity.IsAuthenticated && (User.IsInRole("SSTU_Deanery") || User.IsInRole("SSTU_Administrator")))
+        {
+            <th>
+                @Html.Label("Действия")
+            </th>
+        }
     </tr>
 
-    @foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
         <tr>
             <td>
                 @Html.ActionLink(item.GUID, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
@@ -104,10 +111,13 @@
             <td>
                 @Html.ActionLink(item.Role, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
             </td>
-            <td>
-                @Html.ActionLink("Редактировать", "Edit", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "link" })
-                @Html.ActionLink("Удалить", "Delete", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "link" })
-            </td>
+            @if (User.Identity.IsAuthenticated && (User.IsInRole("SSTU_Deanery") || User.IsInRole("SSTU_Administrator")))
+            {
+                <td>
+                    @Html.ActionLink("Редактировать", "Edit", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "link" })
+                    @Html.ActionLink("Удалить", "Delete", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "link" })
+                </td>
+            }
         </tr>
     }
 </table>

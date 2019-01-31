@@ -1,9 +1,13 @@
 ﻿@model IEnumerable<Domain.Core.Activity>
 
 <h2>Список событий</h2>
-<p>
-    @Html.ActionLink("Создать", "Create", routeValues: null, htmlAttributes: new { @class = "link" })
-</p>
+@if (User.Identity.IsAuthenticated && User.IsInRole("SSTU_Administrator"))
+{
+    <p>
+        @Html.ActionLink("Создать", "Create", routeValues: null, htmlAttributes: new { @class = "link" })
+    </p>
+}
+
 <table class="table">
     <tr>
         <th>
@@ -21,9 +25,12 @@
         <th>
             @Html.Label("Режим")
         </th>
-        <th>
-            @Html.Label("Действия")
-        </th>
+        @if (User.Identity.IsAuthenticated && User.IsInRole("SSTU_Administrator"))
+        {
+            <th>
+                @Html.Label("Действия")
+            </th>
+        }
     </tr>
 
     @foreach (var item in Model)
@@ -51,11 +58,13 @@
             <td>
                 @Html.ActionLink(item.Mode, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
             </td>
-
-            <td>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("SSTU_Administrator"))
+            {
+                <td>
                 @Html.ActionLink("Редактировать", "Edit", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "link" })
                 @Html.ActionLink("Удалить", "Delete", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "link" })
             </td>
+            }
         </tr>
     }
 </table>

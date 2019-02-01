@@ -44,8 +44,10 @@
   <ItemGroup>
     <Compile Include="IActivityService.cs" />
     <Compile Include="IAdmissionService.cs" />
+    <Compile Include="IAES.cs" />
     <Compile Include="IAuditService.cs" />
     <Compile Include="ICheckpointService.cs" />
+    <Compile Include="IGrasshopper.cs" />
     <Compile Include="IIdentityService.cs" />
     <Compile Include="ITypeService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,6 +1,7 @@
 ﻿using Domain.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Newtonsoft.Json.Linq;
 using Service.DTO;
 using Service.Interfaces;
 using sstu_nevdev.Controllers;
@@ -17,6 +18,7 @@ namespace sstu_nevdev.Tests.Controllers
     public class IdentityControllerTest
     {
         private Mock<IIdentityService> identityServiceMock;
+        private Mock<IAESService> aesServiceMock;
         private IdentityController controllerWEB;
         private IdentitiesController controllerAPI;
         private List<IdentityDTO> items;
@@ -26,8 +28,9 @@ namespace sstu_nevdev.Tests.Controllers
         public void Initialize()
         {
             identityServiceMock = new Mock<IIdentityService>();
+            aesServiceMock = new Mock<IAESService>();
             controllerWEB = new IdentityController(identityServiceMock.Object);
-            controllerAPI = new IdentitiesController(identityServiceMock.Object);
+            controllerAPI = new IdentitiesController(identityServiceMock.Object, aesServiceMock.Object);
             items = new List<IdentityDTO>()
             {
                 new IdentityDTO()
@@ -111,7 +114,7 @@ namespace sstu_nevdev.Tests.Controllers
             identityServiceMock.Setup(x => x.Get(id)).Returns(items[0]);
 
             //Act
-            var result = ((controllerWEB.Details(id) as ViewResult).Model) as IdentityDTO;
+            var result = ((controllerWEB.Details(id) as PartialViewResult).Model) as IdentityDTO;
 
             //Assert
             Assert.IsNotNull(result);
@@ -197,15 +200,15 @@ namespace sstu_nevdev.Tests.Controllers
         {
             //Arrange
             identityServiceMock.Setup(x => x.GetAll()).Returns(items);
+            aesServiceMock.Setup(x => x.Encrypt(It.IsAny<JObject>())).Returns(new byte[0]);
 
             //Act
             var actionResult = controllerAPI.Get();
-            var createdResult = actionResult as OkNegotiatedContentResult<IEnumerable<IdentityDTO>>;
+            var createdResult = actionResult as OkNegotiatedContentResult<byte[]>;
 
             //Assert
             Assert.IsNotNull(createdResult);
-            Assert.IsInstanceOfType(createdResult.Content, typeof(IEnumerable<IdentityDTO>));
-            Assert.AreEqual(items, createdResult.Content);
+            Assert.IsInstanceOfType(createdResult.Content, typeof(byte[]));
         }
 
         [TestMethod]
@@ -213,15 +216,16 @@ namespace sstu_nevdev.Tests.Controllers
         {
             //Arrange
             identityServiceMock.Setup(x => x.Get(id)).Returns(items[0]);
+            aesServiceMock.Setup(x => x.Encrypt(It.IsAny<JObject>())).Returns(new byte[0]);
 
             //Act
             var response = controllerAPI.Get(id);
-            var result = response as OkNegotiatedContentResult<IdentityDTO>;
+            var result = response as OkNegotiatedContentResult<byte[]>;
 
             //Assert
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Content);
-            Assert.IsInstanceOfType(result.Content, typeof(IdentityDTO));
+            Assert.IsInstanceOfType(result.Content, typeof(byte[]));
         }
 
         [TestMethod]

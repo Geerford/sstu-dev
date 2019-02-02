@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -44,7 +47,8 @@
   <ItemGroup>
     <Compile Include="IActivityService.cs" />
     <Compile Include="IAdmissionService.cs" />
-    <Compile Include="IAES.cs" />
+    <Compile Include="IAESHelper.cs" />
+    <Compile Include="IAESService.cs" />
     <Compile Include="IAuditService.cs" />
     <Compile Include="ICheckpointService.cs" />
     <Compile Include="IGrasshopper.cs" />
@@ -61,6 +65,9 @@
       <Project>{EBEB2CB8-7868-4AE8-AB96-46CB7C5D12C5}</Project>
       <Name>Service.DTO</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

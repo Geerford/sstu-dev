@@ -204,7 +204,7 @@ namespace sstu_nevdev.Tests.Controllers
             activityServiceMock.Setup(x => x.Get(id)).Returns(items[0]);
 
             //Act
-            var result = ((controllerWEB.Details(id) as ViewResult).Model) as Activity;
+            var result = ((controllerWEB.Details(id) as PartialViewResult).Model) as Activity;
 
             //Assert
             Assert.IsNotNull(result);

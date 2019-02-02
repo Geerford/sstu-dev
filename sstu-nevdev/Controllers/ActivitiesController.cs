@@ -24,7 +24,7 @@ namespace sstu_nevdev.Controllers
         }
 
         // GET api/activities
-        [AuthenticationAPI(Roles = "SSTU_Deanery, SSTU_Administrator, SSTU_Inspector, SSTU_Student")]
+        [AuthenticationAPI(Roles = "SSTU_Deanery,SSTU_Administrator,SSTU_Inspector,SSTU_Student")]
         public IHttpActionResult Get()
         {
             IEnumerable<Activity> items = activityService.GetAll();
@@ -39,7 +39,7 @@ namespace sstu_nevdev.Controllers
         }
 
         // GET api/activities/5
-        [AuthenticationAPI(Roles = "SSTU_Deanery, SSTU_Administrator, SSTU_Inspector, SSTU_Student")]
+        [AuthenticationAPI(Roles = "SSTU_Deanery,SSTU_Administrator,SSTU_Inspector,SSTU_Student")]
         public IHttpActionResult Get(int id)
         {
             Activity item = activityService.Get(id);

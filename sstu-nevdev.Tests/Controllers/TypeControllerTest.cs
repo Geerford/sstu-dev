@@ -64,7 +64,7 @@ namespace sstu_nevdev.Tests.Controllers
             typeServiceMock.Setup(x => x.Get(id)).Returns(items[0]);
 
             //Act
-            var result = ((controllerWEB.Details(id) as ViewResult).Model) as Type;
+            var result = ((controllerWEB.Details(id) as PartialViewResult).Model) as Type;
 
             //Assert
             Assert.IsNotNull(result);

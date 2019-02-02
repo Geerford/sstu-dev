@@ -135,7 +135,7 @@ namespace sstu_nevdev.Tests.Controllers
             checkpointServiceMock.Setup(x => x.Get(id)).Returns(items[0]);
 
             //Act
-            var result = ((controllerWEB.Details(id) as ViewResult).Model) as CheckpointDTO;
+            var result = ((controllerWEB.Details(id) as PartialViewResult).Model) as CheckpointDTO;
 
             //Assert
             Assert.IsNotNull(result);

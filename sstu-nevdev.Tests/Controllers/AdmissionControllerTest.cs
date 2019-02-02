@@ -60,7 +60,7 @@ namespace sstu_nevdev.Tests.Controllers
             admissionServiceMock.Setup(x => x.Get(id)).Returns(items[0]);
 
             //Act
-            var result = ((controllerWEB.Details(id) as ViewResult).Model) as Admission;
+            var result = ((controllerWEB.Details(id) as PartialViewResult).Model) as Admission;
 
             //Assert
             Assert.IsNotNull(result);

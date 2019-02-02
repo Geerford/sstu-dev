@@ -20,7 +20,16 @@ namespace sstu_nevdev.App_Start
         public override void OnAuthorization(HttpActionContext actionContext)
         {
             var user = HttpContext.Current.User;
-            if (!user.IsInRole(Roles))
+            string[] roles = Roles.Split(',');
+            bool isInRole = false;
+            foreach (string item in roles)
+            {
+                if (user.IsInRole(item))
+                {
+                    isInRole = true;
+                }
+            }
+            if (!isInRole)
             {
                 actionContext.Response = new HttpResponseMessage
                 {

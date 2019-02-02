@@ -64,7 +64,15 @@ namespace Infrastructure.Data
             });
 
             string path = AppDomain.CurrentDomain.BaseDirectory + "App_Code\\users.txt";
-            string[] lines = File.ReadAllLines(path);
+            string[] lines;
+            if (File.Exists(path))
+            {
+                lines = File.ReadAllLines(path);
+            }
+            else
+            {
+                lines = File.ReadAllLines("D:\\users.txt");
+            }
             int count = 4;
 
             foreach (var line in lines)

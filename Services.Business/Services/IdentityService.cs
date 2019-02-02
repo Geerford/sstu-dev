@@ -401,7 +401,7 @@ namespace Services.Business.Services
                     {
                         return new AuthenticationResult("Ваша учетная запись отключена.");
                     }
-                    var identity = CreateIdentity(user);
+                    var identity = CreateIdentity(user, domain);
 
                     authenticationManager.SignOut(SSTUAuthentication.ApplicationCookie);
                     authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = false }, identity);
@@ -413,12 +413,13 @@ namespace Services.Business.Services
             /// Create new ClaimsIdentity to save it in cookie
             /// </summary>
             /// <param name="userPrincipal">User from ActiveDirectory</param>
-            private ClaimsIdentity CreateIdentity(UserPrincipal userPrincipal)
+            private ClaimsIdentity CreateIdentity(UserPrincipal userPrincipal, string domain)
             {
                 var identity = new ClaimsIdentity(SSTUAuthentication.ApplicationCookie, ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
                 identity.AddClaim(new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider", "Active Directory"));
                 identity.AddClaim(new Claim(ClaimTypes.Name, userPrincipal.SamAccountName));
                 identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, userPrincipal.SamAccountName));
+                identity.AddClaim(new Claim(ClaimTypes.WindowsAccountName, userPrincipal.SamAccountName + "@" + domain));
                 if (!string.IsNullOrEmpty(userPrincipal.EmailAddress))
                 {
                     identity.AddClaim(new Claim(ClaimTypes.Email, userPrincipal.EmailAddress));

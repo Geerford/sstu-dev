@@ -20,7 +20,7 @@ namespace sstu_nevdev.Controllers
 
         // GET api/accounts/identityValue=5&domain=aptech.com
         [HttpGet]
-        [AuthenticationAPI(Roles = "SSTU_Deanery, SSTU_Administrator")]
+        [AuthenticationAPI(Roles = "SSTU_Deanery,SSTU_Administrator")]
         public IHttpActionResult Get(string identityValue, string domain)
         {
             var user = service.GetUser(identityValue, domain);
@@ -38,7 +38,8 @@ namespace sstu_nevdev.Controllers
         {
             IAuthenticationManager authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
             var authService = new Authentication(authenticationManager);
-            var authenticationResult = authService.SignIn(model.User + "@" + model.Domain, model.Password);
+            var username = model.User + "@" + model.Domain;
+            var authenticationResult = authService.SignIn(username, model.Password);
             if (authenticationResult.IsSuccess)
             {
                 var user = (UserApiModel)service.GetUser(model.User, model.Domain);

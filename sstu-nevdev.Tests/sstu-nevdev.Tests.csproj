@@ -120,6 +120,8 @@
     <Reference Include="System.Net.Http.WebRequest" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\GrasshopperTest.cs" />
+    <Compile Include="Algorithms\RSATest.cs" />
     <Compile Include="Controllers\ActivityControllerTest.cs" />
     <Compile Include="Controllers\AdmissionControllerTest.cs" />
     <Compile Include="Controllers\AuditControllerTest.cs" />
@@ -137,6 +139,7 @@
     <Compile Include="Repositories\UserRepositoryTest.cs" />
     <Compile Include="Services\ActivityServiceTest.cs" />
     <Compile Include="Services\AdmissionServiceTest.cs" />
+    <Compile Include="Services\AESServiceTest.cs" />
     <Compile Include="Services\AuditServiceTest.cs" />
     <Compile Include="Services\CheckpointServiceTest.cs" />
     <Compile Include="Services\IdentityServiceTest.cs" />

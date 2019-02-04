@@ -3,13 +3,10 @@ using Domain.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Repository.Interfaces;
-using Service.DTO;
 using Service.Interfaces;
 using Services.Business.Services;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Type = Domain.Core.Type;
 
 namespace sstu_nevdev.Tests.Services
 {

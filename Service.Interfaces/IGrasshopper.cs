@@ -8,10 +8,10 @@
         /// <summary>
         /// Decrypts the cipher message.
         /// </summary>
-        /// <param name="message">The cipherbytes.</param>
+        /// <param name="cipherbytes">The cipherbytes.</param>
         /// <param name="key">The key.</param>
         /// <returns>The plainbytes.</returns>
-        byte[] Decrypt(byte[] message, byte[] key);
+        byte[] Decrypt(byte[] cipherbytes, byte[] key);
 
         /// <summary>
         /// Encrypts the message.

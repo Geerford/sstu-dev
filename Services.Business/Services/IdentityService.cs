@@ -103,17 +103,6 @@ namespace Services.Business.Services
         }
 
         /// <summary>
-        /// Implements <see cref="IIdentityService.GetGrasshopperKey(string)"/>.
-        /// </summary>
-        /// <param name="key">The client public key.</param>
-        /// <returns>The cipherbytes.</returns>
-        public byte[] GetGrasshopperKey(string key)
-        {
-            RSA rsa = new RSA();
-            return rsa.ResponseKey(Keys.GrasshopperKey, key);
-        }
-
-        /// <summary>
         /// Implements <see cref="IIdentityService.Get(int?)"/>.
         /// </summary>
         public IdentityDTO Get(int? id)
@@ -220,6 +209,17 @@ namespace Services.Business.Services
                 throw new ValidationException("Сущность не найдена в синхронизируемой БД", "");
             }
             return new IdentityDTO(identity, user);
+        }
+
+        /// <summary>
+        /// Implements <see cref="IIdentityService.GetGrasshopperKey(string)"/>.
+        /// </summary>
+        /// <param name="key">The client public key.</param>
+        /// <returns>The cipherbytes.</returns>
+        public byte[] GetGrasshopperKey(string key)
+        {
+            RSA rsa = new RSA();
+            return rsa.ResponseKey(Keys.GrasshopperKey, key);
         }
 
         /// <summary>

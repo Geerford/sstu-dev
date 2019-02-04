@@ -68,17 +68,17 @@ namespace Services.Business.Security
         /// <summary>
         /// Implements <see cref="IGrasshopper.Decrypt(byte[], byte[])"/>.
         /// </summary>
-        public byte[] Decrypt(byte[] message, byte[] key)
+        public byte[] Decrypt(byte[] cipherbytes, byte[] key)
         {
             byte[][] K = ExpandKey(key);
             for (int i = 9; i > 0; i--)
             {
-                message = XOR(message, K[i]);
-                message = ReverseL(message);
-                message = ReverseS(message);
+                cipherbytes = XOR(cipherbytes, K[i]);
+                cipherbytes = ReverseL(cipherbytes);
+                cipherbytes = ReverseS(cipherbytes);
             }
-            message = XOR(message, K[0]);
-            return message;
+            cipherbytes = XOR(cipherbytes, K[0]);
+            return cipherbytes;
         }
 
         /// <summary>

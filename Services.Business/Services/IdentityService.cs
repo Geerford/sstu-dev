@@ -100,8 +100,6 @@ namespace Services.Business.Services
         {
             RSA rsa = new RSA();
             rsa.GenerateKey();
-            Grasshopper grasshopper = new Grasshopper();
-            grasshopper.GenerateKey();
         }
 
         /// <summary>

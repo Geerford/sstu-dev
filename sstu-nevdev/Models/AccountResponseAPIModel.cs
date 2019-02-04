@@ -24,11 +24,6 @@ namespace sstu_nevdev.Models
         public List<string> Roles { get; set; }
 
         /// <summary>
-        /// Gets or sets the server public key.
-        /// </summary>
-        public string PublicKey { get; set; }
-
-        /// <summary>
         /// Gets or sets the grasshopper key.
         /// </summary>
         public byte[] GrasshopperKey { get; set; }

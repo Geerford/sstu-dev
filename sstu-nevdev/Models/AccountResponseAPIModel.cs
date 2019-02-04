@@ -6,7 +6,7 @@ namespace sstu_nevdev.Models
     /// <summary>
     /// Represents additional information about User from ActiveDirectory for response.
     /// </summary>
-    public class UserApiModel
+    public class AccountResponseAPIModel
     {
         /// <summary>
         /// Gets or sets the name.
@@ -24,14 +24,24 @@ namespace sstu_nevdev.Models
         public List<string> Roles { get; set; }
 
         /// <summary>
-        /// Initializes a <see cref="UserApiModel"/> class.
+        /// Gets or sets the server public key.
         /// </summary>
-        public UserApiModel() { }
+        public string PublicKey { get; set; }
 
         /// <summary>
-        /// Initializes a <see cref="UserApiModel"/> class after cast from <see cref="UserDTO"/> object.
+        /// Gets or sets the grasshopper key.
         /// </summary>
-        public UserApiModel(UserDTO item)
+        public byte[] GrasshopperKey { get; set; }
+
+        /// <summary>
+        /// Initializes a <see cref="AccountResponseAPIModel"/> class.
+        /// </summary>
+        public AccountResponseAPIModel() { }
+
+        /// <summary>
+        /// Initializes a <see cref="AccountResponseAPIModel"/> class after cast from <see cref="UserDTO"/> object.
+        /// </summary>
+        public AccountResponseAPIModel(UserDTO item)
         {
             Name = item.Name;
             Surname = item.Surname;
@@ -43,9 +53,9 @@ namespace sstu_nevdev.Models
         /// that must be invoked with a cast.
         /// </summary>
         /// <param name="item">The <see cref="UserDTO"/> object</param>
-        public static explicit operator UserApiModel(UserDTO item)
+        public static explicit operator AccountResponseAPIModel(UserDTO item)
         {
-            return new UserApiModel(item);
+            return new AccountResponseAPIModel(item);
         }
     }
 }

@@ -58,9 +58,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AESHelper.cs" />
-    <Compile Include="Grasshopper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\AESHelper.cs" />
+    <Compile Include="Security\Grasshopper.cs" />
+    <Compile Include="Security\Keys.cs" />
+    <Compile Include="Security\RSA.cs" />
     <Compile Include="ServiceModule.cs" />
     <Compile Include="Services\ActivityService.cs" />
     <Compile Include="Services\AdmissionService.cs" />

@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents account model for post requests.
     /// </summary>
-    public class AccountAPIModel
+    public class AccountRequestAPIModel
     {
         /// <summary>
         /// Gets or sets the username.
@@ -19,5 +19,10 @@
         /// Gets or sets the domain.
         /// </summary>
         public string Domain { get; set; }
+
+        /// <summary>
+        /// Gets or sets the client public key.
+        /// </summary>
+        public string PublicKey { get; set; }
     }
 }

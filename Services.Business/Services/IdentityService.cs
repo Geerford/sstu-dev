@@ -3,6 +3,7 @@ using Microsoft.Owin.Security;
 using Repository.Interfaces;
 using Service.DTO;
 using Service.Interfaces;
+using Services.Business.Security;
 using System;
 using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
@@ -90,6 +91,28 @@ namespace Services.Business.Services
         public IdentityDTO Find(Identity model)
         {
             return GetFull(model.GUID);
+        }
+
+        /// <summary>
+        /// Implements <see cref="IIdentityService.GenerateKey"/>.
+        /// </summary>
+        public void GenerateKey()
+        {
+            RSA rsa = new RSA();
+            rsa.GenerateKey();
+            Grasshopper grasshopper = new Grasshopper();
+            grasshopper.GenerateKey();
+        }
+
+        /// <summary>
+        /// Implements <see cref="IIdentityService.GetGrasshopperKey(string)"/>.
+        /// </summary>
+        /// <param name="key">The client public key.</param>
+        /// <returns>The cipherbytes.</returns>
+        public byte[] GetGrasshopperKey(string key)
+        {
+            RSA rsa = new RSA();
+            return rsa.ResponseKey(Keys.GrasshopperKey, key);
         }
 
         /// <summary>

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Text;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Service.Interfaces;
+using System;
+using System.Text;
 
-namespace Services.Business
+namespace Services.Business.Security
 {
     /// <summary>
     /// Implements <see cref="IAESHelper"/>.
@@ -17,7 +17,7 @@ namespace Services.Business
         private readonly int blockLength = 16;
 
         /// <summary>
-        /// Implements <see cref="IAESHelper"/>.
+        /// Implements <see cref="IAESHelper.Normalize(dynamic)"/>.
         /// </summary>
         public byte[] Normalize(dynamic json)
         {
@@ -36,7 +36,7 @@ namespace Services.Business
         }
 
         /// <summary>
-        /// Implements <see cref="IAESHelper"/>.
+        /// Implements <see cref="IAESHelper.ParseToJson(byte[])"/>.
         /// </summary>
         public JObject ParseToJson(byte[] plainbytes)
         {

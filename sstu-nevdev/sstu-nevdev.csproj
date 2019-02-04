@@ -260,7 +260,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountAPIModel.cs" />
+    <Compile Include="Models\AccountRequestAPIModel.cs" />
     <Compile Include="Models\ActivityAPIModel.cs" />
     <Compile Include="Models\ActivityViewModel.cs" />
     <Compile Include="Models\AdmissionViewModel.cs" />
@@ -270,7 +270,7 @@
     <Compile Include="Models\AccountViewModel.cs" />
     <Compile Include="Models\StatusForList.cs" />
     <Compile Include="Models\TypeViewModel.cs" />
-    <Compile Include="Models\UserApiModel.cs" />
+    <Compile Include="Models\AccountResponseAPIModel.cs" />
     <Compile Include="Ninject\NinjectDependencyResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

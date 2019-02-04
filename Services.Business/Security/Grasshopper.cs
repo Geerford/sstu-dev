@@ -1,7 +1,7 @@
 ﻿using Service.Interfaces;
 using System;
 
-namespace Services.Business
+namespace Services.Business.Security
 {
     /// <summary>
     /// Implements <see cref="IGrasshopper"/>.
@@ -66,7 +66,7 @@ namespace Services.Business
         };
 
         /// <summary>
-        /// Implements <see cref="IGrasshopper"/>.
+        /// Implements <see cref="IGrasshopper.Decrypt(byte[], byte[])"/>.
         /// </summary>
         public byte[] Decrypt(byte[] message, byte[] key)
         {
@@ -82,7 +82,7 @@ namespace Services.Business
         }
 
         /// <summary>
-        /// Implements <see cref="IGrasshopper"/>.
+        /// Implements <see cref="IGrasshopper.Encrypt(byte[], byte[])"/>.
         /// </summary>
         public byte[] Encrypt(byte[] message, byte[] key)
         {
@@ -98,7 +98,7 @@ namespace Services.Business
         }
 
         /// <summary>
-        /// Implements <see cref="IGrasshopper"/>.
+        /// Implements <see cref="IGrasshopper.ExpandKey(byte[])"/>.
         /// </summary>
         public byte[][] ExpandKey(byte[] K)
         {
@@ -135,7 +135,7 @@ namespace Services.Business
         }
 
         /// <summary>
-        /// Implements <see cref="IGrasshopper"/>.
+        /// Implements <see cref="IGrasshopper.F"/>.
         /// </summary>
         public byte[] F(byte[] K1, byte[] K2, byte[] value)
         {
@@ -151,7 +151,19 @@ namespace Services.Business
         }
 
         /// <summary>
-        /// Implements <see cref="IGrasshopper"/>.
+        /// Implements <see cref="IGrasshopper.GenerateKey"/>
+        /// </summary>
+        /// <returns></returns>
+        public void GenerateKey()
+        {
+            Random random = new Random();
+            byte[] key = new byte[32];
+            random.NextBytes(key);
+            Keys.GrasshopperKey = key;
+        }
+
+        /// <summary>
+        /// Implements <see cref="IGrasshopper.L(byte[])"/>.
         /// </summary>
         public byte[] L(byte[] input)
         {
@@ -163,12 +175,8 @@ namespace Services.Business
         }
 
         /// <summary>
-        /// Gets the multiplication of numbers in a finite field over an 
-        /// irreducible polynomial x^8 + x^7 + x^6 + x + 1.
+        /// Implements <see cref="IGrasshopper.Multiply(byte, byte)"/>.
         /// </summary>
-        /// <param name="a">The first byte value.</param>
-        /// <param name="b">The second byte value.</param>
-        /// <returns>The multiplication of two <see cref="byte"/> values.</returns>
         public byte Multiply(byte a, byte b)
         {
             byte c = 0x00;
@@ -185,7 +193,7 @@ namespace Services.Business
         }
 
         /// <summary>
-        /// Implements <see cref="IGrasshopper"/>.
+        /// Implements <see cref="IGrasshopper.R(byte[])"/>.
         /// </summary>
         public byte[] R(byte[] input)
         {
@@ -203,7 +211,7 @@ namespace Services.Business
         }
 
         /// <summary>
-        /// Implements <see cref="IGrasshopper"/>.
+        /// Implements <see cref="IGrasshopper.ReverseL(byte[])"/>.
         /// </summary>
         public byte[] ReverseL(byte[] input)
         {
@@ -215,7 +223,7 @@ namespace Services.Business
         }
 
         /// <summary>
-        /// Implements <see cref="IGrasshopper"/>.
+        /// Implements <see cref="IGrasshopper.ReverseR(byte[])"/>.
         /// </summary>
         public byte[] ReverseR(byte[] input)
         {
@@ -235,7 +243,7 @@ namespace Services.Business
         }
 
         /// <summary>
-        /// Implements <see cref="IGrasshopper"/>.
+        /// Implements <see cref="IGrasshopper.ReverseS(byte[])"/>.
         /// </summary>
         public byte[] ReverseS(byte[] input)
         {
@@ -248,7 +256,7 @@ namespace Services.Business
         }
 
         /// <summary>
-        /// Implements <see cref="IGrasshopper"/>.
+        /// Implements <see cref="IGrasshopper.S(byte[])"/>.
         /// </summary>
         public byte[] S(byte[] input)
         {
@@ -261,7 +269,7 @@ namespace Services.Business
         }
 
         /// <summary>
-        /// Implements <see cref="IGrasshopper"/>.
+        /// Implements <see cref="IGrasshopper.XOR(byte[], byte[])"/>.
         /// </summary>
         public byte[] XOR(byte[] a, byte[] b)
         {

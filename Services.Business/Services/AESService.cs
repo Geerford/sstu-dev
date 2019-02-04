@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Service.Interfaces;
+using Services.Business.Security;
 using System;
 using System.IO;
 
@@ -28,17 +29,7 @@ namespace Services.Business.Services
         private readonly int blockLength = 16;
 
         /// <summary>
-        /// The grasshopper key.
-        /// </summary>
-        public byte[] Key { get; } = {
-            0x88, 0x99, 0xaa, 0xbb, 0xcc, 0xdd, 0xee, 0xff,
-            0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77,
-            0xfe, 0xdc, 0xba, 0x98, 0x76, 0x54, 0x32, 0x10,
-            0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef
-        };
-
-        /// <summary>
-        /// Decrypts the cipherbytes. Implements <see cref="IAESService"/>.
+        /// Decrypts the cipherbytes. Implements <see cref="IAESService.Decrypt(byte[])"/>.
         /// </summary>
         /// <param name="cipherbytes">The cipherbytes to be decrypted.</param>
         /// <returns>The JSON object.</returns>
@@ -53,7 +44,7 @@ namespace Services.Business.Services
                 int count = 0;
                 while (stream.Read(block, 0, blockLength) > 0)
                 {
-                    Array.Copy(algorithm.Decrypt(block, Key), 0, plainbytes, count, blockLength);
+                    Array.Copy(algorithm.Decrypt(block, Keys.GrasshopperKey), 0, plainbytes, count, blockLength);
                     count += blockLength;
                 }
                 return helperAES.ParseToJson(plainbytes);
@@ -94,7 +85,7 @@ namespace Services.Business.Services
         }
 
         /// <summary>
-        /// Encrypts the message. Implements <see cref="IAESService"/>.
+        /// Encrypts the message. Implements <see cref="IAESService.Encrypt(dynamic)"/>.
         /// </summary>
         /// <param name="json">The JSON object to be encrypted.</param>
         /// <returns>The cipherbytes.</returns>
@@ -110,7 +101,7 @@ namespace Services.Business.Services
                 while (stream.Read(block, 0, blockLength) > 0)
                 {
                     Array.Resize(ref cipherbytes, cipherbytes.Length + blockLength);
-                    Array.Copy(algorithm.Encrypt(block, Key), 0, cipherbytes, cipherbytes.Length - blockLength, blockLength);
+                    Array.Copy(algorithm.Encrypt(block, Keys.GrasshopperKey), 0, cipherbytes, cipherbytes.Length - blockLength, blockLength);
                 }
                 return cipherbytes;
             }

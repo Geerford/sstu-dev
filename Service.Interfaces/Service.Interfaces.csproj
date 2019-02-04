@@ -53,6 +53,7 @@
     <Compile Include="ICheckpointService.cs" />
     <Compile Include="IGrasshopper.cs" />
     <Compile Include="IIdentityService.cs" />
+    <Compile Include="IRSA.cs" />
     <Compile Include="ITypeService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

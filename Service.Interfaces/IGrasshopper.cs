@@ -38,6 +38,12 @@
         byte[] F(byte[] K1, byte[] K2, byte[] value);
 
         /// <summary>
+        /// Generates the grasshopper key.
+        /// </summary>
+        /// <returns>The grasshopper key.</returns>
+        void GenerateKey();
+
+        /// <summary>
         /// Gets linear L-conversion.
         /// </summary>
         /// <param name="input">The 16-byte block.</param>

@@ -41,6 +41,11 @@ namespace Service.Interfaces
         IdentityDTO Find(Identity model);
 
         /// <summary>
+        /// Generates the new RSA-keys and grasshopper-key.
+        /// </summary>
+        void GenerateKey();
+
+        /// <summary>
         /// Gets a <see cref="IdentityDTO"/> object from the repository.
         /// </summary>
         /// <param name="id">The ID of <see cref="IdentityDTO"/>.</param>
@@ -99,6 +104,13 @@ namespace Service.Interfaces
         /// <param name="guid">The identity GUID.</param>
         /// <returns>The <see cref="IdentityDTO"/> with the given ID.</returns>
         IdentityDTO GetFull(string guid);
+
+        /// <summary>
+        /// Gets the grasshopper key.
+        /// </summary>
+        /// <param name="key">The client public key.</param>
+        /// <returns>The cipherbytes.</returns>
+        byte[] GetGrasshopperKey(string key);
 
         /// <summary>
         /// Gets a <see cref="Identity"/> from repository.

@@ -235,6 +235,7 @@ namespace Infrastructure.Data
                                     if (!Equals(originalValue, currentValue))
                                     {
                                         dynamic auditLog = new JObject();
+                                        auditLog.State = item.State.ToString();
                                         auditLog.PropertyName = propertyName;
                                         auditLog.OriginalValue = originalValue;
                                         auditLog.NewValue = currentValue;

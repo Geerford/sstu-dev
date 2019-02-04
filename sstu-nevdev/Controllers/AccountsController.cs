@@ -1,5 +1,6 @@
 ﻿using Microsoft.Owin.Security;
 using Service.Interfaces;
+using Services.Business.Security;
 using sstu_nevdev.App_Start;
 using sstu_nevdev.Models;
 using System.Net;
@@ -34,16 +35,20 @@ namespace sstu_nevdev.Controllers
         // POST api/accounts
         [HttpPost]
         [AllowAnonymous]
-        public IHttpActionResult Post([FromBody]AccountAPIModel model)
+        public IHttpActionResult Post([FromBody]AccountRequestAPIModel model)
         {
             IAuthenticationManager authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
             var authService = new Authentication(authenticationManager);
-            var username = model.User + "@" + model.Domain;
-            var authenticationResult = authService.SignIn(username, model.Password);
+            var authenticationResult = authService.SignIn(model.User + "@" + model.Domain, model.Password);
             if (authenticationResult.IsSuccess)
             {
-                var user = (UserApiModel)service.GetUser(model.User, model.Domain);
-                return Ok(user);
+                if (Keys.PublicKey == null)
+                {
+                    service.GenerateKey();
+                }
+                var response = (AccountResponseAPIModel)service.GetUser(model.User, model.Domain);
+                response.GrasshopperKey = service.GetGrasshopperKey(model.PublicKey);
+                return Ok(response);
             }
             else
             {

@@ -73,7 +73,7 @@ namespace Service.Interfaces
         /// <summary>
         /// True if the user is at university; otherwise, false.
         /// </summary>
-        /// <param name="IdentityGUID">The user GUID.</param>
-        bool IsPassed(string IdentityGUID);
+        /// <param name="identityGUID">The user GUID.</param>
+        bool IsPassed(string identityGUID);
     }
 }

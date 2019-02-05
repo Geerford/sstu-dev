@@ -207,7 +207,7 @@ namespace Services.Business.Services
             {
                 throw new ValidationException("Не задан тип", "");
             }
-            Type typeObject = Database.Type.Find(x => x.Status == type).LastOrDefault();
+            Type typeObject = Database.Type.Find(x => x.Status == type).FirstOrDefault();
             if (typeObject == null)
             {
                 throw new ValidationException("Сущность не найдена", "");
@@ -237,9 +237,10 @@ namespace Services.Business.Services
             CheckpointDTO result = (CheckpointDTO)checkpoint;
             Type type = Database.Type.Get(checkpoint.TypeID);
             List<Admission> admissions = new List<Admission>();
+            var admissionsQuery = Database.Admission.GetAll();
             foreach (var item in Database.CheckpointAdmission.GetAll().Where(x => x.CheckpointID == checkpoint.ID))
             {
-                Admission admission = Database.Admission.Get(item.AdmissionID);
+                Admission admission = admissionsQuery.Where(y => y.ID == item.AdmissionID).FirstOrDefault();
                 if (admission == null)
                 {
                     throw new ValidationException("Сущность не найдена", "");

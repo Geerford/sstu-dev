@@ -325,7 +325,7 @@ namespace sstu_nevdev.Tests.Services
             unitWorkMoq.Setup(x => x.Type.Get(2)).Returns(itemsType[1]);
             unitWorkMoq.Setup(x => x.Type.Get(3)).Returns(itemsType[2]);
             unitWorkMoq.Setup(x => x.CheckpointAdmission.GetAll()).Returns(itemsCheckpointAdmission);
-            unitWorkMoq.Setup(x => x.Admission.Get(It.IsAny<int>())).Returns(itemsAdmission[0]);
+            unitWorkMoq.Setup(x => x.Admission.GetAll()).Returns(itemsAdmission);
 
             //Act
             var result = serviceMock.Get(id);
@@ -357,8 +357,7 @@ namespace sstu_nevdev.Tests.Services
             unitWorkMoq.Setup(x => x.Type.Get(2)).Returns(itemsType[1]);
             unitWorkMoq.Setup(x => x.Type.Get(3)).Returns(itemsType[2]);
             unitWorkMoq.Setup(x => x.CheckpointAdmission.GetAll()).Returns(itemsCheckpointAdmission);
-            unitWorkMoq.Setup(x => x.Admission.Get(1)).Returns(itemsAdmission[0]);
-            unitWorkMoq.Setup(x => x.Admission.Get(2)).Returns(itemsAdmission[1]);
+            unitWorkMoq.Setup(x => x.Admission.GetAll()).Returns(itemsAdmission);
 
             //Act
             var result = serviceMock.GetByIP(ip);
@@ -389,8 +388,7 @@ namespace sstu_nevdev.Tests.Services
             unitWorkMoq.Setup(x => x.Type.Get(2)).Returns(itemsType[1]);
             unitWorkMoq.Setup(x => x.Type.Get(3)).Returns(itemsType[2]);
             unitWorkMoq.Setup(x => x.CheckpointAdmission.GetAll()).Returns(itemsCheckpointAdmission);
-            unitWorkMoq.Setup(x => x.Admission.Get(1)).Returns(itemsAdmission[0]);
-            unitWorkMoq.Setup(x => x.Admission.Get(2)).Returns(itemsAdmission[1]);
+            unitWorkMoq.Setup(x => x.Admission.GetAll()).Returns(itemsAdmission);
 
             //Act
             var result = serviceMock.GetAll();
@@ -414,8 +412,7 @@ namespace sstu_nevdev.Tests.Services
             unitWorkMoq.Setup(x => x.Type.Get(2)).Returns(itemsType[1]);
             unitWorkMoq.Setup(x => x.Type.Get(3)).Returns(itemsType[2]);
             unitWorkMoq.Setup(x => x.CheckpointAdmission.GetAll()).Returns(itemsCheckpointAdmission);
-            unitWorkMoq.Setup(x => x.Admission.Get(1)).Returns(itemsAdmission[0]);
-            unitWorkMoq.Setup(x => x.Admission.Get(2)).Returns(itemsAdmission[1]);
+            unitWorkMoq.Setup(x => x.Admission.GetAll()).Returns(itemsAdmission);
 
             //Act
             var result = serviceMock.GetByStatus(status);
@@ -441,8 +438,7 @@ namespace sstu_nevdev.Tests.Services
             unitWorkMoq.Setup(x => x.Type.Get(2)).Returns(itemsType[1]);
             unitWorkMoq.Setup(x => x.Type.Get(3)).Returns(itemsType[2]);
             unitWorkMoq.Setup(x => x.CheckpointAdmission.GetAll()).Returns(itemsCheckpointAdmission);
-            unitWorkMoq.Setup(x => x.Admission.Get(1)).Returns(itemsAdmission[0]);
-            unitWorkMoq.Setup(x => x.Admission.Get(2)).Returns(itemsAdmission[1]);
+            unitWorkMoq.Setup(x => x.Admission.GetAll()).Returns(itemsAdmission);
 
             //Act
             var result = serviceMock.GetByType(type);
@@ -463,8 +459,7 @@ namespace sstu_nevdev.Tests.Services
             unitWorkMoq.Setup(x => x.Type.Get(2)).Returns(itemsType[1]);
             unitWorkMoq.Setup(x => x.Type.Get(3)).Returns(itemsType[2]);
             unitWorkMoq.Setup(x => x.CheckpointAdmission.GetAll()).Returns(itemsCheckpointAdmission);
-            unitWorkMoq.Setup(x => x.Admission.Get(1)).Returns(itemsAdmission[0]);
-            unitWorkMoq.Setup(x => x.Admission.Get(2)).Returns(itemsAdmission[1]);
+            unitWorkMoq.Setup(x => x.Admission.GetAll()).Returns(itemsAdmission);
 
             //Act
             var result = serviceMock.GetFull(id);

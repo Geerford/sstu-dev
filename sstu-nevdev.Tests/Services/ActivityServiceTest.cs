@@ -257,7 +257,7 @@ namespace sstu_nevdev.Tests.Services
 
             //Assert
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(List<Activity>));
+            Assert.IsInstanceOfType(result, typeof(IEnumerable<Activity>));
             Assert.AreEqual(3, result.Count());
         }
 
@@ -268,8 +268,7 @@ namespace sstu_nevdev.Tests.Services
             string role = "Сотрудник";
             unitWorkMoq.Setup(x => x.CheckpointAdmission.GetAll())
                 .Returns(itemsCheckpointAdmission.Where(x => x.CheckpointID == id));
-            unitWorkMoq.Setup(x => x.Admission.Get(1)).Returns(itemsAdmission[0]);
-            unitWorkMoq.Setup(x => x.Admission.Get(2)).Returns(itemsAdmission[1]);
+            unitWorkMoq.Setup(x => x.Admission.GetAll()).Returns(itemsAdmission);
 
             //Act
             var result = serviceMock.IsAdmission(id, role);
@@ -385,8 +384,7 @@ namespace sstu_nevdev.Tests.Services
                 .Returns(itemsActivity.Where(x => x.IdentityGUID == id.ToString()));
             unitWorkMoq.Setup(x => x.CheckpointAdmission.GetAll())
                 .Returns(itemsCheckpointAdmission.Where(x => x.CheckpointID == checkpoint.ID));
-            unitWorkMoq.Setup(x => x.Admission.Get(1)).Returns(itemsAdmission[0]);
-            unitWorkMoq.Setup(x => x.Admission.Get(2)).Returns(itemsAdmission[1]);
+            unitWorkMoq.Setup(x => x.Admission.GetAll()).Returns(itemsAdmission);
 
             //Act
             var result = serviceMock.IsOk(checkpoint, identity);
@@ -453,8 +451,7 @@ namespace sstu_nevdev.Tests.Services
                 .Returns(itemsActivity.Where(x => x.IdentityGUID == id.ToString()));
             unitWorkMoq.Setup(x => x.CheckpointAdmission.GetAll())
                 .Returns(admissions.Where(x => x.CheckpointID == checkpoint.ID));
-            unitWorkMoq.Setup(x => x.Admission.Get(1)).Returns(itemsAdmission[0]);
-            unitWorkMoq.Setup(x => x.Admission.Get(2)).Returns(itemsAdmission[1]);
+            unitWorkMoq.Setup(x => x.Admission.GetAll()).Returns(itemsAdmission);
 
             //Act
             var result = serviceMock.IsOk(checkpoint, identity);

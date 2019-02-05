@@ -83,7 +83,7 @@ namespace Services.Business.Services
         /// </summary>
         public IEnumerable<Activity> GetAll()
         {
-            return Database.Activity.GetAll().ToList();
+            return Database.Activity.GetAll();
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Services.Business.Services
         /// </summary>
         public IEnumerable<Activity> GetByStatus(bool status)
         {
-            return Database.Activity.Find(x => x.Status == status).ToList();
+            return Database.Activity.Find(x => x.Status == status);
         }
 
         /// <summary>
@@ -103,9 +103,10 @@ namespace Services.Business.Services
             {
                 throw new ValidationException("Не задананы параметры", "");
             }
+            var admissions = Database.Admission.GetAll();
             foreach (CheckpointAdmission item in Database.CheckpointAdmission.GetAll().Where(x => x.CheckpointID == checkpointID))
             {
-                Admission admission = Database.Admission.Get(item.AdmissionID);
+                Admission admission = admissions.Where(y => y.ID == item.AdmissionID).FirstOrDefault();
                 if (admission.Role.Equals(role))
                 {
                     return true;
@@ -196,13 +197,13 @@ namespace Services.Business.Services
         /// <summary>
         /// Implements <see cref="IActivityService.IsPassed(string)()"/>.
         /// </summary>
-        public bool IsPassed(string IdentityGUID)
+        public bool IsPassed(string identityGUID)
         {
-            if (string.IsNullOrEmpty(IdentityGUID))
+            if (string.IsNullOrEmpty(identityGUID))
             {
                 throw new ValidationException("Не задан ID", "");
             }
-            Activity activity = Database.Activity.GetAll().Where(x => x.IdentityGUID == IdentityGUID).FirstOrDefault();
+            Activity activity = Database.Activity.GetAll().Where(x => x.IdentityGUID == identityGUID).FirstOrDefault();
             if (activity != null && activity.Mode == "Вход")
             {
                 return true; //Person in the room

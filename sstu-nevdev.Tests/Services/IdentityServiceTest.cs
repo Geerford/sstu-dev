@@ -5,6 +5,7 @@ using Moq;
 using Repository.Interfaces;
 using Service.DTO;
 using Service.Interfaces;
+using Services.Business.Security;
 using Services.Business.Services;
 using System;
 using System.Collections.Generic;
@@ -253,6 +254,16 @@ namespace sstu_nevdev.Tests.Services
             Assert.IsInstanceOfType(result, typeof(IdentityDTO));
             Assert.IsNotNull(result.ID);
             Assert.AreEqual(itemsDTO[0], result);
+        }
+
+        [TestMethod]
+        public void GenerateKey()
+        {
+            //Act
+            serviceMock.GenerateKey();
+
+            //Assert
+            Assert.IsTrue(true);
         }
 
         [TestMethod]

@@ -2,7 +2,6 @@
 using Repository.Interfaces;
 using Service.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.Business.Services
 {
@@ -82,7 +81,7 @@ namespace Services.Business.Services
         /// </summary>
         public IEnumerable<Type> GetAll()
         {
-            return Database.Type.GetAll().ToList();
+            return Database.Type.GetAll();
         }
 
         /// <summary>

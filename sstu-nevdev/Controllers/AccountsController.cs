@@ -6,7 +6,7 @@ using sstu_nevdev.Models;
 using System.Net;
 using System.Web;
 using System.Web.Http;
-using static Services.Business.Services.IdentityService;
+using static Services.Business.Service.IdentityService;
 
 namespace sstu_nevdev.Controllers
 {

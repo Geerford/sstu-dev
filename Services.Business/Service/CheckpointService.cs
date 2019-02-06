@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Service.DTO;
 
-namespace Services.Business.Services
+namespace Services.Business.Service
 {
     /// <summary>
     /// Implements <see cref="ICheckpointService"/>.

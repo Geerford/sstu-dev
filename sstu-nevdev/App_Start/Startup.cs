@@ -2,7 +2,7 @@
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 using System;
-using static Services.Business.Services.IdentityService.Authentication;
+using static Services.Business.Service.IdentityService.Authentication;
 
 [assembly: OwinStartup(typeof(sstu_nevdev.App_Start.Startup))]
 

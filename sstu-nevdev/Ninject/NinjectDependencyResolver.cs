@@ -1,6 +1,6 @@
 ﻿using Ninject;
 using Service.Interfaces;
-using Services.Business.Services;
+using Services.Business.Service;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;

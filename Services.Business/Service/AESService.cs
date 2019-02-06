@@ -4,7 +4,7 @@ using Services.Business.Security;
 using System;
 using System.IO;
 
-namespace Services.Business.Services
+namespace Services.Business.Service
 {
     public class AESService : IAESService
     {

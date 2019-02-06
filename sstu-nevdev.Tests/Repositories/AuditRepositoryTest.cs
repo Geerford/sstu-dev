@@ -1,5 +1,4 @@
-﻿using Domain.Core;
-using Domain.Core.Logs;
+﻿using Domain.Core.Logs;
 using Infrastructure.Data;
 using Infrastructure.Data.Repository;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

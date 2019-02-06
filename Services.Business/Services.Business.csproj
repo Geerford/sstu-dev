@@ -64,13 +64,13 @@
     <Compile Include="Security\Keys.cs" />
     <Compile Include="Security\RSA.cs" />
     <Compile Include="ServiceModule.cs" />
-    <Compile Include="Services\ActivityService.cs" />
-    <Compile Include="Services\AdmissionService.cs" />
-    <Compile Include="Services\AESService.cs" />
-    <Compile Include="Services\AuditService.cs" />
-    <Compile Include="Services\CheckpointService.cs" />
-    <Compile Include="Services\IdentityService.cs" />
-    <Compile Include="Services\TypeService.cs" />
+    <Compile Include="Service\ActivityService.cs" />
+    <Compile Include="Service\AdmissionService.cs" />
+    <Compile Include="Service\AESService.cs" />
+    <Compile Include="Service\AuditService.cs" />
+    <Compile Include="Service\CheckpointService.cs" />
+    <Compile Include="Service\IdentityService.cs" />
+    <Compile Include="Service\TypeService.cs" />
     <Compile Include="ValidationException.cs" />
   </ItemGroup>
   <ItemGroup>

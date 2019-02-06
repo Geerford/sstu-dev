@@ -2,8 +2,8 @@
 using sstu_nevdev.Models;
 using System.Web;
 using System.Web.Mvc;
-using static Services.Business.Services.IdentityService;
-using static Services.Business.Services.IdentityService.Authentication;
+using static Services.Business.Service.IdentityService;
+using static Services.Business.Service.IdentityService.Authentication;
 
 namespace sstu_nevdev.Controllers
 {

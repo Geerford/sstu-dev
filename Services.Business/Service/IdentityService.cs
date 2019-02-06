@@ -12,7 +12,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Web;
 
-namespace Services.Business.Services
+namespace Services.Business.Service
 {
     /// <summary>
     /// Implements <see cref="IIdentityService"/>.

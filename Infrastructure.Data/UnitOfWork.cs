@@ -37,6 +37,11 @@ namespace Infrastructure.Data
         private AdmissionRepository AdmissionRepository;
 
         /// <summary>
+        /// Store for the <see cref="AuditRepository"/> property.
+        /// </summary>
+        private AuditRepository AuditRepository;
+
+        /// <summary>
         /// Store for the <see cref="CheckpointAdmissionRepository"/> property.
         /// </summary>
         private CheckpointAdmissionRepository CheckpointAdmissionRepository;
@@ -55,11 +60,6 @@ namespace Infrastructure.Data
         /// Store for the <see cref="TypeRepository"/> property.
         /// </summary>
         private TypeRepository TypeRepository;
-
-        /// <summary>
-        /// Store for the <see cref="AuditRepository"/> property.
-        /// </summary>
-        private AuditRepository AuditRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UnitOfWork"/> class.

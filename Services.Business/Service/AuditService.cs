@@ -3,7 +3,7 @@ using Repository.Interfaces;
 using Service.Interfaces;
 using System.Collections.Generic;
 
-namespace Services.Business.Services
+namespace Services.Business.Service
 {
     /// <summary>
     /// Implements <see cref="IAuditService"/>.

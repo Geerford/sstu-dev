@@ -19,13 +19,13 @@ namespace Domain.Core
         /// Gets or sets the checkpoint ID.
         /// </summary>
         [Required]
-        public int CheckpointID { get; set; }
+        public int? CheckpointID { get; set; }
 
         /// <summary>
         /// Gets or sets the admission ID.
         /// </summary>
         [Required]
-        public int AdmissionID { get; set; }
+        public int? AdmissionID { get; set; }
 
         /// <summary>
         /// Implements <see cref="IDescribable.Describe()"/>

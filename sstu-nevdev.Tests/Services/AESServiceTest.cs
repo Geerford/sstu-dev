@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Linq;
 using Service.Interfaces;
 using Services.Business.Security;
-using Services.Business.Services;
+using Services.Business.Service;
 
 namespace sstu_nevdev.Tests.Services
 {

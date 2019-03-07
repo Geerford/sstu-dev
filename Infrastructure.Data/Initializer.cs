@@ -55,7 +55,9 @@ namespace Infrastructure.Data
                 IP = "192.168.0.1",
                 Campus = 1,
                 Row = 4,
-                Description = "На 4 этаже, 425 аудитория",
+                Section = 1,
+                Classroom = 425,
+                Description = "В лекционной аудитории",
                 Status = "Отметка",
                 Type = type2
             });
@@ -64,7 +66,8 @@ namespace Infrastructure.Data
                 IP = "192.168.0.15",
                 Campus = 1,
                 Row = 4,
-                Description = "На 1 этаже на входе",
+                Section = 3,
+                Description = "На углу на 4 этаже",
                 Status = "Пропуск",
                 Type = type1
             });

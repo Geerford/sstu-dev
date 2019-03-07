@@ -20,6 +20,12 @@
             @Html.Label("Этаж")
         </th>
         <th>
+            @Html.Label("Секция")
+        </th>
+        <th>
+            @Html.Label("Аудитория")
+        </th>
+        <th>
             @Html.Label("Описание")
         </th>
         <th>
@@ -50,6 +56,19 @@
             </td>
             <td>
                 @Html.ActionLink(item.Row.ToString(), "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+            </td>
+            <td>
+                @Html.ActionLink(item.Section.ToString(), "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+            </td>
+            <td>
+                @if (item.Classroom != null)
+                {
+                    @Html.ActionLink(item.Classroom.ToString(), "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                }
+                else
+                {
+                    @Html.ActionLink("-", "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                }
             </td>
             <td>
                 @Html.ActionLink(item.Description, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })

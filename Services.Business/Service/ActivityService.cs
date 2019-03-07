@@ -89,8 +89,12 @@ namespace Services.Business.Service
         /// <summary>
         /// Implements <see cref="IActivityService.GetByStatus(bool)"/>.
         /// </summary>
-        public IEnumerable<Activity> GetByStatus(bool status)
+        public IEnumerable<Activity> GetByStatus(bool? status)
         {
+            if (status == null)
+            {
+                throw new ValidationException("Не задан статус", "");
+            }
             return Database.Activity.Find(x => x.Status == status);
         }
 

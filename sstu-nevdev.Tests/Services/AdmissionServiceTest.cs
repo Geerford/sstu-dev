@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Repository.Interfaces;
 using Service.Interfaces;
-using Services.Business.Services;
+using Services.Business.Service;
 using System.Collections.Generic;
 using System.Linq;
 

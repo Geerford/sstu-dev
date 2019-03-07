@@ -51,7 +51,7 @@ namespace Service.Interfaces
         /// <param name="status">True if the <see cref="Activity"/> is successful; otherwise,false</param>
         /// <returns>The collection of all <see cref="Activity"/> from the repository which equals the 
         /// <paramref name="status"/>.</returns>
-        IEnumerable<Activity> GetByStatus(bool status);
+        IEnumerable<Activity> GetByStatus(bool? status);
 
         /// <summary>
         /// Checks admissions of the user.

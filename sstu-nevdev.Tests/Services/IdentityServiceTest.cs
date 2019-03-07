@@ -6,7 +6,7 @@ using Repository.Interfaces;
 using Service.DTO;
 using Service.Interfaces;
 using Services.Business.Security;
-using Services.Business.Services;
+using Services.Business.Service;
 using System;
 using System.Collections.Generic;
 

@@ -70,6 +70,10 @@ namespace Services.Business.Service
         /// </summary>
         public void Delete(int? checkpointID, int? admissionID)
         {
+            if (checkpointID == null || admissionID == null)
+            {
+                throw new ValidationException("Не заданы параметры ID", "");
+            }
             Database.CheckpointAdmission.Delete(
                 Database.CheckpointAdmission.GetAll()
                     .Where(c => (c.CheckpointID == checkpointID) && (c.AdmissionID == admissionID))
@@ -82,7 +86,11 @@ namespace Services.Business.Service
         /// </summary>
         public void DeleteAllAdmission(int? checkpointID)
         {
-            foreach(var item in Database.CheckpointAdmission.GetAll().Where(x => x.CheckpointID == checkpointID))
+            if (checkpointID == null)
+            {
+                throw new ValidationException("Не задан ID", "");
+            }
+            foreach (var item in Database.CheckpointAdmission.GetAll().Where(x => x.CheckpointID == checkpointID))
             {
                 Database.CheckpointAdmission.Delete(item.ID);
             }
@@ -272,8 +280,12 @@ namespace Services.Business.Service
         /// <summary>
         /// Implements <see cref="ICheckpointService.IsMatchAdmission(int, int)"/>.
         /// </summary>
-        public bool IsMatchAdmission(int checkpointID, int admissionID)
+        public bool IsMatchAdmission(int? checkpointID, int? admissionID)
         {
+            if (checkpointID == null || admissionID == null)
+            {
+                throw new ValidationException("Не заданы параметры ID", "");
+            }
             return (Database.CheckpointAdmission.FindFirst(i => i.CheckpointID == checkpointID && 
                 i.AdmissionID == admissionID) != null) ? true : false;
         }

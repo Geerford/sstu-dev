@@ -33,6 +33,7 @@ namespace sstu_nevdev.Tests.Repositories
                 IP = "test",
                 Campus = -1,
                 Row = -1,
+                Section = -1,
                 Description = "test",
                 Status = "test",
                 TypeID = 1
@@ -123,6 +124,7 @@ namespace sstu_nevdev.Tests.Repositories
                 IP = "test",
                 Campus = -1,
                 Row = -1,
+                Section = -1,
                 Description = "test",
                 Status = "test",
                 TypeID = 1

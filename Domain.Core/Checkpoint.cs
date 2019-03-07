@@ -25,13 +25,24 @@ namespace Domain.Core
         /// Gets or sets the campus.
         /// </summary>
         [Required]
-        public int Campus { get; set; }
+        public int? Campus { get; set; }
 
         /// <summary>
         /// Gets or sets the floor.
         /// </summary>
         [Required]
-        public int Row { get; set; }
+        public int? Row { get; set; }
+
+        /// <summary>
+        /// Gets or sets the section.
+        /// </summary>
+        [Required]
+        public int? Section { get; set; }
+
+        /// <summary>
+        /// Gets or sets the classroom.
+        /// </summary>
+        public int? Classroom { get; set; }
 
         /// <summary>
         /// Gets or sets the description.

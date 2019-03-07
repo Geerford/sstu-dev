@@ -24,13 +24,24 @@ namespace Service.DTO
         /// Gets or sets the campus.
         /// </summary>
         [Required]
-        public int Campus { get; set; }
+        public int? Campus { get; set; }
 
         /// <summary>
         /// Gets or sets the floor.
         /// </summary>
         [Required]
-        public int Row { get; set; }
+        public int? Row { get; set; }
+
+        /// <summary>
+        /// Gets or sets the section.
+        /// </summary>
+        [Required]
+        public int? Section { get; set; }
+
+        /// <summary>
+        /// Gets or sets the classroom.
+        /// </summary>
+        public int? Classroom { get; set; }
 
         /// <summary>
         /// Gets or sets the description.
@@ -73,6 +84,8 @@ namespace Service.DTO
             IP = item.IP;
             Campus = item.Campus;
             Row = item.Row;
+            Section = item.Section;
+            Classroom = item.Classroom;
             Description = item.Description;
             Status = item.Status;
         }

@@ -39,7 +39,7 @@ namespace Domain.Core
         /// Gets or sets the event status. True equals success and false equals failure.
         /// </summary>
         [Required]
-        public bool Status { get; set; }
+        public bool? Status { get; set; }
 
         /// <summary>
         /// Gets or sets the event mode.

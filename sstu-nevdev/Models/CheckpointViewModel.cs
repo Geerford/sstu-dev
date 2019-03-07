@@ -35,6 +35,18 @@ namespace sstu_nevdev.Models
         public int? Row { get; set; }
 
         /// <summary>
+        /// Gets or sets the section.
+        /// </summary>
+        [Required(ErrorMessage = "Секция должна быть заполнена")]
+        public int? Section { get; set; }
+
+        /// <summary>
+        /// Gets or sets the classroom.
+        /// </summary>
+        [Required(ErrorMessage = "Аудитория должна быть заполнена")]
+        public int? Classroom { get; set; }
+
+        /// <summary>
         /// Gets or sets the desciption.
         /// </summary>
         [Required(ErrorMessage = "Описание должно быть заполнено")]
@@ -94,6 +106,8 @@ namespace sstu_nevdev.Models
             IP = item.IP;
             Campus = item.Campus;
             Row = item.Row;
+            Section = item.Section;
+            Classroom = item.Classroom;
             Description = item.Description;
             Status = item.Status;
             Admissions = item.Admissions;

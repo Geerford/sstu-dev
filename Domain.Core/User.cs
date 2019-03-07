@@ -35,7 +35,7 @@ namespace Domain.Core
         /// <summary>
         /// Gets or sets the gender.
         /// </summary>
-        public bool Gender { get; set; }
+        public bool? Gender { get; set; }
 
         /// <summary>
         /// Gets or sets the birthdate.

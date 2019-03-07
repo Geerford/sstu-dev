@@ -100,6 +100,6 @@ namespace Service.Interfaces
         /// </summary>
         /// <param name="checkpointID">ID of Checkpoint.</param>
         /// <param name="admissionID">ID of Admission.</param>
-        bool IsMatchAdmission(int checkpointID, int admissionID);
+        bool IsMatchAdmission(int? checkpointID, int? admissionID);
     }
 }

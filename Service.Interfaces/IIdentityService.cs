@@ -59,7 +59,7 @@ namespace Service.Interfaces
         IEnumerable<IdentityDTO> GetAll();
 
         /// <summary>
-        /// Gets a <see cref="IdentityDTO"/> from repository by department.
+        /// Gets all <see cref="IdentityDTO"/> from repository by department.
         /// </summary>
         /// <param name="department">The identity department.</param>
         /// <returns>The collection of all <see cref="IdentityDTO"/> from the repository which equals the 
@@ -67,7 +67,7 @@ namespace Service.Interfaces
         IEnumerable<IdentityDTO> GetByDepartment(string department);
 
         /// <summary>
-        /// Gets a <see cref="IdentityDTO"/> from repository by group.
+        /// Gets all <see cref="IdentityDTO"/> from repository by group.
         /// </summary>
         /// <param name="group">The user group.</param>
         /// <returns>The collection of all <see cref="IdentityDTO"/> from the repository which equals the 

@@ -14,6 +14,7 @@ namespace Domain.Core
         /// <summary>
         /// Gets or sets the ID.
         /// </summary>
+        [Key]
         public int ID { get; set; }
 
         /// <summary>

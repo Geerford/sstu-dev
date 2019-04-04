@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Core
 {
@@ -14,18 +15,23 @@ namespace Domain.Core
         /// <summary>
         /// Gets or sets the ID.
         /// </summary>
+        [Key]
         public int ID { get; set; }
 
         /// <summary>
         /// Gets or sets the user GUID.
         /// </summary>
         [Required]
+        [StringLength(50)]
+        [Index("IX_GUIDAndIP", 2)]
         public string IdentityGUID { get; set; }
 
         /// <summary>
         /// Gets or sets the checkpoint IP-address.
         /// </summary>
         [Required]
+        [StringLength(39)]
+        [Index("IX_GUIDAndIP", 1)]
         public string CheckpointIP { get; set; }
 
         /// <summary>
@@ -39,7 +45,7 @@ namespace Domain.Core
         /// Gets or sets the event status. True equals success and false equals failure.
         /// </summary>
         [Required]
-        public bool? Status { get; set; }
+        public bool Status { get; set; }
 
         /// <summary>
         /// Gets or sets the event mode.

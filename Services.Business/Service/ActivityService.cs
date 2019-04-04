@@ -208,7 +208,7 @@ namespace Services.Business.Service
                 throw new ValidationException("Не задан ID", "");
             }
             Activity activity = Database.Activity.GetAll().Where(x => x.IdentityGUID == identityGUID).FirstOrDefault();
-            if (activity != null && activity.Mode == "Вход")
+            if (activity != null && activity.Mode.Equals("Вход"))
             {
                 return true; //Person in the room
             }

@@ -143,6 +143,7 @@
     <Compile Include="Services\AuditServiceTest.cs" />
     <Compile Include="Services\CheckpointServiceTest.cs" />
     <Compile Include="Services\IdentityServiceTest.cs" />
+    <Compile Include="Services\StatisticsServiceTest.cs" />
     <Compile Include="Services\TypeServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>

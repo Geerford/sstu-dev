@@ -5,7 +5,6 @@ using Moq;
 using Repository.Interfaces;
 using Service.DTO;
 using Service.Interfaces;
-using Services.Business.Security;
 using Services.Business.Service;
 using System;
 using System.Collections.Generic;
@@ -17,7 +16,7 @@ namespace sstu_nevdev.Tests.Services
     {
         private IIdentityService serviceMock;
         private Mock<IRepository<Identity>> repositoryMock;
-        private Mock<IUnitOfWork> unitWorkMoq;
+        private Mock<IUnitOfWork> unitWorkMock;
         private Mock<ISyncUnitOfWork> syncUnitOfWork;
         private List<IdentityDTO> itemsDTO;
         private List<Identity> itemsSimple;
@@ -28,9 +27,9 @@ namespace sstu_nevdev.Tests.Services
         public void Initialize()
         {
             repositoryMock = new Mock<IRepository<Identity>>();
-            unitWorkMoq = new Mock<IUnitOfWork>();
+            unitWorkMock = new Mock<IUnitOfWork>();
             syncUnitOfWork = new Mock<ISyncUnitOfWork>();
-            serviceMock = new IdentityService(unitWorkMoq.Object, syncUnitOfWork.Object);
+            serviceMock = new IdentityService(unitWorkMock.Object, syncUnitOfWork.Object);
             itemsDTO = new List<IdentityDTO>()
             {
                 new IdentityDTO()
@@ -186,8 +185,8 @@ namespace sstu_nevdev.Tests.Services
                 itemsSimple[1]
             };
             syncUnitOfWork.Setup(x => x.User.GetAll()).Returns(itemsUser);
-            unitWorkMoq.Setup(x => x.Identity.GetAll()).Returns(items);
-            unitWorkMoq.Setup(x => x.Identity.Create(item)).Callback(() => 
+            unitWorkMock.Setup(x => x.Identity.GetAll()).Returns(items);
+            unitWorkMock.Setup(x => x.Identity.Create(item)).Callback(() => 
             {
                 item.ID = 3;
             });
@@ -204,7 +203,7 @@ namespace sstu_nevdev.Tests.Services
         {
             //Arrange
             int ID = -1;
-            unitWorkMoq.Setup(x => x.Identity.Delete(itemsSimple[0].ID)).Callback((int callbackID) =>
+            unitWorkMock.Setup(x => x.Identity.Delete(itemsSimple[0].ID)).Callback((int callbackID) =>
             {
                 ID = itemsSimple[0].ID;
             });
@@ -222,7 +221,7 @@ namespace sstu_nevdev.Tests.Services
         {
             //Arrange
             Identity item = new Identity();
-            unitWorkMoq.Setup(x => x.Identity.Update(itemsSimple[0])).Callback(() =>
+            unitWorkMock.Setup(x => x.Identity.Update(itemsSimple[0])).Callback(() =>
             {
                 item.ID = itemsSimple[0].ID;
                 item.GUID = itemsSimple[0].GUID;
@@ -243,7 +242,7 @@ namespace sstu_nevdev.Tests.Services
         public void Find()
         {
             //Arrange
-            unitWorkMoq.Setup(x => x.Identity.GetAll()).Returns(itemsSimple);
+            unitWorkMock.Setup(x => x.Identity.GetAll()).Returns(itemsSimple);
             syncUnitOfWork.Setup(x => x.User.GetAll()).Returns(itemsUser);
 
             //Act
@@ -270,7 +269,7 @@ namespace sstu_nevdev.Tests.Services
         public void Get_Simple_Model()
         {
             //Arrange
-            unitWorkMoq.Setup(x => x.Identity.Get(It.IsAny<int>())).Returns(itemsSimple[0]);
+            unitWorkMock.Setup(x => x.Identity.Get(It.IsAny<int>())).Returns(itemsSimple[0]);
 
             //Act
             var result = serviceMock.GetSimple(id);
@@ -285,8 +284,8 @@ namespace sstu_nevdev.Tests.Services
         public void Get()
         {
             //Arrange
-            unitWorkMoq.Setup(x => x.Identity.Get(It.IsAny<int>())).Returns(itemsSimple[0]);
-            unitWorkMoq.Setup(x => x.Identity.GetAll()).Returns(itemsSimple);
+            unitWorkMock.Setup(x => x.Identity.Get(It.IsAny<int>())).Returns(itemsSimple[0]);
+            unitWorkMock.Setup(x => x.Identity.GetAll()).Returns(itemsSimple);
             syncUnitOfWork.Setup(x => x.User.GetAll()).Returns(itemsUser);
 
             //Act
@@ -302,7 +301,7 @@ namespace sstu_nevdev.Tests.Services
         public void Get_By_GUID()
         {
             //Arrange
-            unitWorkMoq.Setup(x => x.Identity.GetAll()).Returns(itemsSimple);
+            unitWorkMock.Setup(x => x.Identity.GetAll()).Returns(itemsSimple);
             syncUnitOfWork.Setup(x => x.User.GetAll()).Returns(itemsUser);
 
             //Act
@@ -320,7 +319,7 @@ namespace sstu_nevdev.Tests.Services
             //Arrange
             string name = "Сидр", midname = "Сидорович", surname = "Сидоров";
             syncUnitOfWork.Setup(x => x.User.Find(It.IsAny<Func<User, bool>>())).Returns(itemsUser);
-            unitWorkMoq.Setup(x => x.Identity.GetAll()).Returns(itemsSimple);
+            unitWorkMock.Setup(x => x.Identity.GetAll()).Returns(itemsSimple);
             syncUnitOfWork.Setup(x => x.User.GetAll()).Returns(itemsUser);
 
             //Act
@@ -336,7 +335,7 @@ namespace sstu_nevdev.Tests.Services
         public void Get_All()
         {
             //Arrange
-            unitWorkMoq.Setup(x => x.Identity.GetAll()).Returns(itemsSimple);
+            unitWorkMock.Setup(x => x.Identity.GetAll()).Returns(itemsSimple);
             syncUnitOfWork.Setup(x => x.User.GetAll()).Returns(itemsUser);
 
             //Act
@@ -352,7 +351,7 @@ namespace sstu_nevdev.Tests.Services
         {
             //Arrange
             var status = "Отчислен";
-            unitWorkMoq.Setup(x => x.Identity.GetAll()).Returns(itemsSimple);
+            unitWorkMock.Setup(x => x.Identity.GetAll()).Returns(itemsSimple);
             syncUnitOfWork.Setup(x => x.User.GetAll()).Returns(itemsUser);
 
             //Act
@@ -368,7 +367,7 @@ namespace sstu_nevdev.Tests.Services
         {
             //Arrange
             var department = "ИнПИТ";
-            unitWorkMoq.Setup(x => x.Identity.GetAll()).Returns(itemsSimple);
+            unitWorkMock.Setup(x => x.Identity.GetAll()).Returns(itemsSimple);
             syncUnitOfWork.Setup(x => x.User.GetAll()).Returns(itemsUser);
 
             //Act
@@ -384,7 +383,7 @@ namespace sstu_nevdev.Tests.Services
         {
             //Arrange
             var group = "ИФСТ";
-            unitWorkMoq.Setup(x => x.Identity.GetAll()).Returns(itemsSimple);
+            unitWorkMock.Setup(x => x.Identity.GetAll()).Returns(itemsSimple);
             syncUnitOfWork.Setup(x => x.User.GetAll()).Returns(itemsUser);
 
             //Act
@@ -399,7 +398,7 @@ namespace sstu_nevdev.Tests.Services
         public void Get_Full()
         {
             //Arrange
-            unitWorkMoq.Setup(x => x.Identity.GetAll()).Returns(itemsSimple);
+            unitWorkMock.Setup(x => x.Identity.GetAll()).Returns(itemsSimple);
             syncUnitOfWork.Setup(x => x.User.GetAll()).Returns(itemsUser);
 
             //Act

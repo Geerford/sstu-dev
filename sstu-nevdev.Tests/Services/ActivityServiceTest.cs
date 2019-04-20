@@ -105,7 +105,8 @@ namespace sstu_nevdev.Tests.Services
                     IdentityGUID = "1",
                     CheckpointIP = "192.168.0.1",
                     Date = DateTime.Now,
-                    Mode = "Вход",
+                    ModeID = 1,
+                    Mode = new Mode { Description = "Вход" },
                     Status = true
                 },
                 new Activity
@@ -114,7 +115,8 @@ namespace sstu_nevdev.Tests.Services
                     IdentityGUID = "2",
                     CheckpointIP = "192.168.0.1",
                     Date = DateTime.Now,
-                    Mode = "Выход",
+                    ModeID = 2,
+                    Mode = new Mode { Description = "Выход" },
                     Status = true
                 }, 
                 new Activity
@@ -123,7 +125,8 @@ namespace sstu_nevdev.Tests.Services
                     IdentityGUID = "3",
                     CheckpointIP = "192.168.0.1",
                     Date = DateTime.Now,
-                    Mode = "Вход",
+                    ModeID = 1,
+                    Mode = new Mode { Description = "Вход" },
                     Status = true
                 }
             };
@@ -150,7 +153,8 @@ namespace sstu_nevdev.Tests.Services
                     IdentityGUID = "1",
                     CheckpointIP = "192.168.0.1",
                     Date = DateTime.Now,
-                    Mode = "Вход",
+                    ModeID = 1,
+                    Mode = new Mode { Description = "Вход" },
                     Status = true
                 },
                 new Activity
@@ -159,7 +163,8 @@ namespace sstu_nevdev.Tests.Services
                     IdentityGUID = "2",
                     CheckpointIP = "192.168.0.1",
                     Date = DateTime.Now,
-                    Mode = "Выход",
+                    ModeID = 2,
+                    Mode = new Mode { Description = "Выход" },
                     Status = true
                 },
             };
@@ -306,7 +311,7 @@ namespace sstu_nevdev.Tests.Services
                 Row = 4,
                 Description = "На 4 этаже, 425 аудитория",
                 Status = "Отметка",
-                Type = (TypeDTO)itemsType[0],
+                Type = (TypeDTO)itemsType[2],
                 Admissions = itemsAdmission
             };
             IdentityDTO identity = new IdentityDTO()
@@ -332,7 +337,11 @@ namespace sstu_nevdev.Tests.Services
             unitWorkMoq.Setup(x => x.Type.Get(2)).Returns(itemsType[1]);
             unitWorkMoq.Setup(x => x.Type.Get(3)).Returns(itemsType[2]);
             unitWorkMoq.Setup(x => x.Activity.GetAll())
-                .Returns(itemsActivity.Where(x => x.IdentityGUID == id.ToString()));
+                .Returns(itemsActivity.Where(x => x.IdentityGUID.Equals(id.ToString())));
+            unitWorkMoq.Setup(x => x.Admission.GetAll())
+                .Returns(itemsAdmission);
+            unitWorkMoq.Setup(x => x.CheckpointAdmission.GetAll())
+                .Returns(itemsCheckpointAdmission.Where(x => x.CheckpointID == checkpoint.ID));
 
             //Act
             var result = serviceMock.IsOk(checkpoint, identity);

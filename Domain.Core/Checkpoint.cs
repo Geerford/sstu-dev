@@ -1,6 +1,7 @@
 ﻿using Domain.Core.Logs;
 using Newtonsoft.Json.Linq;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Core
 {
@@ -20,6 +21,7 @@ namespace Domain.Core
         /// Gets or sets the IP-address.
         /// </summary>
         [Required]
+        [Index(IsUnique = true)]
         public string IP { get; set; }
 
         /// <summary>

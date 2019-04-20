@@ -58,6 +58,11 @@ namespace Infrastructure.Data
         private IdentityRepository IdentityRepository;
 
         /// <summary>
+        /// Store for the <see cref="ModeRepository"/> property.
+        /// </summary>
+        private ModeRepository ModeRepository;
+
+        /// <summary>
         /// Store for the <see cref="TypeRepository"/> property.
         /// </summary>
         private TypeRepository TypeRepository;
@@ -158,6 +163,21 @@ namespace Infrastructure.Data
                     IdentityRepository = new IdentityRepository(database);
                 }
                 return IdentityRepository;
+            }
+        }
+
+        /// <summary>
+        /// Implements <see cref="IUnitOfWork.Mode"/>.
+        /// </summary>
+        public IRepository<Mode> Mode
+        {
+            get
+            {
+                if (ModeRepository == null)
+                {
+                    ModeRepository = new ModeRepository(database);
+                }
+                return ModeRepository;
             }
         }
 

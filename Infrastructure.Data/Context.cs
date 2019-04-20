@@ -41,6 +41,11 @@ namespace Infrastructure.Data
         public DbSet<Identity> Identity { get; set; }
 
         /// <summary>
+        /// Gets or sets the <see cref="Mode <see cref="DbSet"/>.
+        /// </summary>
+        public DbSet<Mode> Mode { get; set; }
+
+        /// <summary>
         /// Gets or sets the <see cref="Type"/> <see cref="DbSet"/>.
         /// </summary>
         public DbSet<Type> Type { get; set; }

@@ -2,6 +2,7 @@
 using Service.Interfaces;
 using sstu_nevdev.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace sstu_nevdev.Controllers
@@ -10,10 +11,12 @@ namespace sstu_nevdev.Controllers
     public class ActivityController : Controller
     {
         IActivityService service;
+        IModeService modeService;
 
-        public ActivityController(IActivityService service)
+        public ActivityController(IActivityService service, IModeService modeService)
         {
             this.service = service;
+            this.modeService = modeService;
         }
 
         public ActionResult Index()
@@ -97,7 +100,7 @@ namespace sstu_nevdev.Controllers
                     IdentityGUID = model.IdentityGUID,
                     CheckpointIP = model.CheckpointIP,
                     Date = (System.DateTime)model.Date,
-                    Mode = model.Mode,
+                    ModeID = modeService.GetByMode(model.Mode).FirstOrDefault().ID,
                     Status = status
                 });
                 return RedirectToAction("Index", "Activity");
@@ -192,7 +195,7 @@ namespace sstu_nevdev.Controllers
                     IdentityGUID = model.IdentityGUID,
                     CheckpointIP = model.CheckpointIP,
                     Date = (System.DateTime)model.Date,
-                    Mode = model.Mode,
+                    ModeID = modeService.GetByMode(model.Mode).First().ID,
                     Status = status
                 });
                 return RedirectToAction("Index", "Activity");

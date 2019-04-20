@@ -7,6 +7,7 @@ using sstu_nevdev.Controllers;
 using sstu_nevdev.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http.Results;
 using System.Web.Mvc;
 using RedirectToRouteResult = System.Web.Mvc.RedirectToRouteResult;
@@ -19,10 +20,12 @@ namespace sstu_nevdev.Tests.Controllers
         private Mock<IActivityService> activityServiceMock;
         private Mock<ICheckpointService> checkpointServiceMock;
         private Mock<IIdentityService> identityServiceMock;
+        private Mock<IModeService> modeServiceMock;
         private ActivityController controllerWEB;
         private ActivitiesController controllerAPI;
         private List<Activity> items;
         private List<CheckpointDTO> checkpoints;
+        private List<Mode> mods;
         private List<IdentityDTO> users;
         private readonly int id = 1;
         
@@ -32,7 +35,8 @@ namespace sstu_nevdev.Tests.Controllers
             activityServiceMock = new Mock<IActivityService>();
             checkpointServiceMock = new Mock<ICheckpointService>();
             identityServiceMock = new Mock<IIdentityService>();
-            controllerWEB = new ActivityController(activityServiceMock.Object);
+            modeServiceMock = new Mock<IModeService>();
+            controllerWEB = new ActivityController(activityServiceMock.Object, modeServiceMock.Object);
             controllerAPI = new ActivitiesController(activityServiceMock.Object, checkpointServiceMock.Object,
                 identityServiceMock.Object);
             items = new List<Activity>()
@@ -42,7 +46,8 @@ namespace sstu_nevdev.Tests.Controllers
                     IdentityGUID = "1",
                     CheckpointIP = "192.168.0.1",
                     Date = DateTime.Now,
-                    Mode = "Вход",
+                    ModeID = 1,
+                    Mode = new Mode { Description = "Статистика" },
                     Status = true
                 },
                 new Activity
@@ -50,7 +55,8 @@ namespace sstu_nevdev.Tests.Controllers
                     IdentityGUID = "2",
                     CheckpointIP = "192.168.0.2",
                     Date = DateTime.Now,
-                    Mode = "Выход",
+                    ModeID = 2,
+                    Mode = new Mode { Description = "Выход" },
                     Status = true
                 },
                 new Activity
@@ -58,7 +64,8 @@ namespace sstu_nevdev.Tests.Controllers
                     IdentityGUID = "3",
                     CheckpointIP = "192.168.0.3",
                     Date = DateTime.Now,
-                    Mode = "Вход",
+                    ModeID = 2,
+                    Mode = new Mode { Description = "Выход" },
                     Status = true
                 }
             };
@@ -119,6 +126,24 @@ namespace sstu_nevdev.Tests.Controllers
                         Status = "Статистический"
                     },
                     Admissions = new List<Admission>()
+                }
+            };
+            mods = new List<Mode>()
+            {
+                new Mode
+                {
+                    ID = 1,
+                    Description = "Вход"
+                },
+                new Mode
+                {
+                    ID = 2,
+                    Description = "Выход"
+                },
+                new Mode
+                {
+                    ID = 3,
+                    Description = "Статистика"
                 }
             };
             users = new List<IdentityDTO>()
@@ -222,6 +247,7 @@ namespace sstu_nevdev.Tests.Controllers
                 Status = "Успех",
                 Mode = "Вход"
             };
+            modeServiceMock.Setup(x => x.GetByMode(It.IsAny<string>())).Returns(mods.Where(x => x.Description.Equals(model.Mode)));
 
             //Act
             var result = (RedirectToRouteResult)controllerWEB.Create(model);
@@ -262,6 +288,7 @@ namespace sstu_nevdev.Tests.Controllers
                 Status = "Успех",
                 Mode = "Вход"
             };
+            modeServiceMock.Setup(x => x.GetByMode(It.IsAny<string>())).Returns(mods.Where(x => x.Description.Equals(model.Mode)));
 
             //Act
             var result = (RedirectToRouteResult)controllerWEB.Edit(model);
@@ -294,7 +321,7 @@ namespace sstu_nevdev.Tests.Controllers
                 CheckpointIP = "192.168.0.0",
                 Date = DateTime.Now,
                 Status = true,
-                Mode = "Вход"
+                ModeID = 1
             };
 
             //Act
@@ -463,7 +490,7 @@ namespace sstu_nevdev.Tests.Controllers
                 IdentityGUID = "1",
                 CheckpointIP = "192.168.0.1",
                 Date = DateTime.Now,
-                Mode = "Вход",
+                ModeID = 1,
                 Status = true
             };
 
@@ -488,7 +515,7 @@ namespace sstu_nevdev.Tests.Controllers
                 IdentityGUID = "1",
                 CheckpointIP = "192.168.0.1",
                 Date = DateTime.Now,
-                Mode = "Вход",
+                ModeID = 1,
                 Status = true
             };
 
@@ -510,7 +537,7 @@ namespace sstu_nevdev.Tests.Controllers
                 IdentityGUID = "1",
                 CheckpointIP = "192.168.0.1",
                 Date = DateTime.Now,
-                Mode = "Вход",
+                ModeID = 1,
                 Status = true
             };
             activityServiceMock.Setup(x => x.Get(id)).Returns(item);

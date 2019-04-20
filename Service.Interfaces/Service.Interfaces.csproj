@@ -54,6 +54,7 @@
     <Compile Include="IDatabaseService.cs" />
     <Compile Include="IGrasshopper.cs" />
     <Compile Include="IIdentityService.cs" />
+    <Compile Include="IModeService.cs" />
     <Compile Include="IRSA.cs" />
     <Compile Include="IStatisticsService.cs" />
     <Compile Include="ITypeService.cs" />

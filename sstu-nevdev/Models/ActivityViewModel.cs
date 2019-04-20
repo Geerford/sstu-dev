@@ -71,7 +71,7 @@ namespace sstu_nevdev.Models
             IdentityGUID = item.IdentityGUID;
             CheckpointIP = item.CheckpointIP;
             Date = item.Date;
-            Mode = item.Mode;
+            Mode = item.Mode.Description;
             Status = item.Status.Equals(true) ? "Успех" : "Неудача";
         }
 

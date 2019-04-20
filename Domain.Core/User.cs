@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Core
 {
@@ -17,6 +18,7 @@ namespace Domain.Core
         /// <summary>
         /// Gets or sets the GUID.
         /// </summary>
+        [Index(IsUnique = true)]
         public string GUID { get; set; }
 
         /// <summary>

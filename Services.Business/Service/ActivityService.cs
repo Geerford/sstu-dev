@@ -139,7 +139,7 @@ namespace Services.Business.Service
                             CheckpointIP = checkpoint.IP,
                             Date = System.DateTime.Now,
                             IdentityGUID = identity.GUID,
-                            Mode = "Выход",
+                            ModeID = 2,
                             Status = true
                         });
                         return -1;
@@ -153,7 +153,7 @@ namespace Services.Business.Service
                                 CheckpointIP = checkpoint.IP,
                                 Date = System.DateTime.Now,
                                 IdentityGUID = identity.GUID,
-                                Mode = "Вход",
+                                ModeID = 1,
                                 Status = true
                             });
                             return 200;
@@ -168,7 +168,7 @@ namespace Services.Business.Service
                             CheckpointIP = checkpoint.IP,
                             Date = System.DateTime.Now,
                             IdentityGUID = identity.GUID,
-                            Mode = "Выход",
+                            ModeID = 2,
                             Status = true
                         });
                         return -1;
@@ -180,7 +180,7 @@ namespace Services.Business.Service
                             CheckpointIP = checkpoint.IP,
                             Date = System.DateTime.Now,
                             IdentityGUID = identity.GUID,
-                            Mode = "Вход",
+                            ModeID = 1,
                             Status = true
                         });
                         return -1;
@@ -191,7 +191,7 @@ namespace Services.Business.Service
                         CheckpointIP = checkpoint.IP,
                         Date = System.DateTime.Now,
                         IdentityGUID = identity.GUID,
-                        Mode = "Проход",
+                        ModeID = 3,
                         Status = true
                     });
                     return -1;
@@ -208,7 +208,7 @@ namespace Services.Business.Service
                 throw new ValidationException("Не задан ID", "");
             }
             Activity activity = Database.Activity.GetAll().Where(x => x.IdentityGUID == identityGUID).FirstOrDefault();
-            if (activity != null && activity.Mode.Equals("Вход"))
+            if (activity != null && activity.Mode.Description.Equals("Вход"))
             {
                 return true; //Person in the room
             }

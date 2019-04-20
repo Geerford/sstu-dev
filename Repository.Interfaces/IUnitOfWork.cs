@@ -42,6 +42,11 @@ namespace Repository.Interfaces
         IRepository<Identity> Identity { get; }
 
         /// <summary>
+        /// Gets the <see cref="Mode"/> repository.
+        /// </summary>
+        IRepository<Mode> Mode { get; }
+
+        /// <summary>
         /// Gets the <see cref="Type"/> repository.
         /// </summary>
         IRepository<Domain.Core.Type> Type { get; }

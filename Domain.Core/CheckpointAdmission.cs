@@ -1,6 +1,7 @@
 ﻿using Domain.Core.Logs;
 using Newtonsoft.Json.Linq;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Core
 {
@@ -20,12 +21,14 @@ namespace Domain.Core
         /// Gets or sets the checkpoint ID.
         /// </summary>
         [Required]
+        [Index("IX_AdmissionAndCheckpoint", 1)]
         public int? CheckpointID { get; set; }
 
         /// <summary>
         /// Gets or sets the admission ID.
         /// </summary>
         [Required]
+        [Index("IX_AdmissionAndCheckpoint", 2)]
         public int? AdmissionID { get; set; }
 
         /// <summary>

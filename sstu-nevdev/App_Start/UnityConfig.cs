@@ -24,6 +24,7 @@ namespace sstu_nevdev.App_Start
             container.RegisterType<ICheckpointService, CheckpointService>();
             container.RegisterType<IDatabaseService, DatabaseService>();
             container.RegisterType<IIdentityService, IdentityService>();
+            container.RegisterType<IModeService, ModeService>();
             container.RegisterType<ITypeService, TypeService>();
             return container;
         }

@@ -60,6 +60,7 @@
     <Compile Include="CheckpointAdmission.cs" />
     <Compile Include="Identity.cs" />
     <Compile Include="Logs\IDescribable.cs" />
+    <Compile Include="Mode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Type.cs" />
     <Compile Include="User.cs" />

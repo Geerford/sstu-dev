@@ -48,11 +48,15 @@ namespace Domain.Core
         public bool Status { get; set; }
 
         /// <summary>
-        /// Gets or sets the event mode.
+        /// Gets or sets the ID of activity mode.
         /// </summary>
         [Required]
-        [StringLength(20)]
-        public string Mode { get; set; }
+        public int ModeID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the event mode.
+        /// </summary>
+        public Mode Mode { get; set; }
 
         /// <summary>
         /// Implements <see cref="IDescribable.Describe()"/>
@@ -84,6 +88,7 @@ namespace Domain.Core
                 result &= CheckpointIP.Equals(item.CheckpointIP);
                 result &= Date.Equals(item.Date);
                 result &= Status.Equals(item.Status);
+                result &= ModeID.Equals(item.ModeID);
                 result &= Mode.Equals(item.Mode);
                 return result;
             }
@@ -101,6 +106,7 @@ namespace Domain.Core
             hashcode ^= CheckpointIP.GetHashCode();
             hashcode ^= Date.GetHashCode();
             hashcode ^= Status.GetHashCode();
+            hashcode ^= ModeID.GetHashCode();
             hashcode ^= Mode.GetHashCode();
             return hashcode;
         }

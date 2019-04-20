@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Core
 {
@@ -15,6 +16,7 @@ namespace Domain.Core
         /// Gets or sets the ID.
         /// </summary>
         [Key]
+        [Index(IsUnique = true)]
         public int ID { get; set; }
 
         /// <summary>

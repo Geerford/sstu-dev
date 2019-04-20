@@ -34,7 +34,7 @@ namespace sstu_nevdev.Tests.Repositories
                 CheckpointIP = "test",
                 IdentityGUID = "test",
                 Date = DateTime.Now,
-                Mode = "test",
+                ModeID = 1,
                 Status = true
             };
 
@@ -123,7 +123,7 @@ namespace sstu_nevdev.Tests.Repositories
                 CheckpointIP = "test",
                 IdentityGUID = "test",
                 Date = DateTime.Now,
-                Mode = "test",
+                ModeID = 1,
                 Status = true
             };
 

@@ -59,6 +59,7 @@
     <Compile Include="Repository\CheckpointAdmissionRepository.cs" />
     <Compile Include="Repository\CheckpointRepository.cs" />
     <Compile Include="Repository\IdentityRepository.cs" />
+    <Compile Include="Repository\ModeRepository.cs" />
     <Compile Include="Repository\TypeRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="SyncContext.cs" />

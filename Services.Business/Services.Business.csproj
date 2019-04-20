@@ -71,6 +71,7 @@
     <Compile Include="Service\CheckpointService.cs" />
     <Compile Include="Service\DatabaseService.cs" />
     <Compile Include="Service\IdentityService.cs" />
+    <Compile Include="Service\ModeService.cs" />
     <Compile Include="Service\StatisticsService.cs" />
     <Compile Include="Service\TypeService.cs" />
     <Compile Include="ValidationException.cs" />

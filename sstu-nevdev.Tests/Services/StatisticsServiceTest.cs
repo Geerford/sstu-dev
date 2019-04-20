@@ -45,7 +45,8 @@ namespace sstu_nevdev.Tests.Services
                     IdentityGUID = "1",
                     CheckpointIP = "192.168.0.1",
                     Date = DateTime.Now,
-                    Mode = "Вход",
+                    ModeID = 1,
+                    Mode = new Mode { Description = "Вход" },
                     Status = true
                 },
                 new Activity
@@ -53,7 +54,8 @@ namespace sstu_nevdev.Tests.Services
                     IdentityGUID = "2",
                     CheckpointIP = "192.168.0.1",
                     Date = DateTime.Now,
-                    Mode = "Вход",
+                    ModeID = 1,
+                    Mode = new Mode { Description = "Вход" },
                     Status = true
                 },
                 new Activity
@@ -61,7 +63,8 @@ namespace sstu_nevdev.Tests.Services
                     IdentityGUID = "2",
                     CheckpointIP = "192.168.0.1",
                     Date = DateTime.Now,
-                    Mode = "Выход",
+                    ModeID = 2,
+                    Mode = new Mode { Description = "Выход" },
                     Status = true
                 }
             };

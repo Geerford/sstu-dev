@@ -20,6 +20,9 @@ namespace Infrastructure.Data
                 Description = "Собирает статистику",
                 Status = "Статистический"
             };
+            Mode mode1 = new Mode { Description = "Вход" };
+            Mode mode2 = new Mode { Description = "Выход" };
+            Mode mode3 = new Mode { Description = "Статистика" };
             database.Type.Add(type1);
             database.Type.Add(type2);
             database.Type.Add(type3);
@@ -78,7 +81,7 @@ namespace Infrastructure.Data
                 IdentityGUID = "1",
                 CheckpointIP = "192.168.0.1",
                 Date = DateTime.Now,
-                Mode = "Вход",
+                Mode = mode1,
                 Status = true
             });
             database.Activity.Add(new Activity
@@ -86,7 +89,7 @@ namespace Infrastructure.Data
                 IdentityGUID = "2",
                 CheckpointIP = "192.168.0.1",
                 Date = DateTime.Now,
-                Mode = "Выход",
+                Mode = mode2,
                 Status = true
             });
             database.Activity.Add(new Activity
@@ -94,7 +97,7 @@ namespace Infrastructure.Data
                 IdentityGUID = "3",
                 CheckpointIP = "192.168.0.1",
                 Date = DateTime.Now,
-                Mode = "Вход",
+                Mode = mode3,
                 Status = true
             });
             database.CheckpointAdmission.Add(new CheckpointAdmission {

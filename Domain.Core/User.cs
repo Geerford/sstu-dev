@@ -18,6 +18,7 @@ namespace Domain.Core
         /// <summary>
         /// Gets or sets the GUID.
         /// </summary>
+        [StringLength(50)]
         [Index(IsUnique = true)]
         public string GUID { get; set; }
 

@@ -21,6 +21,7 @@ namespace Domain.Core
         /// Gets or sets the IP-address.
         /// </summary>
         [Required]
+        [StringLength(39)]
         [Index(IsUnique = true)]
         public string IP { get; set; }
 

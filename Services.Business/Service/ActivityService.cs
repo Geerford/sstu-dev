@@ -75,6 +75,7 @@ namespace Services.Business.Service
             {
                 throw new ValidationException("Сущность не найдена", "");
             }
+            item.Mode = Database.Mode.Get(item.ModeID);
             return item;
         }
 
@@ -83,7 +84,12 @@ namespace Services.Business.Service
         /// </summary>
         public IEnumerable<Activity> GetAll()
         {
-            return Database.Activity.GetAll();
+            var items = Database.Activity.GetAll();
+            foreach (var item in items)
+            {
+                item.Mode = Database.Mode.Get(item.ModeID);
+            }
+            return items;
         }
 
         /// <summary>
@@ -95,7 +101,12 @@ namespace Services.Business.Service
             {
                 throw new ValidationException("Не задан статус", "");
             }
-            return Database.Activity.Find(x => x.Status == status);
+            var items = Database.Activity.Find(x => x.Status == status);
+            foreach (var item in items)
+            {
+                item.Mode = Database.Mode.Get(item.ModeID);
+            }
+            return items;
         }
 
         /// <summary>

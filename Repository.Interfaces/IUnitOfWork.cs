@@ -50,5 +50,24 @@ namespace Repository.Interfaces
         /// Saves state of <see cref="IUnitOfWork"/> repository.
         /// </summary>
         void Save();
+
+        #region Backup and restore
+        /// <summary>
+        /// Creates a database backup. 
+        /// </summary>
+        /// <returns>The backup path.</returns>
+        string Backup();
+
+        /// <summary>
+        /// Drops the database.
+        /// </summary>
+        void Drop();
+
+        /// <summary>
+        /// Recovers database from backup.
+        /// </summary>
+        /// <param name="backupName">The database backup name.</param>
+        void Restore(string backupName);
+        #endregion
     }
 }

@@ -10,6 +10,7 @@ namespace Service.Interfaces
     /// </summary>
     public interface IIdentityService
     {
+        #region Base logic
         /// <summary>
         /// Creates the <see cref="Identity"/> object in the repository.
         /// </summary>
@@ -39,11 +40,6 @@ namespace Service.Interfaces
         /// <param name="model">The <see cref="Identity"/> object.</param>
         /// <returns>The <see cref="IdentityDTO"/> object.</returns>
         IdentityDTO Find(Identity model);
-
-        /// <summary>
-        /// Generates the new RSA-keys and grasshopper-key.
-        /// </summary>
-        void GenerateKey();
 
         /// <summary>
         /// Gets a <see cref="IdentityDTO"/> object from the repository.
@@ -106,13 +102,6 @@ namespace Service.Interfaces
         IdentityDTO GetFull(string guid);
 
         /// <summary>
-        /// Gets the grasshopper key.
-        /// </summary>
-        /// <param name="key">The client public key.</param>
-        /// <returns>The cipherbytes.</returns>
-        byte[] GetGrasshopperKey(string key);
-
-        /// <summary>
         /// Gets a <see cref="Identity"/> from repository.
         /// </summary>
         /// <param name="id">The identity ID.</param>
@@ -129,18 +118,32 @@ namespace Service.Interfaces
         UserDTO GetUser(string identityValue, string domain);
 
         /// <summary>
-        /// Gets all <see cref="IdentityDTO"/> from the 1C-repository.
-        /// </summary>
-        /// <returns>The collection of all <see cref="User"/> from the 1C-repository.</returns>
-        IEnumerable<User> GetUsers1C();
-
-        /// <summary>
         /// Saves <see cref="HttpPostedFileBase"/> to ~/Content/uploads/.
         /// </summary>
         /// <param name="data">The picture stream.</param>
         /// <returns>The path of saved picture.</returns>
         string SaveImage(HttpPostedFileBase data);
+        #endregion
+        #region Sync logic
+        /// <summary>
+        /// Gets all <see cref="IdentityDTO"/> from the 1C-repository.
+        /// </summary>
+        /// <returns>The collection of all <see cref="User"/> from the 1C-repository.</returns>
+        IEnumerable<User> GetUsers1C();
+        #endregion
+        #region Security logic
+        /// <summary>
+        /// Generates the new RSA-keys and grasshopper-key.
+        /// </summary>
+        void GenerateKey();
 
+        /// <summary>
+        /// Gets the grasshopper key.
+        /// </summary>
+        /// <param name="key">The client public key.</param>
+        /// <returns>The cipherbytes.</returns>
+        byte[] GetGrasshopperKey(string key);
+        
         /// <summary>
         /// Returns the boolean result of finding user in Active Directory by 
         /// <paramref name="identityValue"/>.
@@ -160,5 +163,6 @@ namespace Service.Interfaces
         /// <param name="domain"><example>"aptech.com", "sstu.com", etc. Can be 
         /// used Environment.UserDomainName</example>.</param>
         bool IsValidUser(string username, string password, string domain);
+        #endregion
     }
 }

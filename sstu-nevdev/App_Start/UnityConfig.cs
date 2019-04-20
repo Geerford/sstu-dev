@@ -22,6 +22,7 @@ namespace sstu_nevdev.App_Start
             container.RegisterType<IAESService, AESService>();
             container.RegisterType<IAuditService, AuditService>();
             container.RegisterType<ICheckpointService, CheckpointService>();
+            container.RegisterType<IDatabaseService, DatabaseService>();
             container.RegisterType<IIdentityService, IdentityService>();
             container.RegisterType<ITypeService, TypeService>();
             return container;

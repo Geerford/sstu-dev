@@ -51,6 +51,7 @@
     <Compile Include="IAESService.cs" />
     <Compile Include="IAuditService.cs" />
     <Compile Include="ICheckpointService.cs" />
+    <Compile Include="IDatabaseService.cs" />
     <Compile Include="IGrasshopper.cs" />
     <Compile Include="IIdentityService.cs" />
     <Compile Include="IRSA.cs" />

@@ -29,6 +29,7 @@ namespace sstu_nevdev.Ninject
             kernel.Bind<IAuditService>().To<AuditService>();
             kernel.Bind<IAdmissionService>().To<AdmissionService>();
             kernel.Bind<ICheckpointService>().To<CheckpointService>();
+            kernel.Bind<IDatabaseService>().To<DatabaseService>();
             kernel.Bind<IIdentityService>().To<IdentityService>();
             kernel.Bind<ITypeService>().To<TypeService>();
         }

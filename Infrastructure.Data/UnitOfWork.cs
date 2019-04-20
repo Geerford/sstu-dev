@@ -7,6 +7,7 @@ using Repository.Interfaces;
 using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Reflection;
 
 namespace Infrastructure.Data
@@ -286,6 +287,57 @@ namespace Infrastructure.Data
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Implements <see cref="IUnitOfWork.Backup"/>.
+        /// </summary>
+        public string Backup()
+        {
+            SqlConnection connection = new SqlConnection
+            {
+                ConnectionString = database.Database.Connection.ConnectionString
+            };
+            connection.Open();
+            string dbName = connection.Database;
+            connection.Close();
+            string dbBackupPath = AppDomain.CurrentDomain.GetData("DataDirectory") + "\\DB_" +
+                DateTime.Now.ToString("yyyyMMddHHmm") + ".bak";
+            string command = $"BACKUP DATABASE [{dbName}] TO DISK = '{dbBackupPath}' " + @"
+                                WITH NOFORMAT, NOINIT, NAME = N'Context-Full Database Backup',
+                                    SKIP, NOREWIND, NOUNLOAD, STATS = 10";
+            database.Database.ExecuteSqlCommand(TransactionalBehavior.DoNotEnsureTransaction, command);
+            return dbBackupPath;
+        }
+
+        /// <summary>
+        /// Implements <see cref="IUnitOfWork.Drop"/>.
+        /// </summary>
+        public void Drop()
+        {
+            database.Database.Delete();
+            database.SaveChanges();
+            database = new Context("Context");
+        }
+
+        /// <summary>
+        /// Implements <see cref="IUnitOfWork.Restore(string)"/>.
+        /// </summary>
+        public void Restore(string backupName)
+        {
+            SqlConnection connection = new SqlConnection
+            {
+                ConnectionString = database.Database.Connection.ConnectionString
+            };
+            connection.Open();
+            string dbName = connection.Database;
+            connection.Close();
+            string path = AppDomain.CurrentDomain.GetData("DataDirectory") + "\\" + backupName;
+            string command = "use [master];" + 
+                        $"ALTER DATABASE {dbName} SET SINGLE_USER WITH ROLLBACK IMMEDIATE;" + 
+                        $"RESTORE DATABASE {dbName} FROM DISK = N'{path}' WITH NOUNLOAD, REPLACE, STATS = 10;" +
+                        $"ALTER DATABASE {dbName} SET MULTI_USER;";
+            database.Database.ExecuteSqlCommand(TransactionalBehavior.DoNotEnsureTransaction, command);
         }
     }
 }

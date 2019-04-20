@@ -1,0 +1,59 @@
+﻿@model sstu_nevdev.Models.DatabaseViewModel
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.css" rel="stylesheet" />
+<h3>Выберите резервную копию для восстановления</h3>
+@if (Model.Backups != null)
+{
+    <table data-toggle="table" data-sort-name="time" data-sort-order="desc">
+        <thead>
+            <tr>
+                <th data-field="id" data-sortable="true"> ID </th>
+                <th data-field="time" data-sortable="true"> Time </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Backups)
+            {
+                <tr>
+                    <td>@Html.ActionLink(@item.Key, "Recovery", new { backupName = item.Key }, new { @class = "badge badge-primary" })</td>
+                    <td>@Html.ActionLink(@item.Value.ToString(), "Recovery", new { backupName = item.Key }, new { @class = "badge badge-primary" })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@Html.ActionLink("Создать резевную копию", "Backup", null, new { @class = "btn btn-default" })
+<br /><br />
+@if (Model.Status != null)
+{
+    <div class="status">
+        @if (Model.Status == true)
+        {
+            <div class="alert alert-success" role="alert">Успех</div>
+        }
+        else
+        {
+            <div class="alert alert-danger" role="alert">Неудача</div>
+        }
+    </div>
+}
+@if (Model.Backup != null)
+{
+    <div class="backup">
+        @if (!string.IsNullOrEmpty(Model.Backup))
+        {
+            <div class="alert alert-success" role="alert">Резервная копия с именем @Model.Backup успешно создана</div>
+        }
+        else
+        {
+            <div class="alert alert-danger" role="alert">Неудача</div>
+        }
+    </div>
+}
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.js"></script>
+<script type="text/javascript">
+    $(window).bind("load", function () {
+        $("div.status").slideToggle(5000);
+        $("div.backup").slideToggle(5000);
+    });
+</script>

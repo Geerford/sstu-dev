@@ -48,10 +48,7 @@ namespace Infrastructure.Data
         /// <summary>
         /// Initializes a <see cref="Database"/> of new data.
         /// </summary>
-        static Context()
-        {
-            Database.SetInitializer(new Initializer());
-        }
+        static Context() => Database.SetInitializer(new Initializer());
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Context"/> class.
@@ -62,9 +59,6 @@ namespace Infrastructure.Data
         /// <summary>
         /// For unit testing.
         /// </summary>
-        public Context(DbConnection connection) : base(connection, true)
-        {
-            Configuration.LazyLoadingEnabled = false;
-        }
+        public Context(DbConnection connection) : base(connection, true) => Configuration.LazyLoadingEnabled = false;
     }
 }

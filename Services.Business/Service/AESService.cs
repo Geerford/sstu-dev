@@ -6,6 +6,9 @@ using System.IO;
 
 namespace Services.Business.Service
 {
+    /// <summary>
+    /// Implements <see cref="IAESService"/>.
+    /// </summary>
     public class AESService : IAESService
     {
         /// <summary>

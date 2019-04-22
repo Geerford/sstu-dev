@@ -38,6 +38,19 @@ namespace Infrastructure.Data
             database.Admission.Add(admission2);
             database.SaveChanges();
 
+            #region GUESTS
+            int guestNumber = 15;
+            while(guestNumber > 0)
+            {
+                database.Identity.Add(new Identity
+                {
+                    GUID = "GUEST_" + guestNumber.ToString(),
+                    Picture = "cat.jpg"
+                });
+                --guestNumber;
+            }
+            database.SaveChanges();
+            #endregion
             database.Identity.Add(new Identity
             {
                 GUID = "1",

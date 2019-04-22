@@ -27,12 +27,22 @@ namespace Domain.Core
         public string IdentityGUID { get; set; }
 
         /// <summary>
+        /// Identity navigation properties.
+        /// </summary>
+        public Identity Identity { get; set; }
+
+        /// <summary>
         /// Gets or sets the checkpoint IP-address.
         /// </summary>
         [Required]
         [StringLength(39)]
         [Index("IX_GUIDAndIP", 1)]
         public string CheckpointIP { get; set; }
+
+        /// <summary>
+        /// Checkpoint navigation properties.
+        /// </summary>
+        public Checkpoint Checkpoint { get; set; }
 
         /// <summary>
         /// Gets or sets the date.

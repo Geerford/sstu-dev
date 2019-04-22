@@ -25,7 +25,7 @@
 <br /><br />
 @if (Model.Status != null)
 {
-    <div class="status">
+    <div class="recovery">
         @if (Model.Status == true)
         {
             <div class="alert alert-success" role="alert">Успех</div>
@@ -53,7 +53,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.js"></script>
 <script type="text/javascript">
     $(window).bind("load", function () {
-        $("div.status").slideToggle(5000);
+        $("div.recovery").slideToggle(5000);
         $("div.backup").slideToggle(5000);
     });
 </script>

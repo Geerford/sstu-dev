@@ -13,6 +13,9 @@ namespace sstu_nevdev.Tests.Repositories
     {
         DbConnection connection;
         Context context;
+        //AdmissionRepository admissionRepository;
+        //CheckpointRepository checkpointRepository;
+        //TypeRepository typeRepository;
         CheckpointAdmissionRepository repository;
         private readonly int id = 1;
 
@@ -21,7 +24,36 @@ namespace sstu_nevdev.Tests.Repositories
         {
             connection = Effort.DbConnectionFactory.CreateTransient();
             context = new Context(connection);
+            //admissionRepository = new AdmissionRepository(context);
+            //checkpointRepository = new CheckpointRepository(context);
+            //typeRepository = new TypeRepository(context);
             repository = new CheckpointAdmissionRepository(context);
+            //Admission admission = new Admission()
+            //{
+            //    ID = 1,
+            //    Description = "Description",
+            //    Role = "Role"
+            //};
+            //Checkpoint checkpoint = new Checkpoint()
+            //{
+            //    ID = 1,
+            //    Campus = 1,
+            //    Classroom = 420,
+            //    Description = "Description",
+            //    IP = "10.0.0.5",
+            //    Row = 4,
+            //    Status = "Status",
+            //    TypeID = 1
+            //};
+            //Type type = new Type()
+            //{
+            //    ID = 1,
+            //    Description = "Description",
+            //    Status = "Status"
+            //};
+            //admissionRepository.Create(admission);
+            //checkpointRepository.Create(checkpoint);
+            //typeRepository.Create(type);
         }
 
         [TestMethod]
@@ -30,8 +62,8 @@ namespace sstu_nevdev.Tests.Repositories
             //Arrange
             CheckpointAdmission item = new CheckpointAdmission()
             {
-                AdmissionID = 3,
-                CheckpointID = 3
+                AdmissionID = 2,
+                CheckpointID = 2
             };
 
             //Act
@@ -116,8 +148,8 @@ namespace sstu_nevdev.Tests.Repositories
             CheckpointAdmission item = new CheckpointAdmission()
             {
                 ID = 1,
-                AdmissionID = 3,
-                CheckpointID = 3
+                AdmissionID = 2,
+                CheckpointID = 2
             };
 
             //Act

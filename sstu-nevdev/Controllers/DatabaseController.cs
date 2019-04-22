@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace sstu_nevdev.Controllers
 {
+    [Authorize(Roles = "SSTU_Administrator")]
     public class DatabaseController : Controller
     {
         IDatabaseService service;

@@ -22,14 +22,24 @@ namespace Domain.Core
         /// </summary>
         [Required]
         [Index("IX_AdmissionAndCheckpoint", 1)]
-        public int? CheckpointID { get; set; }
+        public int CheckpointID { get; set; }
+
+        /// <summary>
+        /// Checkpoint navigation properties.
+        /// </summary>
+        public Checkpoint Checkpoint { get; set; }
 
         /// <summary>
         /// Gets or sets the admission ID.
         /// </summary>
         [Required]
         [Index("IX_AdmissionAndCheckpoint", 2)]
-        public int? AdmissionID { get; set; }
+        public int AdmissionID { get; set; }
+
+        /// <summary>
+        /// Admission navigation properties.
+        /// </summary>
+        public Admission Admission { get; set; }
 
         /// <summary>
         /// Implements <see cref="IDescribable.Describe()"/>

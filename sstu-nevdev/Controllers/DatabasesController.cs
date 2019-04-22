@@ -1,10 +1,12 @@
 ﻿using Service.Interfaces;
+using sstu_nevdev.App_Start;
 using System;
 using System.IO;
 using System.Web.Http;
 
 namespace sstu_nevdev.Controllers
 {
+    [AuthenticationAPI(Roles = "SSTU_Administrator")]
     public class DatabasesController : ApiController
     {
         IDatabaseService service;

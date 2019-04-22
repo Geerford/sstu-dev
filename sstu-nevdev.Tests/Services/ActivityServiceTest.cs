@@ -21,11 +21,13 @@ namespace sstu_nevdev.Tests.Services
         private Mock<IRepository<CheckpointAdmission>> repositoryCheckpointAdmissionMock;
         private Mock<IRepository<Type>> repositoryTypeMock;
         private Mock<IRepository<Admission>> repositoryAdmissionMock;
+        private Mock<IRepository<Mode>> modeRepositoryMock;
         private Mock<IUnitOfWork> unitWorkMoq;
         private List<Activity> itemsActivity;
         private List<CheckpointAdmission> itemsCheckpointAdmission;
         private List<Admission> itemsAdmission;
         private List<Type> itemsType;
+        private List<Mode> itemsMode;
         private readonly int id = 1;
 
         [TestInitialize]
@@ -35,6 +37,7 @@ namespace sstu_nevdev.Tests.Services
             repositoryCheckpointAdmissionMock = new Mock<IRepository<CheckpointAdmission>>();
             repositoryTypeMock = new Mock<IRepository<Type>>();
             repositoryAdmissionMock = new Mock<IRepository<Admission>>();
+            modeRepositoryMock = new Mock<IRepository<Mode>>();
             unitWorkMoq = new Mock<IUnitOfWork>();
             serviceMock = new ActivityService(unitWorkMoq.Object);
             itemsCheckpointAdmission = new List<CheckpointAdmission>()
@@ -128,6 +131,24 @@ namespace sstu_nevdev.Tests.Services
                     ModeID = 1,
                     Mode = new Mode { Description = "Вход" },
                     Status = true
+                }
+            };
+            itemsMode = new List<Mode>()
+            {
+                new Mode
+                {
+                    ID = 1,
+                    Description = "Вход"
+                },
+                new Mode
+                {
+                    ID = 2,
+                    Description = "Выход"
+                },
+                new Mode
+                {
+                    ID = 3,
+                    Description = "Статистика"
                 }
             };
         }
@@ -224,6 +245,7 @@ namespace sstu_nevdev.Tests.Services
             unitWorkMoq.Setup(x => x.Activity.Get(1)).Returns(itemsActivity[0]);
             unitWorkMoq.Setup(x => x.Activity.Get(2)).Returns(itemsActivity[1]);
             unitWorkMoq.Setup(x => x.Activity.Get(3)).Returns(itemsActivity[2]);
+            unitWorkMoq.Setup(x => x.Mode.Get(It.IsAny<int>())).Returns(itemsMode[0]);
 
             //Act
             var result = serviceMock.Get(id);
@@ -239,6 +261,7 @@ namespace sstu_nevdev.Tests.Services
         {
             //Arrange
             unitWorkMoq.Setup(x => x.Activity.GetAll()).Returns(itemsActivity);
+            unitWorkMoq.Setup(x => x.Mode.Get(It.IsAny<int>())).Returns(itemsMode[0]);
 
             //Act
             var result = serviceMock.GetAll();
@@ -256,6 +279,7 @@ namespace sstu_nevdev.Tests.Services
             bool status = true;
             unitWorkMoq.Setup(x => x.Activity.Find(It.IsAny<Func<Activity, bool>>()))
                 .Returns(itemsActivity.Where(x => x.Status == status));
+            unitWorkMoq.Setup(x => x.Mode.Get(It.IsAny<int>())).Returns(itemsMode[0]);
 
             //Act
             var result = serviceMock.GetByStatus(status);

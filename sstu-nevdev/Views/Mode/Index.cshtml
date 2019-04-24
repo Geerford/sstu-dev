@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Domain.Core.Mode>
+
+<h2>Список статусов событий</h2>
+<p>
+    @Html.ActionLink("Создать", "Create", routeValues: null, htmlAttributes: new { @class = "link" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("Описание")
+        </th>
+        <th>
+            @Html.Label("Статус")
+        </th>
+        <th>
+            @Html.Label("Действия")
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Description, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+            </td>
+            <td>
+                @Html.ActionLink(item.Status, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+            </td>
+            <td>
+                @Html.ActionLink("Редактировать", "Edit", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "link" })
+                @Html.ActionLink("Удалить", "Delete", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "link" })
+            </td>
+        </tr>
+    }
+</table>
+<div id="dialog" class="modal fade">
+    <div id="content" class="modal-dialog"></div>
+</div>

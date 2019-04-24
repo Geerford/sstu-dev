@@ -257,6 +257,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IdentitiesController.cs" />
     <Compile Include="Controllers\IdentityController.cs" />
+    <Compile Include="Controllers\ModeController.cs" />
+    <Compile Include="Controllers\ModesController.cs" />
+    <Compile Include="Controllers\StatisticsAPIController.cs" />
     <Compile Include="Controllers\TypeController.cs" />
     <Compile Include="Controllers\TypesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -271,8 +274,8 @@
     <Compile Include="Models\DatabaseViewModel.cs" />
     <Compile Include="Models\IdentityViewModel.cs" />
     <Compile Include="Models\AccountViewModel.cs" />
+    <Compile Include="Models\StatisticsAPIModel.cs" />
     <Compile Include="Models\StatusForList.cs" />
-    <Compile Include="Models\TypeViewModel.cs" />
     <Compile Include="Models\AccountResponseAPIModel.cs" />
     <Compile Include="Ninject\NinjectDependencyResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -358,9 +361,16 @@
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Database\Index.cshtml" />
+    <Content Include="Views\Mode\Index.cshtml" />
+    <Content Include="Views\Mode\Create.cshtml" />
+    <Content Include="Views\Mode\Edit.cshtml" />
+    <Content Include="Views\Mode\Delete.cshtml" />
+    <Content Include="Views\Mode\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\StatisticsMVC\" />
+    <Folder Include="Views\Statistics\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain.Contracts\Domain.Contracts.csproj">

@@ -2,6 +2,7 @@
 using Service.Interfaces;
 using sstu_nevdev.Models;
 using System.IO;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -27,8 +28,12 @@ namespace sstu_nevdev.Controllers
             return View(service.GetUsers1C());
         }
 
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             var item = service.Get(id);
             if (item != null)
             {
@@ -76,9 +81,18 @@ namespace sstu_nevdev.Controllers
         }
 
         [Authorize(Roles = "SSTU_Deanery, SSTU_Administrator")]
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View((IdentityViewModel)service.GetSimple(id));
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            IdentityViewModel model = (IdentityViewModel)service.GetSimple(id);
+            if (model != null)
+            {
+                return View(model);
+            }
+            return HttpNotFound();
         }
 
         [HttpPost]
@@ -107,9 +121,18 @@ namespace sstu_nevdev.Controllers
         }
 
         [Authorize(Roles = "SSTU_Deanery, SSTU_Administrator")]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View(service.GetSimple(id));
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Identity model = service.GetSimple(id);
+            if (model == null)
+            {
+                return HttpNotFound();
+            }
+            return View(model);
         }
 
         [HttpPost]

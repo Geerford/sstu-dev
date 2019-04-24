@@ -2,6 +2,7 @@
 using Service.Interfaces;
 using sstu_nevdev.Models;
 using System.Collections.Generic;
+using System.Net;
 using System.Web.Mvc;
 
 namespace sstu_nevdev.Controllers
@@ -21,8 +22,12 @@ namespace sstu_nevdev.Controllers
             return View(service.GetAll());
         }
 
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             var item = service.Get(id);
             if (item != null)
             {
@@ -82,10 +87,16 @@ namespace sstu_nevdev.Controllers
             }
         }
 
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             AdmissionViewModel model = (AdmissionViewModel)service.Get(id);
-            model.RoleList = new SelectList(new List<StatusForList> {
+            if (model != null)
+            {
+                model.RoleList = new SelectList(new List<StatusForList> {
                     new StatusForList {
                         Key = "Сотрудник",
                         Display = "Сотрудник" },
@@ -93,7 +104,9 @@ namespace sstu_nevdev.Controllers
                         Key = "Студент",
                         Display = "Студент" } },
                     "Key", "Display");
-            return View(model);
+                return View(model);
+            }
+            return HttpNotFound();
         }
 
         [HttpPost]
@@ -132,9 +145,18 @@ namespace sstu_nevdev.Controllers
             }
         }
 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View(service.Get(id));
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Admission model = service.Get(id);
+            if (model == null)
+            {
+                return HttpNotFound();
+            }
+            return View(model);
         }
 
         [HttpPost]

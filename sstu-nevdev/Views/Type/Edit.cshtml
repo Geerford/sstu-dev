@@ -1,4 +1,4 @@
-﻿@model sstu_nevdev.Models.TypeViewModel
+﻿@model Domain.Core.Type
 
 <h2>Редактирование</h2>
 
@@ -20,10 +20,8 @@
         <div class="form-group">
             @Html.Label("Статус", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.DropDownListFor(x => x.Status, Model.StatusList, "Выберите статус", new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
-                </div>
+                @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
             </div>
         </div>
 

@@ -26,6 +26,13 @@ namespace Domain.Core
         public string Description { get; set; }
 
         /// <summary>
+        /// Gets or sets the status.
+        /// </summary>
+        [Required]
+        [StringLength(20)]
+        public string Status { get; set; }
+
+        /// <summary>
         /// Implements <see cref="IDescribable.Describe()"/>
         /// </summary>
         public string Describe()

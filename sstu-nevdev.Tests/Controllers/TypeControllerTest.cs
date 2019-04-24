@@ -75,7 +75,7 @@ namespace sstu_nevdev.Tests.Controllers
         public void Create_Valid()
         {
             //Arrange
-            TypeViewModel model = new TypeViewModel() {
+            Type model = new Type() {
                 Description = "test",
                 Status = "test"
             };
@@ -91,7 +91,7 @@ namespace sstu_nevdev.Tests.Controllers
         public void Create_Invalid()
         {
             // Arrange
-            TypeViewModel model = new TypeViewModel()
+            Type model = new Type()
             {
                 Description = "test",
                 Status = "test"
@@ -109,7 +109,7 @@ namespace sstu_nevdev.Tests.Controllers
         public void Edit_Valid()
         {
             //Arrange
-            TypeViewModel model = new TypeViewModel() {
+            Type model = new Type() {
                 Description = "test",
                 Status = "test"
             };
@@ -125,7 +125,7 @@ namespace sstu_nevdev.Tests.Controllers
         public void Edit_Invalid()
         {
             //Arrange
-            TypeViewModel model = new TypeViewModel() { };
+            Type model = new Type() { };
             controllerWEB.ModelState.AddModelError("Error", "Что-то пошло не так");
 
             //Act

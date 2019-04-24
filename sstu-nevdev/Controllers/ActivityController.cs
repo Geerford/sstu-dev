@@ -3,6 +3,7 @@ using Service.Interfaces;
 using sstu_nevdev.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 
 namespace sstu_nevdev.Controllers
@@ -24,8 +25,12 @@ namespace sstu_nevdev.Controllers
             return View(service.GetAll());
         }
 
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             var item = service.Get(id);
             if (item != null)
             {
@@ -131,10 +136,16 @@ namespace sstu_nevdev.Controllers
         }
 
         [Authorize(Roles = "SSTU_Administrator")]
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             ActivityViewModel model = (ActivityViewModel)service.Get(id);
-            model.StatusList = new SelectList(new List<StatusForList> {
+            if (model != null)
+            {
+                model.StatusList = new SelectList(new List<StatusForList> {
                     new StatusForList {
                         Key = "Успех",
                         Display = "Успех" },
@@ -142,15 +153,17 @@ namespace sstu_nevdev.Controllers
                         Key = "Неудача",
                         Display = "Неудача" } },
                     "Key", "Display");
-            model.ModeList = new SelectList(new List<StatusForList> {
+                model.ModeList = new SelectList(new List<StatusForList> {
                     new StatusForList {
                         Key = "Вход",
                         Display = "Вход" },
                     new StatusForList {
                         Key = "Выход",
                         Display = "Выход" } },
-                    "Key", "Display");
-            return View(model);
+                        "Key", "Display");
+                return View(model);
+            }
+            return HttpNotFound();
         }
 
         [HttpPost]
@@ -226,9 +239,18 @@ namespace sstu_nevdev.Controllers
         }
 
         [Authorize(Roles = "SSTU_Administrator")]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View(service.Get(id));
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Activity model = service.Get(id);
+            if (model == null)
+            {
+                return HttpNotFound();
+            }
+            return View(model);
         }
 
         [HttpPost]

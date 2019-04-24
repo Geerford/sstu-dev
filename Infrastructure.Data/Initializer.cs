@@ -20,9 +20,9 @@ namespace Infrastructure.Data
                 Description = "Собирает статистику",
                 Status = "Статистический"
             };
-            Mode mode1 = new Mode { Description = "Вход" };
-            Mode mode2 = new Mode { Description = "Выход" };
-            Mode mode3 = new Mode { Description = "Статистика" };
+            Mode mode1 = new Mode { Description = "Отмечает событие входа в объект", Status = "Вход" };
+            Mode mode2 = new Mode { Description = "Отмечает событие выхода из объекта", Status = "Выход" };
+            Mode mode3 = new Mode { Description = "Собирает статистические данные передвижений субъекта", Status = "Статистика" };
             database.Type.Add(type1);
             database.Type.Add(type2);
             database.Type.Add(type3);

@@ -3,6 +3,7 @@ using Service.DTO;
 using Service.Interfaces;
 using sstu_nevdev.Models;
 using System.Collections.Generic;
+using System.Net;
 using System.Web.Mvc;
 
 namespace sstu_nevdev.Controllers
@@ -27,8 +28,12 @@ namespace sstu_nevdev.Controllers
             return View(checkpointService.GetAll());
         }
 
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             var item = checkpointService.Get(id);
             if (item != null)
             {
@@ -166,8 +171,12 @@ namespace sstu_nevdev.Controllers
         }
 
         [Authorize(Roles = "SSTU_Administrator")]
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             List<StatusForList> types = new List<StatusForList>();
             foreach (Type item in typeService.GetAll())
             {
@@ -201,16 +210,20 @@ namespace sstu_nevdev.Controllers
                 }
             }
             CheckpointViewModel model = (CheckpointViewModel)checkpointService.Get(id);
-            model.StatusList = new SelectList(new List<StatusForList> {
+            if (model != null)
+            {
+                model.StatusList = new SelectList(new List<StatusForList> {
                     new StatusForList {
                         Key = "Пропуск",
                         Display = "Пропуск" },
                     new StatusForList {
                         Key = "Отметка",
                         Display = "Отметка" } }, "Key", "Display");
-            model.TypeList = new SelectList(types, "Key", "Display");
-            model.AdmissionList = admissions;
-            return View(model);
+                model.TypeList = new SelectList(types, "Key", "Display");
+                model.AdmissionList = admissions;
+                return View(model);
+            }
+            return HttpNotFound();
         }
 
         [HttpPost]
@@ -320,9 +333,18 @@ namespace sstu_nevdev.Controllers
         }
 
         [Authorize(Roles = "SSTU_Administrator")]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View(checkpointService.Get(id));
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            CheckpointDTO model = checkpointService.Get(id);
+            if (model == null)
+            {
+                return HttpNotFound();
+            }
+            return View(model);
         }
 
         [HttpPost]

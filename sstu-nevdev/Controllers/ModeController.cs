@@ -6,11 +6,11 @@ using System.Web.Mvc;
 namespace sstu_nevdev.Controllers
 {
     [Authorize(Roles = "SSTU_Administrator")]
-    public class TypeController : Controller
+    public class ModeController : Controller
     {
-        ITypeService service;
+        IModeService service;
 
-        public TypeController(ITypeService service)
+        public ModeController(IModeService service)
         {
             this.service = service;
         }
@@ -26,7 +26,7 @@ namespace sstu_nevdev.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var item = service.Get(id);
+            Mode item = service.Get(id);
             if (item != null)
             {
                 return PartialView(item);
@@ -41,7 +41,7 @@ namespace sstu_nevdev.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Type model)
+        public ActionResult Create(Mode model)
         {
             if (string.IsNullOrEmpty(model.Description))
             {
@@ -49,15 +49,16 @@ namespace sstu_nevdev.Controllers
             }
             if (string.IsNullOrEmpty(model.Status))
             {
-                ModelState.AddModelError("Status", "Выберите статус");
+                ModelState.AddModelError("Status", "Статус должен быть заполнен");
             }
             if (ModelState.IsValid)
             {
-                service.Create(new Type {
+                service.Create(new Mode
+                {
                     Description = model.Description,
                     Status = model.Status
                 });
-                return RedirectToAction("Index", "Type");
+                return RedirectToAction("Index", "Mode");
             }
             return View(model);
         }
@@ -68,8 +69,8 @@ namespace sstu_nevdev.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Type model = service.Get(id);
-            if(model != null)
+            Mode model = service.Get(id);
+            if (model != null)
             {
                 return View(model);
             }
@@ -78,7 +79,7 @@ namespace sstu_nevdev.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Type model)
+        public ActionResult Edit(Mode model)
         {
             if (string.IsNullOrEmpty(model.Description))
             {
@@ -86,17 +87,17 @@ namespace sstu_nevdev.Controllers
             }
             if (string.IsNullOrEmpty(model.Status))
             {
-                ModelState.AddModelError("Status", "Выберите статус");
+                ModelState.AddModelError("Status", "Статус должен быть заполнен");
             }
             if (ModelState.IsValid)
             {
-                service.Edit(new Type
+                service.Edit(new Mode
                 {
                     ID = model.ID,
                     Description = model.Description,
                     Status = model.Status
                 });
-                return RedirectToAction("Index", "Type");
+                return RedirectToAction("Index", "Mode");
             }
             return View(model);
         }
@@ -107,7 +108,7 @@ namespace sstu_nevdev.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Type model = service.Get(id);
+            Mode model = service.Get(id);
             if (model == null)
             {
                 return HttpNotFound();
@@ -116,12 +117,12 @@ namespace sstu_nevdev.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(Type model)
+        public ActionResult Delete(Mode model)
         {
             try
             {
                 service.Delete(model);
-                return RedirectToAction("Index", "Type");
+                return RedirectToAction("Index", "Mode");
             }
             catch
             {

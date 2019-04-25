@@ -369,8 +369,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\StatisticsMVC\" />
-    <Folder Include="Views\Statistics\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain.Contracts\Domain.Contracts.csproj">

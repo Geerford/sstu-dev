@@ -20,9 +20,18 @@ namespace Infrastructure.Data
                 Description = "Собирает статистику",
                 Status = "Статистический"
             };
-            Mode mode1 = new Mode { Description = "Отмечает событие входа в объект", Status = "Вход" };
-            Mode mode2 = new Mode { Description = "Отмечает событие выхода из объекта", Status = "Выход" };
-            Mode mode3 = new Mode { Description = "Собирает статистические данные передвижений субъекта", Status = "Статистика" };
+            Mode mode1 = new Mode {
+                Description = "Отмечает событие входа в объект",
+                Status = "Вход"
+            };
+            Mode mode2 = new Mode {
+                Description = "Отмечает событие выхода из объекта",
+                Status = "Выход"
+            };
+            Mode mode3 = new Mode {
+                Description = "Собирает статистические данные передвижений субъекта",
+                Status = "Статистика"
+            };
             database.Type.Add(type1);
             database.Type.Add(type2);
             database.Type.Add(type3);
@@ -53,17 +62,22 @@ namespace Infrastructure.Data
             #endregion
             database.Identity.Add(new Identity
             {
-                GUID = "1",
-                Picture = "cat.jpg"
+                GUID = "milantev_sa#1516",
+                Picture = "milantev_sa#1516.jpg"
             });
             database.Identity.Add(new Identity
             {
-                GUID = "2",
-                Picture = "cat.jpg"
+                GUID = "konyaev_yy#1517",
+                Picture = "konyaev_yy#1517.jpg"
             });
             database.Identity.Add(new Identity
             {
-                GUID = "3",
+                GUID = "eremenko_d#1518",
+                Picture = "eremenko_d#1518.jpg"
+            });
+            database.Identity.Add(new Identity
+            {
+                GUID = "abor#1519",
                 Picture = "cat.jpg"
             });
             database.Checkpoint.Add(new Checkpoint

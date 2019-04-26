@@ -45,93 +45,204 @@ namespace Services.Business.Service
         /// <summary>
         /// Implements <see cref="IStatisticsService.GetByCampus(int, DateTime, DateTime)"/>.
         /// </summary>
-        public IEnumerable<Activity> GetByCampus(int campus, DateTime start, DateTime end)
+        public IEnumerable<ActivityDTO> GetByCampus(int campus, DateTime start, DateTime end)
         {
-            List<Activity> activities = new List<Activity>();
+            List<ActivityDTO> activities = new List<ActivityDTO>();
+            IdentityService identityService = new IdentityService(Database, SyncDatabase);
+            CheckpointService checkpointService = new CheckpointService(Database);
             foreach(var checkpoint in Database.Checkpoint.GetAll().Where(y => y.Campus == campus))
             {
-                activities.AddRange(Database.Activity.GetAll().Where(x => x.CheckpointIP == checkpoint.IP && x.Date > start && x.Date <= end));
+                foreach(var activity in Database.Activity.GetAll().Where(x => x.CheckpointIP == checkpoint.IP 
+                    && x.Date > start && x.Date <= end))
+                {
+                    activities.Add(new ActivityDTO()
+                    {
+                        ID = activity.ID,
+                        User = identityService.GetFull(activity.IdentityGUID),
+                        Checkpoint = checkpointService.GetByIP(activity.CheckpointIP),
+                        Mode = Database.Mode.GetAll().Where(x => x.ID == activity.ID).FirstOrDefault(),
+                        Date = activity.Date,
+                        Status = activity.Status
+                    });
+                }
             }
+            identityService.Dispose();
+            checkpointService.Dispose();
             return activities;
         }
 
         /// <summary>
         /// Implements <see cref="IStatisticsService.GetByCampusRow(int, int, DateTime, DateTime)"/>.
         /// </summary>
-        public IEnumerable<Activity> GetByCampusRow(int campus, int row, DateTime start, DateTime end)
+        public IEnumerable<ActivityDTO> GetByCampusRow(int campus, int row, DateTime start, DateTime end)
         {
-            List<Activity> activities = new List<Activity>();
+            List<ActivityDTO> activities = new List<ActivityDTO>();
+            IdentityService identityService = new IdentityService(Database, SyncDatabase);
+            CheckpointService checkpointService = new CheckpointService(Database);
             foreach (var checkpoint in Database.Checkpoint.GetAll().Where(y => y.Campus == campus && y.Row == row))
             {
-                activities.AddRange(Database.Activity.GetAll().Where(x => x.CheckpointIP == checkpoint.IP && x.Date > start && x.Date <= end));
+                foreach (var activity in Database.Activity.GetAll().Where(x => x.CheckpointIP == checkpoint.IP
+                     && x.Date > start && x.Date <= end))
+                {
+                    activities.Add(new ActivityDTO()
+                    {
+                        ID = activity.ID,
+                        User = identityService.GetFull(activity.IdentityGUID),
+                        Checkpoint = checkpointService.GetByIP(activity.CheckpointIP),
+                        Mode = Database.Mode.GetAll().Where(x => x.ID == activity.ID).FirstOrDefault(),
+                        Date = activity.Date,
+                        Status = activity.Status
+                    });
+                }
             }
+            identityService.Dispose();
+            checkpointService.Dispose();
             return activities;
         }
 
         /// <summary>
         /// Implements <see cref="IStatisticsService.GetByClassroom(int, DateTime, DateTime)"/>.
         /// </summary>
-        public IEnumerable<Activity> GetByClassroom(int classroom, DateTime start, DateTime end)
+        public IEnumerable<ActivityDTO> GetByClassroom(int classroom, DateTime start, DateTime end)
         {
-            List<Activity> activities = new List<Activity>();
+            List<ActivityDTO> activities = new List<ActivityDTO>();
+            IdentityService identityService = new IdentityService(Database, SyncDatabase);
+            CheckpointService checkpointService = new CheckpointService(Database);
             foreach (var checkpoint in Database.Checkpoint.GetAll().Where(y => y.Classroom == classroom))
             {
-                activities.AddRange(Database.Activity.GetAll().Where(x => x.CheckpointIP == checkpoint.IP && x.Date > start && x.Date <= end));
+                foreach (var activity in Database.Activity.GetAll().Where(x => x.CheckpointIP == checkpoint.IP
+                     && x.Date > start && x.Date <= end))
+                {
+                    activities.Add(new ActivityDTO()
+                    {
+                        ID = activity.ID,
+                        User = identityService.GetFull(activity.IdentityGUID),
+                        Checkpoint = checkpointService.GetByIP(activity.CheckpointIP),
+                        Mode = Database.Mode.GetAll().Where(x => x.ID == activity.ID).FirstOrDefault(),
+                        Date = activity.Date,
+                        Status = activity.Status
+                    });
+                }
             }
+            identityService.Dispose();
+            checkpointService.Dispose();
             return activities;
         }
 
         /// <summary>
         /// Implements <see cref="IStatisticsService.GetByGroup(string, DateTime, DateTime)"/>.
         /// </summary>
-        public IEnumerable<Activity> GetByGroup(string group, DateTime start, DateTime end)
+        public IEnumerable<ActivityDTO> GetByGroup(string group, DateTime start, DateTime end)
         {
-            List<Activity> activities = new List<Activity>();
+            List<ActivityDTO> activities = new List<ActivityDTO>();
             IdentityService identityService = new IdentityService(Database, SyncDatabase);
+            CheckpointService checkpointService = new CheckpointService(Database);
             foreach (var identity in identityService.GetByGroup(group))
             {
-                activities.AddRange(Database.Activity.GetAll().Where(x => x.IdentityGUID == identity.GUID && x.Date > start && x.Date <= end));
+                foreach (var activity in Database.Activity.GetAll().Where(x => x.IdentityGUID == identity.GUID 
+                    && x.Date > start && x.Date <= end))
+                {
+                    activities.Add(new ActivityDTO()
+                    {
+                        ID = activity.ID,
+                        User = identityService.GetFull(activity.IdentityGUID),
+                        Checkpoint = checkpointService.GetByIP(activity.CheckpointIP),
+                        Mode = Database.Mode.GetAll().Where(x => x.ID == activity.ID).FirstOrDefault(),
+                        Date = activity.Date,
+                        Status = activity.Status
+                    });
+                }
             }
             identityService.Dispose();
+            checkpointService.Dispose();
             return activities;
         }
 
         /// <summary>
         /// Implements <see cref="IStatisticsService.GetBySection(int, DateTime, DateTime)"/>.
         /// </summary>
-        public IEnumerable<Activity> GetBySection(int section, DateTime start, DateTime end)
+        public IEnumerable<ActivityDTO> GetBySection(int section, DateTime start, DateTime end)
         {
-            List<Activity> activities = new List<Activity>();
+            List<ActivityDTO> activities = new List<ActivityDTO>();
+            IdentityService identityService = new IdentityService(Database, SyncDatabase);
+            CheckpointService checkpointService = new CheckpointService(Database);
             foreach (var checkpoint in Database.Checkpoint.GetAll().Where(y => y.Section == section))
             {
-                activities.AddRange(Database.Activity.GetAll().Where(x => x.CheckpointIP == checkpoint.IP && x.Date > start && x.Date <= end));
+                foreach (var activity in Database.Activity.GetAll().Where(x => x.CheckpointIP == 
+                    checkpoint.IP && x.Date > start && x.Date <= end))
+                {
+                    activities.Add(new ActivityDTO()
+                    {
+                        ID = activity.ID,
+                        User = identityService.GetFull(activity.IdentityGUID),
+                        Checkpoint = checkpointService.GetByIP(activity.CheckpointIP),
+                        Mode = Database.Mode.GetAll().Where(x => x.ID == activity.ID).FirstOrDefault(),
+                        Date = activity.Date,
+                        Status = activity.Status
+                    });
+                }
             }
+            identityService.Dispose();
+            checkpointService.Dispose();
             return activities;
         }
 
         /// <summary>
         /// Implements <see cref="IStatisticsService.GetByUser(string, string, string, DateTime, DateTime)"/>.
         /// </summary>
-        public IEnumerable<Activity> GetByUser(string name, string midname, string surname, DateTime start, DateTime end)
+        public IEnumerable<ActivityDTO> GetByUser(string name, string midname, string surname, DateTime start, DateTime end)
         {
-            List<Activity> activities = new List<Activity>();
+            List<ActivityDTO> activities = new List<ActivityDTO>();
             IdentityService identityService = new IdentityService(Database, SyncDatabase);
+            CheckpointService checkpointService = new CheckpointService(Database);
             var identity = identityService.GetByName(name, midname, surname);
-            if(identity != null)
+            if (identity != null)
             {
-                activities.AddRange(Database.Activity.GetAll().Where(x => x.IdentityGUID == identity.GUID && x.Date > start && x.Date <= end));
+                foreach (var activity in Database.Activity.GetAll().Where(x => x.IdentityGUID == identity.GUID 
+                    && x.Date > start && x.Date <= end))
+                {
+                    activities.Add(new ActivityDTO()
+                    {
+                        ID = activity.ID,
+                        User = identity,
+                        Checkpoint = checkpointService.GetByIP(activity.CheckpointIP),
+                        Mode = Database.Mode.GetAll().Where(x => x.ID == activity.ID).FirstOrDefault(),
+                        Date = activity.Date,
+                        Status = activity.Status
+                    });
+                }
             }
             identityService.Dispose();
+            checkpointService.Dispose();
             return activities;
         }
 
         /// <summary>
         /// Implements <see cref="IStatisticsService.GetByUser(string, DateTime, DateTime)"/>.
         /// </summary>
-        public IEnumerable<Activity> GetByUser(string guid, DateTime start, DateTime end)
+        public IEnumerable<ActivityDTO> GetByUser(string guid, DateTime start, DateTime end)
         {
-            List<Activity> activities = new List<Activity>();
-            activities.AddRange(Database.Activity.GetAll().Where(x => x.IdentityGUID == guid && x.Date > start && x.Date <= end));
+            List<ActivityDTO> activities = new List<ActivityDTO>();
+            IdentityService identityService = new IdentityService(Database, SyncDatabase);
+            CheckpointService checkpointService = new CheckpointService(Database);
+            var identity = identityService.GetByGUID(guid);
+            if (identity != null)
+            {
+                foreach (var activity in Database.Activity.GetAll().Where(x => x.IdentityGUID == guid && x.Date > start && x.Date <= end))
+                {
+                    activities.Add(new ActivityDTO()
+                    {
+                        ID = activity.ID,
+                        User = identity,
+                        Checkpoint = checkpointService.GetByIP(activity.CheckpointIP),
+                        Mode = Database.Mode.GetAll().Where(x => x.ID == activity.ID).FirstOrDefault(),
+                        Date = activity.Date,
+                        Status = activity.Status
+                    });
+                }
+            }
+            identityService.Dispose();
+            checkpointService.Dispose();
             return activities;
         }
 

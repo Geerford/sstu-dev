@@ -22,7 +22,7 @@ namespace Service.Interfaces
         /// <param name="start">The left endpoint of time interval.</param>
         /// <param name="end">The right endpoint of time interval.</param>
         /// <returns>The collection of all <see cref="Activity"/> with the given campus and time interval [start, end].</returns>
-        IEnumerable<Activity> GetByCampus(int campus, DateTime start, DateTime end);
+        IEnumerable<ActivityDTO> GetByCampus(int campus, DateTime start, DateTime end);
 
         /// <summary>
         /// Gets all <see cref="Activity"/> from repository by campus, row and time interval [start, end].
@@ -32,7 +32,7 @@ namespace Service.Interfaces
         /// <param name="start">The left endpoint of time interval.</param>
         /// <param name="end">The right endpoint of time interval.</param>
         /// <returns>The collection of all <see cref="Activity"/> with the given campus, row and time interval [start, end].</returns>
-        IEnumerable<Activity> GetByCampusRow(int campus, int row, DateTime start, DateTime end);
+        IEnumerable<ActivityDTO> GetByCampusRow(int campus, int row, DateTime start, DateTime end);
 
         /// <summary>
         /// Gets all <see cref="Activity"/> from repository by classroom and time interval [start, end].
@@ -41,7 +41,7 @@ namespace Service.Interfaces
         /// <param name="start">The left endpoint of time interval.</param>
         /// <param name="end">The right endpoint of time interval.</param>
         /// <returns>The collection of all <see cref="Activity"/> with the given classroom and time interval [start, end].</returns>
-        IEnumerable<Activity> GetByClassroom(int classroom, DateTime start, DateTime end);
+        IEnumerable<ActivityDTO> GetByClassroom(int classroom, DateTime start, DateTime end);
 
         /// <summary>
         /// Gets all <see cref="Activity"/> from repository by group and time interval [start, end].
@@ -50,7 +50,7 @@ namespace Service.Interfaces
         /// <param name="start">The left endpoint of time interval.</param>
         /// <param name="end">The right endpoint of time interval.</param>
         /// <returns>The collection of all <see cref="Activity"/> with the given group and time interval [start, end].</returns>
-        IEnumerable<Activity> GetByGroup(string group, DateTime start, DateTime end);
+        IEnumerable<ActivityDTO> GetByGroup(string group, DateTime start, DateTime end);
 
         /// <summary>
         /// Gets all <see cref="Activity"/> from repository by section and time interval [start, end].
@@ -59,7 +59,7 @@ namespace Service.Interfaces
         /// <param name="start">The left endpoint of time interval.</param>
         /// <param name="end">The right endpoint of time interval.</param>
         /// <returns>The collection of all <see cref="Activity"/> with the given section and time interval [start, end].</returns>
-        IEnumerable<Activity> GetBySection(int section, DateTime start, DateTime end);
+        IEnumerable<ActivityDTO> GetBySection(int section, DateTime start, DateTime end);
 
         /// <summary>
         /// Gets all <see cref="Activity"/> from repository by full name and time interval [start, end].
@@ -70,7 +70,7 @@ namespace Service.Interfaces
         /// <param name="start">The left endpoint of time interval.</param>
         /// <param name="end">The right endpoint of time interval.</param>
         /// <returns>The collection of all <see cref="Activity"/> with the given full name and time interval [start, end].</returns>
-        IEnumerable<Activity> GetByUser(string name, string midname, string surname, DateTime start, DateTime end);
+        IEnumerable<ActivityDTO> GetByUser(string name, string midname, string surname, DateTime start, DateTime end);
 
         /// <summary>
         /// Gets all <see cref="Activity"/> from repository by GUID and time interval [start, end].
@@ -79,7 +79,7 @@ namespace Service.Interfaces
         /// <param name="start">The left endpoint of time interval.</param>
         /// <param name="end">The right endpoint of time interval.</param>
         /// <returns>The collection of all <see cref="Activity"/> with the given full name and time interval [start, end].</returns>
-        IEnumerable<Activity> GetByUser(string guid, DateTime start, DateTime end);
+        IEnumerable<ActivityDTO> GetByUser(string guid, DateTime start, DateTime end);
 
         /// <summary>
         /// Gets all <see cref="IdentityDTO"/> from repository by campus.

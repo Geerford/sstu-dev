@@ -262,3 +262,6 @@ __pycache__/
 
 # Backup file (SQL)
 *.bak
+
+#JPEG
+*.jpg

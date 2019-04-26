@@ -11,55 +11,73 @@ namespace Infrastructure.Data
         {
             database.User.Add(new User
             {
-                GUID = "1",
-                Name = "Сидр",
-                Surname = "Сидоров",
-                Midname = "Сидорович",
+                GUID = "milantev_sa#1516",
+                Name = "Сергей",
+                Surname = "Милантьев",
+                Midname = "Андреевич",
                 Gender = true,
-                Birthdate = Convert.ToDateTime("2000-01-25"),
-                Country = "Россия",
-                City = "Саратов",
-                Department = "ИнПИТ",
-                Group = "ИФСТ",
-                Status = "Отчислен",
-                Email = "email@gmail.com",
-                Phone = "+79993499334",
-                Role = "Студент"
-            });
-
-            database.User.Add(new User
-            {
-                GUID = "2",
-                Name = "Петр",
-                Surname = "Петров",
-                Midname = "Петрович",
-                Gender = true,
-                Birthdate = Convert.ToDateTime("2000-01-25"),
+                Birthdate = Convert.ToDateTime("1995-03-29"),
                 Country = "Россия",
                 City = "Саратов",
                 Department = "ИнПИТ",
                 Group = "ИФСТ",
                 Status = "Обучающийся",
-                Email = "email@gmail.com",
-                Phone = "+79993499334",
+                Email = "geerkus@gmail.com",
+                Phone = "+79020447508",
                 Role = "Студент"
             });
 
             database.User.Add(new User
             {
-                GUID = "3",
-                Name = "Иван",
-                Surname = "Иванов",
-                Midname = "Иванович",
+                GUID = "konyaev_yy#1517",
+                Name = "Юрий",
+                Surname = "Коняев-Гурченко",
+                Midname = "Юрьевич",
                 Gender = true,
-                Birthdate = Convert.ToDateTime("2000-01-25"),
+                Birthdate = Convert.ToDateTime("1997-10-05"),
                 Country = "Россия",
                 City = "Саратов",
                 Department = "ИнПИТ",
                 Group = "ИФСТ",
                 Status = "Отпуск",
-                Email = "email@gmail.com",
-                Phone = "+79993499334",
+                Email = "konyaev_yurii@mail.ru",
+                Phone = "+79061508501",
+                Role = "Студент"
+            });
+
+            database.User.Add(new User
+            {
+                GUID = "eremenko_d#1518",
+                Name = "Денис",
+                Surname = "Еременко",
+                Midname = "Сергеевич",
+                Gender = true,
+                Birthdate = Convert.ToDateTime("1997-01-08"),
+                Country = "Россия",
+                City = "Саратов",
+                Department = "ИнПИТ",
+                Group = "ИФСТ",
+                Status = "Отчислен",
+                Email = "x2denissergeevich@gmail.com",
+                Phone = "+79370220973",
+                Role = "Студент"
+            });
+
+            database.User.Add(new User
+            {
+                GUID = "abor#1519",
+                Name = "Андрей",
+                Surname = "Бороздюхин",
+                Midname = "Александрович",
+                Gender = true,
+                Birthdate = Convert.ToDateTime("1970-01-25"),
+                Country = "Россия",
+                City = "Саратов",
+                Department = "ИнПИТ",
+                Group = "ИФСТ",
+                Status = "Отпуск",
+                Email = "abor@sstu.ru",
+                Phone = "+79030459403",
                 Role = "Преподаватель"
             });
 

@@ -21,16 +21,6 @@ namespace Service.DTO
         public string GUID { get; set; }
 
         /// <summary>
-        /// Gets or sets the RFID. Optional field.
-        /// </summary>
-        public string RFID { get; set; }
-
-        /// <summary>
-        /// Gets or sets the QR. Optional field.
-        /// </summary>
-        public string QR { get; set; }
-
-        /// <summary>
         /// Gets or sets the name.
         /// </summary>
         [Required]

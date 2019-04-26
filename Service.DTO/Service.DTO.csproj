@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivityDTO.cs" />
     <Compile Include="CheckpointDTO.cs" />
     <Compile Include="IdentityDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

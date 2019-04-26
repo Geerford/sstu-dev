@@ -218,13 +218,8 @@ namespace Services.Business.Service
             {
                 throw new ValidationException("Не задан ID", "");
             }
-            Activity activity = Database.Activity.GetAll().Where(x => x.IdentityGUID == identityGUID).FirstOrDefault();
-            Mode mode = Database.Mode.GetAll().Where(x => x.ID == activity.ModeID).FirstOrDefault();
-            if(mode == null)
-            {
-                throw new ValidationException("Сущность не найдена", "");
-            }
-            if (activity != null && mode.Description.Equals("Вход"))
+            Activity activity = Database.Activity.GetAll().Where(x => x.IdentityGUID == identityGUID).LastOrDefault();
+            if(activity != null && activity.Mode.Status.Equals("Вход"))
             {
                 return true; //Person in the room
             }

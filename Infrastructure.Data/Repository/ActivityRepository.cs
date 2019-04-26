@@ -67,7 +67,7 @@ namespace Infrastructure.Data.Repository
         /// </summary>
         public Activity Get(int id)
         {
-            return database.Activity.Find(id);
+            return database.Activity.Where(x => x.ID == id).Include(x => x.Mode).FirstOrDefault();
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Infrastructure.Data.Repository
         /// </summary>
         public IEnumerable<Activity> GetAll()
         {
-            return database.Activity;
+            return database.Activity.Include(x => x.Mode);
         }
 
         /// <summary>

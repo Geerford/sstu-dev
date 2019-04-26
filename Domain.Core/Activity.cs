@@ -79,7 +79,7 @@ namespace Domain.Core
             json.CheckpointIP = CheckpointIP;
             json.Date = Date;
             json.Status = Status;
-            json.Mode = Mode;
+            json.ModeID = ModeID;
             return json.ToString();
         }
 

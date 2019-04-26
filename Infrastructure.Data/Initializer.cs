@@ -4,7 +4,7 @@ using System.Data.Entity;
 
 namespace Infrastructure.Data
 {
-    internal class Initializer : DropCreateDatabaseIfModelChanges<Context>
+    internal class Initializer : DropCreateDatabaseAlways<Context>
     {
         protected override void Seed(Context database)
         {
@@ -105,7 +105,7 @@ namespace Infrastructure.Data
 
             database.Activity.Add(new Activity
             {
-                IdentityGUID = "1",
+                IdentityGUID = "milantev_sa#1516",
                 CheckpointIP = "192.168.0.1",
                 Date = DateTime.Now,
                 Mode = mode1,
@@ -113,7 +113,7 @@ namespace Infrastructure.Data
             });
             database.Activity.Add(new Activity
             {
-                IdentityGUID = "2",
+                IdentityGUID = "milantev_sa#1516",
                 CheckpointIP = "192.168.0.1",
                 Date = DateTime.Now,
                 Mode = mode2,
@@ -121,7 +121,7 @@ namespace Infrastructure.Data
             });
             database.Activity.Add(new Activity
             {
-                IdentityGUID = "3",
+                IdentityGUID = "milantev_sa#1516",
                 CheckpointIP = "192.168.0.1",
                 Date = DateTime.Now,
                 Mode = mode3,

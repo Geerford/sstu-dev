@@ -40,6 +40,7 @@ namespace Domain.Core
             dynamic json = new JObject();
             json.ID = ID;
             json.Description = Description;
+            json.Status = Status;
             return json.ToString();
         }
 
@@ -55,6 +56,7 @@ namespace Domain.Core
             {
                 result = ID == item.ID;
                 result &= Description.Equals(item.Description);
+                result &= Status.Equals(item.Status);
                 return result;
             }
             return false;
@@ -68,6 +70,7 @@ namespace Domain.Core
         {
             var hashcode = ID.GetHashCode();
             hashcode ^= Description.GetHashCode();
+            hashcode ^= Status.GetHashCode();
             return hashcode;
         }
     }

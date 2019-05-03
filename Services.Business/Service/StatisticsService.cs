@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Domain.Core;
 using Repository.Interfaces;
 using Service.DTO;
 using Service.Interfaces;
@@ -66,8 +65,6 @@ namespace Services.Business.Service
                     });
                 }
             }
-            identityService.Dispose();
-            checkpointService.Dispose();
             return activities;
         }
 
@@ -95,8 +92,6 @@ namespace Services.Business.Service
                     });
                 }
             }
-            identityService.Dispose();
-            checkpointService.Dispose();
             return activities;
         }
 
@@ -124,8 +119,6 @@ namespace Services.Business.Service
                     });
                 }
             }
-            identityService.Dispose();
-            checkpointService.Dispose();
             return activities;
         }
 
@@ -153,8 +146,6 @@ namespace Services.Business.Service
                     });
                 }
             }
-            identityService.Dispose();
-            checkpointService.Dispose();
             return activities;
         }
 
@@ -182,8 +173,6 @@ namespace Services.Business.Service
                     });
                 }
             }
-            identityService.Dispose();
-            checkpointService.Dispose();
             return activities;
         }
 
@@ -212,8 +201,6 @@ namespace Services.Business.Service
                     });
                 }
             }
-            identityService.Dispose();
-            checkpointService.Dispose();
             return activities;
         }
 
@@ -241,8 +228,6 @@ namespace Services.Business.Service
                     });
                 }
             }
-            identityService.Dispose();
-            checkpointService.Dispose();
             return activities;
         }
 
@@ -269,7 +254,6 @@ namespace Services.Business.Service
                     identities.Add(identityService.GetFull(identity.GUID));
                 }
             }
-            identityService.Dispose();
             return identities;
         }
 
@@ -296,7 +280,6 @@ namespace Services.Business.Service
                     identities.Add(identityService.GetFull(identity.GUID));
                 }
             }
-            identityService.Dispose();
             return identities;
         }
 
@@ -323,7 +306,6 @@ namespace Services.Business.Service
                     identities.Add(identityService.GetFull(identity.GUID));
                 }
             }
-            identityService.Dispose();
             return identities;
         }
 
@@ -350,7 +332,6 @@ namespace Services.Business.Service
                     identities.Add(identityService.GetFull(identity.GUID));
                 }
             }
-            identityService.Dispose();
             return identities;
         }
     }

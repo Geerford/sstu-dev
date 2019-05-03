@@ -80,7 +80,20 @@ namespace Infrastructure.Data
                 Phone = "+79030459403",
                 Role = "Преподаватель"
             });
-
+            #region GUESTS
+            int guestNumber = 15;
+            while (guestNumber > 0)
+            {
+                database.User.Add(new User
+                {
+                    GUID = "GUEST_" + guestNumber.ToString(),
+                    Birthdate = DateTime.Now,
+                    Role = "Гость"
+                });
+                --guestNumber;
+            }
+            database.SaveChanges();
+            #endregion
             string path = AppDomain.CurrentDomain.BaseDirectory + "App_Code\\users.txt";
             string[] lines;
             if (File.Exists(path))

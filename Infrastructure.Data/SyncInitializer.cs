@@ -135,7 +135,7 @@ namespace Infrastructure.Data
                 }
                 database.User.Add(new User
                 {
-                    GUID = count.ToString(),
+                    GUID = surname + count.ToString(),
                     Name = name,
                     Surname = surname,
                     Midname = midname,

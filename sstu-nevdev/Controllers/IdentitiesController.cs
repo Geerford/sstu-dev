@@ -8,7 +8,7 @@ using System.Web.Http;
 
 namespace sstu_nevdev.Controllers
 {
-    //[AuthenticationAPI(Roles = "SSTU_Deanery,SSTU_Administrator,SSTU_Inspector,SSTU_Security")]
+    [AuthenticationAPI(Roles = "SSTU_Deanery,SSTU_Administrator,SSTU_Inspector,SSTU_Security")]
     public class IdentitiesController : ApiController
     {
         IIdentityService service;
@@ -21,7 +21,7 @@ namespace sstu_nevdev.Controllers
         }
 
         // GET api/identities
-        //[AuthenticationAPI(Roles = "SSTU_Deanery,SSTU_Administrator,SSTU_Inspector")]
+        [AuthenticationAPI(Roles = "SSTU_Deanery,SSTU_Administrator,SSTU_Inspector")]
         public IHttpActionResult Get()
         {
             IEnumerable<IdentityDTO> items = service.GetAll();

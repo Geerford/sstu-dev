@@ -1,6 +1,7 @@
 ﻿using Domain.Core;
 using System;
 using System.Data.Entity;
+using System.IO;
 
 namespace Infrastructure.Data
 {
@@ -80,6 +81,34 @@ namespace Infrastructure.Data
                 GUID = "abor#1519",
                 Picture = "cat.jpg"
             });
+
+
+            string path = AppDomain.CurrentDomain.BaseDirectory + "App_Code\\users.txt";
+            string[] lines;
+            if (File.Exists(path))
+            {
+                lines = File.ReadAllLines(path);
+            }
+            else
+            {
+                lines = File.ReadAllLines("D:\\users.txt");
+            }
+
+            int count = 4;
+
+            foreach (var line in lines)
+            {
+                string[] items = line.Split(' ');
+
+                database.Identity.Add(new Identity
+                {
+                    GUID = items[0] + count.ToString(),
+                    Picture = "cat.jpg"
+                });
+                ++count;
+            }
+
+
             database.Checkpoint.Add(new Checkpoint
             {
                 IP = "192.168.0.1",

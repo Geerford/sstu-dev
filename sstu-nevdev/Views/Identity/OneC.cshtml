@@ -50,50 +50,83 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.GUID)
+            @Html.ActionLink(item.GUID, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Surname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Midname)
-        </td>
-        <td>
-            @if (item.Gender)
+            @if (!string.IsNullOrEmpty(item.Name))
             {
-                @Html.DisplayName("Мужской")
-            }
-            else
-            {
-                @Html.DisplayName("Женский")
+                @Html.ActionLink(item.Name, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
             }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Birthdate)
+            @if (!string.IsNullOrEmpty(item.Surname))
+            {
+                @Html.ActionLink(item.Surname, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+            }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Country)
+            @if (!string.IsNullOrEmpty(item.Midname))
+            {
+                @Html.ActionLink(item.Midname, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+            }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.City)
+            @if (item.Gender != null)
+            {
+                if ((bool)item.Gender)
+                {
+                    @Html.ActionLink("Мужской", "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                }
+                else
+                {
+                    @Html.ActionLink("Женский", "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                }
+            }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Phone)
+            @Html.ActionLink(Html.DisplayFor(modelItem => item.Birthdate).ToString(), "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Email)
+            @if (!string.IsNullOrEmpty(item.Country))
+            {
+                @Html.ActionLink(item.Country, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+            }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Department)
+            @if (!string.IsNullOrEmpty(item.City))
+            {
+                @Html.ActionLink(item.City, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+            }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Group)
+            @if (!string.IsNullOrEmpty(item.Phone))
+            {
+                @Html.ActionLink(item.Phone, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+            }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Status)
+            @if (!string.IsNullOrEmpty(item.Email))
+            {
+                @Html.ActionLink(item.Email, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+            }
+        </td>
+        <td>
+            @if (!string.IsNullOrEmpty(item.Department))
+            {
+                @Html.ActionLink(item.Department, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+            }
+        </td>
+        <td>
+            @if (item.Group != null)
+            {
+                @Html.ActionLink(item.Group, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+            }
+        </td>
+        <td>
+            @if (!string.IsNullOrEmpty(item.Status))
+            {
+                @Html.ActionLink(item.Status, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Role)

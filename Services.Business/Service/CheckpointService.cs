@@ -35,6 +35,8 @@ namespace Services.Business.Service
             {
                 Campus = model.Campus,
                 Row = model.Row,
+                Classroom = model.Classroom,
+                Section = model.Section,
                 Description = model.Description,
                 Status = model.Status,
                 TypeID = model.Type.ID,
@@ -115,6 +117,8 @@ namespace Services.Business.Service
                 ID = model.ID,
                 IP = model.IP,
                 Campus = model.Campus,
+                Classroom = model.Classroom,
+                Section = model.Section,
                 Description = model.Description,
                 Row = model.Row,
                 Status = model.Status,

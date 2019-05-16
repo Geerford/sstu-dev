@@ -44,8 +44,14 @@ namespace Infrastructure.Data
                 Role = "Студент",
                 Description = "Вход в 1-й корпус"
             };
+            Admission admission3 = new Admission
+            {
+                Role = "Преподаватель",
+                Description = "Вход в 1-й корпус"
+            };
             database.Admission.Add(admission1);
             database.Admission.Add(admission2);
+            database.Admission.Add(admission3);
             database.SaveChanges();
 
             #region GUESTS
@@ -135,7 +141,7 @@ namespace Infrastructure.Data
             database.Activity.Add(new Activity
             {
                 IdentityGUID = "milantev_sa#1516",
-                CheckpointIP = "192.168.0.1",
+                CheckpointIP = "192.168.0.15",
                 Date = DateTime.Now,
                 Mode = mode1,
                 Status = true
@@ -145,15 +151,15 @@ namespace Infrastructure.Data
                 IdentityGUID = "milantev_sa#1516",
                 CheckpointIP = "192.168.0.1",
                 Date = DateTime.Now,
-                Mode = mode2,
+                Mode = mode3,
                 Status = true
             });
             database.Activity.Add(new Activity
             {
                 IdentityGUID = "milantev_sa#1516",
-                CheckpointIP = "192.168.0.1",
+                CheckpointIP = "192.168.0.15",
                 Date = DateTime.Now,
-                Mode = mode3,
+                Mode = mode2,
                 Status = true
             });
             database.CheckpointAdmission.Add(new CheckpointAdmission {
@@ -167,6 +173,16 @@ namespace Infrastructure.Data
             database.CheckpointAdmission.Add(new CheckpointAdmission {
                 CheckpointID = 2,
                 AdmissionID = 2
+            });
+            database.CheckpointAdmission.Add(new CheckpointAdmission
+            {
+                CheckpointID = 1,
+                AdmissionID = 3
+            });
+            database.CheckpointAdmission.Add(new CheckpointAdmission
+            {
+                CheckpointID = 2,
+                AdmissionID = 3
             });
             database.SaveChanges();
         }

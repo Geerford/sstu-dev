@@ -62,4 +62,20 @@ namespace sstu_nevdev.Models
         /// </summary>
         public string GUID { get; set; }
     }
+
+    /// <summary>
+    /// Represents a active directory statistics model for API.
+    /// </summary>
+    public class StatisticsActiveDirectoryAPIModel
+    {
+        /// <summary>
+        /// Gets or sets the domain.
+        /// </summary>
+        public string Domain { get; set; }
+
+        /// <summary>
+        /// Gets or sets the role.
+        /// </summary>
+        public string Role { get; set; }
+    }
 }

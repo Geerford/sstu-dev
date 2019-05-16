@@ -394,16 +394,16 @@ namespace Services.Business.Service
                     domain = Environment.UserDomainName;
                     name = username;
                 }
-                using (var сontext = new PrincipalContext(ContextType.Domain, domain))
+                using (var context = new PrincipalContext(ContextType.Domain, domain))
                 {
                     UserPrincipal user = null;
                     bool isAuthenticated = false;
                     try
                     {
-                        user = UserPrincipal.FindByIdentity(сontext, name);
+                        user = UserPrincipal.FindByIdentity(context, name);
                         if (user != null)
                         {
-                            isAuthenticated = сontext.ValidateCredentials(name, password, ContextOptions.Negotiate);
+                            isAuthenticated = context.ValidateCredentials(name, password, ContextOptions.Negotiate);
                         }
                     }
                     catch (Exception)

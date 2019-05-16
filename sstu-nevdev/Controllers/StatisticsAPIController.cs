@@ -210,5 +210,56 @@ namespace sstu_nevdev.Controllers
             }
             return BadRequest();
         }
+
+        // POST api/statistics/roles
+        [HttpPost]
+        [Route("roles")]
+        public IHttpActionResult GetRoles([FromBody]StatisticsActiveDirectoryAPIModel item)
+        {
+            if (item != null && !string.IsNullOrEmpty(item.Domain))
+            {
+                var items = service.GetRoles(item.Domain);
+                if (items != null)
+                {
+                    return Ok(items);
+                }
+                return Content(HttpStatusCode.BadRequest, "Object does not exist");
+            }
+            return BadRequest();
+        }
+
+        // POST api/statistics/users
+        [HttpPost]
+        [Route("users")]
+        public IHttpActionResult GetUsers([FromBody]StatisticsActiveDirectoryAPIModel item)
+        {
+            if (item != null && !string.IsNullOrEmpty(item.Domain))
+            {
+                var items = service.GetUsers(item.Domain);
+                if (items != null)
+                {
+                    return Ok(items);
+                }
+                return Content(HttpStatusCode.BadRequest, "Object does not exist");
+            }
+            return BadRequest();
+        }
+
+        // POST api/statistics/users/role
+        [HttpPost]
+        [Route("users/role")]
+        public IHttpActionResult GetUsersByRole([FromBody]StatisticsActiveDirectoryAPIModel item)
+        {
+            if (item != null && !string.IsNullOrEmpty(item.Domain) && !string.IsNullOrEmpty(item.Role))
+            {
+                var items = service.GetUsersByRole(item.Domain, item.Role);
+                if (items != null)
+                {
+                    return Ok(items);
+                }
+                return Content(HttpStatusCode.BadRequest, "Object does not exist");
+            }
+            return BadRequest();
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.DirectoryServices.AccountManagement;
 using System.Linq;
 using Repository.Interfaces;
 using Service.DTO;
@@ -333,6 +334,67 @@ namespace Services.Business.Service
                 }
             }
             return identities;
+        }
+
+        public IEnumerable<string> GetRoles(string domain)
+        {
+            List<string> roles = new List<string>();
+            using (var context = new PrincipalContext(ContextType.Domain, domain))
+            {
+                using (var searcher = new PrincipalSearcher(new GroupPrincipal(context)))
+                {
+                    foreach (var result in searcher.FindAll())
+                    {
+                        roles.Add(result.Name);
+                    }
+                }
+            }
+            return roles;
+        }
+
+        public IEnumerable<ADUserDTO> GetUsers(string domain)
+        {
+            List<ADUserDTO> users = new List<ADUserDTO>();
+            using (var context = new PrincipalContext(ContextType.Domain, domain))
+            {
+                using (var searcher = new PrincipalSearcher(new UserPrincipal(context)))
+                {
+                    foreach (var result in searcher.FindAll())
+                    {
+                        ADUserDTO user = new ADUserDTO
+                        {
+                            SamAccountName = result.SamAccountName,
+                            DN = result.DistinguishedName,
+                            Roles = result.GetGroups().Select(x => x.Name)
+                        };
+                        users.Add(user);
+                    }
+                }
+            }
+            return users;
+        }
+
+        public IEnumerable<ADUserDTO> GetUsersByRole(string domain, string role)
+        {
+            List<ADUserDTO> users = new List<ADUserDTO>();
+            using (var context = new PrincipalContext(ContextType.Domain, domain))
+            {
+                using (var searcher = new PrincipalSearcher(new UserPrincipal(context)))
+                {
+                    foreach (var result in searcher.FindAll().Where(x => x.GetGroups()
+                        .Where(y => y.Name.Equals(role)).ToList().Count > 0))
+                    {
+                        ADUserDTO user = new ADUserDTO
+                        {
+                            SamAccountName = result.SamAccountName,
+                            DN = result.DistinguishedName,
+                            Roles = result.GetGroups().Select(x => x.Name)
+                        };
+                        users.Add(user);
+                    }
+                }
+            }
+            return users;
         }
     }
 }

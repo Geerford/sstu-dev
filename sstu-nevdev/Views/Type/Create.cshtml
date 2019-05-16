@@ -1,4 +1,4 @@
-﻿@model Domain.Core.Type
+﻿@model sstu_nevdev.Models.TypeViewModel
 
 <h2>Добавить</h2>
 
@@ -8,7 +8,6 @@
     
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(x => x.ID)
         <div class="form-group">
             @Html.Label("Описание", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

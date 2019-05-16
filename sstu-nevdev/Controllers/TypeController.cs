@@ -1,11 +1,12 @@
 ﻿using Domain.Core;
 using Service.Interfaces;
+using sstu_nevdev.Models;
 using System.Net;
 using System.Web.Mvc;
 
 namespace sstu_nevdev.Controllers
 {
-    [Authorize(Roles = "SSTU_Administrator")]
+    //[Authorize(Roles = "SSTU_Administrator")]
     public class TypeController : Controller
     {
         ITypeService service;
@@ -41,7 +42,7 @@ namespace sstu_nevdev.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Type model)
+        public ActionResult Create(TypeViewModel model)
         {
             if (string.IsNullOrEmpty(model.Description))
             {
@@ -78,7 +79,7 @@ namespace sstu_nevdev.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Type model)
+        public ActionResult Edit(TypeViewModel model)
         {
             if (string.IsNullOrEmpty(model.Description))
             {

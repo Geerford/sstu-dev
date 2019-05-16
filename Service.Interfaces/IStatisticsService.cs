@@ -109,5 +109,27 @@ namespace Service.Interfaces
         /// <param name="section">The section.</param>
         /// <returns>The collection of all <see cref="IdentityDTO"/> with the given section.</returns>
         IEnumerable<IdentityDTO> GetCurrentBySection(int section);
+
+        /// <summary>
+        /// Gets all <see cref="string"/> roles from active directory repository.
+        /// </summary>
+        /// <param name="domain">The active directory domain.</param>
+        /// <returns>The collection of all <see cref="string"/> roles.</returns>
+        IEnumerable<string> GetRoles(string domain);
+
+        /// <summary>
+        /// Gets all <see cref="ADUserDTO"/> from active directory repository.
+        /// </summary>
+        /// <param name="domain">The active directory domain.</param>
+        /// <returns>The collection of all <see cref="ADUserDTO"/>.</returns>
+        IEnumerable<ADUserDTO> GetUsers(string domain);
+
+        /// <summary>
+        /// Gets all <see cref="ADUserDTO"/> from repository by role.
+        /// </summary>
+        /// <param name="domain">The active directory domain.</param>
+        /// <param name="role">The role.</param>
+        /// <returns>The collection of all <see cref="ADUserDTO"/> with the given.</returns>
+        IEnumerable<ADUserDTO> GetUsersByRole(string domain, string role);
     }
 }

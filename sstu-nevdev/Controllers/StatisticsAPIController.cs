@@ -22,7 +22,7 @@ namespace sstu_nevdev.Controllers
         // POST api/statistics/campus
         [HttpPost]
         [Route("campus")]
-        public IHttpActionResult GetByCampus([FromBody]StatisticsAPIModel item)
+        public IHttpActionResult GetByCampus([FromBody]CampusStatisticsAPIModel item)
         {
             if (item != null && item.Campus != null && item.Start != null && item.End != null)
             {
@@ -39,7 +39,7 @@ namespace sstu_nevdev.Controllers
         // POST api/statistics/campus/row
         [HttpPost]
         [Route("campus/row")]
-        public IHttpActionResult GetByCampusRow([FromBody]StatisticsAPIModel item)
+        public IHttpActionResult GetByCampusRow([FromBody]CampusRowStatisticsAPIModel item)
         {
             if (item != null && item.Campus != null && item.Row != null && item.Start != null && item.End != null)
             {
@@ -56,7 +56,7 @@ namespace sstu_nevdev.Controllers
         // POST api/statistics/classroom
         [HttpPost]
         [Route("classroom")]
-        public IHttpActionResult GetByClassroom([FromBody]StatisticsAPIModel item)
+        public IHttpActionResult GetByClassroom([FromBody]ClassroomStatisticsAPIModel item)
         {
             if (item != null)
             {
@@ -77,7 +77,7 @@ namespace sstu_nevdev.Controllers
         // POST api/statistics/group
         [HttpPost]
         [Route("group")]
-        public IHttpActionResult GetByGroup([FromBody]StatisticsAPIModel item)
+        public IHttpActionResult GetByGroup([FromBody]GroupStatisticsAPIModel item)
         {
             if (item != null && !string.IsNullOrEmpty(item.Group) && item.Start != null && item.End != null)
             {
@@ -94,7 +94,7 @@ namespace sstu_nevdev.Controllers
         // POST api/statistics/section
         [HttpPost]
         [Route("section")]
-        public IHttpActionResult GetBySection([FromBody]StatisticsAPIModel item)
+        public IHttpActionResult GetBySection([FromBody]SectionStatisticsAPIModel item)
         {
             if (item != null && item.Section != null && item.Start != null && item.End != null)
             {
@@ -111,7 +111,7 @@ namespace sstu_nevdev.Controllers
         // POST api/statistics/user
         [HttpPost]
         [Route("user")]
-        public IHttpActionResult GetByUser([FromBody]StatisticsAPIModel item)
+        public IHttpActionResult GetByUser([FromBody]UserStatisticsAPIModel item)
         {
             if (item != null && !string.IsNullOrEmpty(item.Name) && !string.IsNullOrEmpty(item.Surname)
                     && !string.IsNullOrEmpty(item.Midname) && item.Start != null && item.End != null)
@@ -129,7 +129,7 @@ namespace sstu_nevdev.Controllers
         // POST api/statistics/guid
         [HttpPost]
         [Route("guid")]
-        public IHttpActionResult GetByUserGuid([FromBody]StatisticsAPIModel item)
+        public IHttpActionResult GetByUserGuid([FromBody]GUIDStatisticsAPIModel item)
         {
             if (item != null && !string.IsNullOrEmpty(item.GUID) && item.Start != null && item.End != null)
             {
@@ -146,7 +146,7 @@ namespace sstu_nevdev.Controllers
         // POST api/statistics/current/campus
         [HttpPost]
         [Route("current/campus")]
-        public IHttpActionResult GetByCurrentCampus([FromBody]StatisticsAPIModel item)
+        public IHttpActionResult GetCurrentByCampus([FromBody]CurrentCampusStatisticsAPIModel item)
         {
             if (item != null && item.Campus != null)
             {
@@ -163,7 +163,7 @@ namespace sstu_nevdev.Controllers
         // POST api/statistics/current/campus/row
         [HttpPost]
         [Route("current/campus/row")]
-        public IHttpActionResult GetByCurrentCampusRow([FromBody]StatisticsAPIModel item)
+        public IHttpActionResult GetCurrentByCampusRow([FromBody]CurrentCampusRowStatisticsAPIModel item)
         {
             if (item != null && item.Campus != null && item.Row != null)
             {
@@ -180,7 +180,7 @@ namespace sstu_nevdev.Controllers
         // POST api/statistics/current/classroom
         [HttpPost]
         [Route("current/classroom")]
-        public IHttpActionResult GetByCurrentClassroom([FromBody]StatisticsAPIModel item)
+        public IHttpActionResult GetCurrentByClassroom([FromBody]CurrentClassroomStatisticsAPIModel item)
         {
             if (item != null && item.Classroom != null)
             {
@@ -197,7 +197,7 @@ namespace sstu_nevdev.Controllers
         // POST api/statistics/current/section
         [HttpPost]
         [Route("current/section")]
-        public IHttpActionResult GetByCurrentSection([FromBody]StatisticsAPIModel item)
+        public IHttpActionResult GetCurrentBySection([FromBody]CurrentSectionStatisticsAPIModel item)
         {
             if (item != null && item.Section != null)
             {
@@ -211,10 +211,45 @@ namespace sstu_nevdev.Controllers
             return BadRequest();
         }
 
+        // POST api/statistics/current/user
+        [HttpPost]
+        [Route("current/user")]
+        public IHttpActionResult GetLocationByName([FromBody]LocationNameStatisticsAPIModel item)
+        {
+            if (item != null && !string.IsNullOrEmpty(item.Name) && !string.IsNullOrEmpty(item.Surname)
+                    && !string.IsNullOrEmpty(item.Midname))
+            {
+                var items = service.GetUserLocation(item.Name, item.Midname, item.Surname);
+                if (items != null)
+                {
+                    return Ok(items);
+                }
+                return Content(HttpStatusCode.BadRequest, "Object does not exist");
+            }
+            return BadRequest();
+        }
+
+        // POST api/statistics/current/guid
+        [HttpPost]
+        [Route("current/guid")]
+        public IHttpActionResult GetLocationByGUID([FromBody]LocationGUIDStatisticsAPIModel item)
+        {
+            if (item != null && !string.IsNullOrEmpty(item.GUID))
+            {
+                var items = service.GetUserLocation(item.GUID);
+                if (items != null)
+                {
+                    return Ok(items);
+                }
+                return Content(HttpStatusCode.BadRequest, "Object does not exist");
+            }
+            return BadRequest();
+        }
+
         // POST api/statistics/roles
         [HttpPost]
         [Route("roles")]
-        public IHttpActionResult GetRoles([FromBody]StatisticsActiveDirectoryAPIModel item)
+        public IHttpActionResult GetRoles([FromBody]ActiveDirectoryUsersStatisticsAPIModel item)
         {
             if (item != null && !string.IsNullOrEmpty(item.Domain))
             {
@@ -231,7 +266,7 @@ namespace sstu_nevdev.Controllers
         // POST api/statistics/users
         [HttpPost]
         [Route("users")]
-        public IHttpActionResult GetUsers([FromBody]StatisticsActiveDirectoryAPIModel item)
+        public IHttpActionResult GetUsers([FromBody]ActiveDirectoryUsersStatisticsAPIModel item)
         {
             if (item != null && !string.IsNullOrEmpty(item.Domain))
             {
@@ -248,7 +283,7 @@ namespace sstu_nevdev.Controllers
         // POST api/statistics/users/role
         [HttpPost]
         [Route("users/role")]
-        public IHttpActionResult GetUsersByRole([FromBody]StatisticsActiveDirectoryAPIModel item)
+        public IHttpActionResult GetUsersByRole([FromBody]ActiveDirectoryRolesStatisticsAPIModel item)
         {
             if (item != null && !string.IsNullOrEmpty(item.Domain) && !string.IsNullOrEmpty(item.Role))
             {

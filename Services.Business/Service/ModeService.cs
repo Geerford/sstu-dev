@@ -89,7 +89,7 @@ namespace Services.Business.Service
         /// </summary>
         public IEnumerable<Mode> GetByMode(string mode)
         {
-            return Database.Mode.Find(x => x.Description.Equals(mode));
+            return Database.Mode.Find(x => x.Status.Equals(mode));
         }
     }
 }

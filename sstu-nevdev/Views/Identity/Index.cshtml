@@ -86,18 +86,21 @@
             <td>
                 @if (item.Gender != null)
                 {
-                if ((bool)item.Gender)
-                {
-                @Html.ActionLink("Мужской", "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
-                }
-                else
-                {
-                @Html.ActionLink("Женский", "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
-                }
+                    if ((bool)item.Gender)
+                    {
+                    @Html.ActionLink("Мужской", "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                    }
+                    else
+                    {
+                    @Html.ActionLink("Женский", "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                    }
                 }
             </td>
-            <td>
-                @Html.ActionLink(Html.DisplayFor(modelItem => item.Birthdate).ToString(), "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+            <td>                
+                @if (item.Birthdate.Date != DateTime.Now.Date)
+                {
+                    @Html.ActionLink(item.Birthdate.ToString(), "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                }
             </td>
             <td>
                 @if (!string.IsNullOrEmpty(item.Country))

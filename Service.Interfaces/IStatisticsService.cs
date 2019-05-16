@@ -111,6 +111,22 @@ namespace Service.Interfaces
         IEnumerable<IdentityDTO> GetCurrentBySection(int section);
 
         /// <summary>
+        /// Gets all <see cref="Activity"/> from repository by full name.
+        /// </summary>
+        /// <param name="name">The user name.</param>
+        /// <param name="midname">The user midname.</param>
+        /// <param name="surname">The user surname.</param>
+        /// <returns>The collection of all <see cref="Activity"/> with the given full name.</returns>
+        ActivityDTO GetUserLocation(string name, string midname, string surname);
+
+        /// <summary>
+        /// Gets all <see cref="Activity"/> from repository by GUID.
+        /// </summary>
+        /// <param name="guid">The user GUID.</param>
+        /// <returns>The collection of all <see cref="Activity"/> with the given full name.</returns>
+        ActivityDTO GetUserLocation(string guid); 
+
+        /// <summary>
         /// Gets all <see cref="string"/> roles from active directory repository.
         /// </summary>
         /// <param name="domain">The active directory domain.</param>

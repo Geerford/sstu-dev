@@ -336,6 +336,53 @@ namespace Services.Business.Service
             return identities;
         }
 
+        public ActivityDTO GetUserLocation(string name, string midname, string surname)
+        {
+            IdentityService identityService = new IdentityService(Database, SyncDatabase);
+            CheckpointService checkpointService = new CheckpointService(Database);
+            var identity = identityService.GetByName(name, midname, surname);
+            if (identity != null)
+            {
+                var activity = Database.Activity.GetAll().Where(x => x.IdentityGUID == identity.GUID).LastOrDefault();
+
+                return new ActivityDTO()
+                {
+                    ID = activity.ID,
+                    User = identity,
+                    Checkpoint = checkpointService.GetByIP(activity.CheckpointIP),
+                    Mode = Database.Mode.GetAll().Where(x => x.ID == activity.ID).FirstOrDefault(),
+                    Date = activity.Date,
+                    Status = activity.Status
+                };
+            }
+            return null;
+        }
+
+        public ActivityDTO GetUserLocation(string guid)
+        {
+            IdentityService identityService = new IdentityService(Database, SyncDatabase);
+            CheckpointService checkpointService = new CheckpointService(Database);
+            var identity = identityService.GetByGUID(guid);
+            if (identity != null)
+            {
+                var activity = Database.Activity.GetAll().Where(x => x.IdentityGUID == identity.GUID).LastOrDefault();
+
+                return new ActivityDTO()
+                {
+                    ID = activity.ID,
+                    User = identity,
+                    Checkpoint = checkpointService.GetByIP(activity.CheckpointIP),
+                    Mode = Database.Mode.GetAll().Where(x => x.ID == activity.ID).FirstOrDefault(),
+                    Date = activity.Date,
+                    Status = activity.Status
+                };
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Implements <see cref="IStatisticsService.GetRoles(string)"/>.
+        /// </summary>
         public IEnumerable<string> GetRoles(string domain)
         {
             List<string> roles = new List<string>();
@@ -345,13 +392,20 @@ namespace Services.Business.Service
                 {
                     foreach (var result in searcher.FindAll())
                     {
-                        roles.Add(result.Name);
+                        if (!result.SamAccountName.Equals("Administrator") && !result.SamAccountName.Equals("Guest")
+                            && !result.SamAccountName.Equals("krbtgt") && !result.SamAccountName.Equals("ASPNET"))
+                        {
+                            roles.Add(result.Name);
+                        }
                     }
                 }
             }
             return roles;
         }
 
+        /// <summary>
+        /// Implements <see cref="IStatisticsService.GetUsers(string)"/>.
+        /// </summary>
         public IEnumerable<ADUserDTO> GetUsers(string domain)
         {
             List<ADUserDTO> users = new List<ADUserDTO>();
@@ -361,19 +415,41 @@ namespace Services.Business.Service
                 {
                     foreach (var result in searcher.FindAll())
                     {
-                        ADUserDTO user = new ADUserDTO
+                        if(!result.SamAccountName.Equals("Administrator") && !result.SamAccountName.Equals("Guest") 
+                            && !result.SamAccountName.Equals("krbtgt") && !result.SamAccountName.Equals("ASPNET"))
                         {
-                            SamAccountName = result.SamAccountName,
-                            DN = result.DistinguishedName,
-                            Roles = result.GetGroups().Select(x => x.Name)
-                        };
-                        users.Add(user);
+                            ADUserDTO user = new ADUserDTO
+                            {
+                                SamAccountName = result.SamAccountName,
+                                DN = result.DistinguishedName,
+                                Roles = result.GetGroups().Select(x => 
+                                {
+                                    switch (x.Name)
+                                    {
+                                        case "SSTU_Student":
+                                            return x.Name;
+                                        case "SSTU_Administrator":
+                                            return x.Name;
+                                        case "SSTU_Deanery":
+                                            return x.Name;
+                                        case "SSTU_Inspector":
+                                            return x.Name;
+                                        default:
+                                            return null;
+                                    }
+                                }).Where(y => y != null).ToList()
+                            };
+                            users.Add(user);
+                        }                        
                     }
                 }
             }
             return users;
         }
 
+        /// <summary>
+        /// Implements <see cref="IStatisticsService.GetUsersByRole(string, string)"/>.
+        /// </summary>
         public IEnumerable<ADUserDTO> GetUsersByRole(string domain, string role)
         {
             List<ADUserDTO> users = new List<ADUserDTO>();
@@ -388,13 +464,28 @@ namespace Services.Business.Service
                         {
                             SamAccountName = result.SamAccountName,
                             DN = result.DistinguishedName,
-                            Roles = result.GetGroups().Select(x => x.Name)
+                            Roles = result.GetGroups().Select(x =>
+                            {
+                                switch (x.Name)
+                                {
+                                    case "SSTU_Student":
+                                        return x.Name;
+                                    case "SSTU_Administrator":
+                                        return x.Name;
+                                    case "SSTU_Deanery":
+                                        return x.Name;
+                                    case "SSTU_Inspector":
+                                        return x.Name;
+                                    default:
+                                        return null;
+                                }
+                            }).Where(y => y != null).ToList()
                         };
                         users.Add(user);
                     }
                 }
             }
             return users;
-        }
+        }        
     }
 }

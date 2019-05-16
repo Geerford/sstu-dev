@@ -2,6 +2,7 @@
 using Service.Interfaces;
 using sstu_nevdev.Models;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
@@ -20,7 +21,7 @@ namespace sstu_nevdev.Controllers
 
         public ActionResult Index()
         {
-            return View(service.GetAll());
+            return View(service.GetAll().Reverse());
         }
 
         public ActionResult OneC()

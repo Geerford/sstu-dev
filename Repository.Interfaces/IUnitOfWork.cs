@@ -69,6 +69,11 @@ namespace Repository.Interfaces
         void Drop();
 
         /// <summary>
+        /// Saves state of <see cref="IUnitOfWork"/> repository during sync.
+        /// </summary>
+        void SaveSync();
+
+        /// <summary>
         /// Recovers database from backup.
         /// </summary>
         /// <param name="backupName">The database backup name.</param>

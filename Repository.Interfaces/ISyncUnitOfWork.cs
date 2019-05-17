@@ -14,5 +14,10 @@ namespace Repository.Interfaces
         /// Gets the <see cref="User"/> repository.
         /// </summary>
         ISyncRepository<User> User { get; }
+
+        /// <summary>
+        /// Drops the database.
+        /// </summary>
+        void Drop();
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Domain.Core;
+using Infrastructure.Data.Utilities;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 
@@ -9,6 +11,7 @@ namespace Infrastructure.Data
     {
         protected override void Seed(Context database)
         {
+            #region TYPES
             Domain.Core.Type type1 = new Domain.Core.Type {
                 Description = "Пропускает через ворота",
                 Status = "Пропускной"
@@ -21,6 +24,11 @@ namespace Infrastructure.Data
                 Description = "Собирает статистику",
                 Status = "Статистический"
             };
+            database.Type.Add(type1);
+            database.Type.Add(type2);
+            database.Type.Add(type3);
+            #endregion
+            #region MODES
             Mode mode1 = new Mode {
                 Description = "Отмечает событие входа в объект",
                 Status = "Вход"
@@ -33,9 +41,8 @@ namespace Infrastructure.Data
                 Description = "Собирает статистические данные передвижений субъекта",
                 Status = "Статистика"
             };
-            database.Type.Add(type1);
-            database.Type.Add(type2);
-            database.Type.Add(type3);
+            #endregion
+            #region ADMISSIONS
             Admission admission1 = new Admission {
                 Role = "Сотрудник",
                 Description = "Вход в лабораторию"
@@ -53,7 +60,7 @@ namespace Infrastructure.Data
             database.Admission.Add(admission2);
             database.Admission.Add(admission3);
             database.SaveChanges();
-
+            #endregion
             #region GUESTS
             int guestNumber = 15;
             while(guestNumber > 0)
@@ -67,6 +74,7 @@ namespace Infrastructure.Data
             }
             database.SaveChanges();
             #endregion
+            #region USERS
             database.Identity.Add(new Identity
             {
                 GUID = "milantev_sa#1516",
@@ -87,8 +95,8 @@ namespace Infrastructure.Data
                 GUID = "abor#1519",
                 Picture = "cat.jpg"
             });
-
-
+            #endregion
+            #region GUID BINDING
             string path = AppDomain.CurrentDomain.BaseDirectory + "App_Code\\users.txt";
             string[] lines;
             if (File.Exists(path))
@@ -99,22 +107,21 @@ namespace Infrastructure.Data
             {
                 lines = File.ReadAllLines("D:\\users.txt");
             }
-
-            int count = 4;
-
+            int count = 1;
+            Translator translator = new Translator();
             foreach (var line in lines)
             {
                 string[] items = line.Split(' ');
-
+                string guid = translator.Bind(items[0].ToLower());
                 database.Identity.Add(new Identity
                 {
-                    GUID = items[0] + count.ToString(),
+                    GUID = guid + count.ToString(),
                     Picture = "cat.jpg"
                 });
                 ++count;
             }
-
-
+            #endregion
+            #region CHECKPOINTS
             database.Checkpoint.Add(new Checkpoint
             {
                 IP = "192.168.0.1",
@@ -137,7 +144,8 @@ namespace Infrastructure.Data
                 Type = type1
             });
             database.SaveChanges();
-
+            #endregion
+            #region ACTIVITIES
             database.Activity.Add(new Activity
             {
                 IdentityGUID = "milantev_sa#1516",
@@ -162,6 +170,8 @@ namespace Infrastructure.Data
                 Mode = mode2,
                 Status = true
             });
+            #endregion
+            #region ADMISSIONS TO CHECKPOINTS
             database.CheckpointAdmission.Add(new CheckpointAdmission {
                 CheckpointID = 1,
                 AdmissionID = 1
@@ -185,6 +195,7 @@ namespace Infrastructure.Data
                 AdmissionID = 3
             });
             database.SaveChanges();
+            #endregion
         }
     }
 }

@@ -206,6 +206,14 @@ namespace Infrastructure.Data
         }
 
         /// <summary>
+        /// Implements <see cref="IUnitOfWork.SaveSync"/>.
+        /// </summary>
+        public void SaveSync()
+        {
+            database.SaveChanges();
+        }
+
+        /// <summary>
         /// Saves state change in Audit SQL-table
         /// </summary>
         private void Logging()

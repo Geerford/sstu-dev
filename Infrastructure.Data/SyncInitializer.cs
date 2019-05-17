@@ -1,5 +1,7 @@
 ﻿using Domain.Core;
+using Infrastructure.Data.Utilities;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 
@@ -9,6 +11,7 @@ namespace Infrastructure.Data
     {
         protected override void Seed(SyncContext database)
         {
+            #region USERS
             database.User.Add(new User
             {
                 GUID = "milantev_sa#1516",
@@ -26,7 +29,6 @@ namespace Infrastructure.Data
                 Phone = "+79020447508",
                 Role = "Студент"
             });
-
             database.User.Add(new User
             {
                 GUID = "konyaev_yy#1517",
@@ -44,7 +46,6 @@ namespace Infrastructure.Data
                 Phone = "+79061508501",
                 Role = "Студент"
             });
-
             database.User.Add(new User
             {
                 GUID = "eremenko_d#1518",
@@ -62,7 +63,6 @@ namespace Infrastructure.Data
                 Phone = "+79370220973",
                 Role = "Студент"
             });
-
             database.User.Add(new User
             {
                 GUID = "abor#1519",
@@ -80,20 +80,8 @@ namespace Infrastructure.Data
                 Phone = "+79030459403",
                 Role = "Преподаватель"
             });
-            #region GUESTS
-            int guestNumber = 15;
-            while (guestNumber > 0)
-            {
-                database.User.Add(new User
-                {
-                    GUID = "GUEST_" + guestNumber.ToString(),
-                    Birthdate = DateTime.Now,
-                    Role = "Гость"
-                });
-                --guestNumber;
-            }
-            database.SaveChanges();
             #endregion
+            #region 1C SYNC
             string path = AppDomain.CurrentDomain.BaseDirectory + "App_Code\\users.txt";
             string[] lines;
             if (File.Exists(path))
@@ -104,8 +92,11 @@ namespace Infrastructure.Data
             {
                 lines = File.ReadAllLines("D:\\users.txt");
             }
-            int count = 4;
-
+            int count = 1;
+            Random random = new Random();
+            DateTime start = new DateTime(1995, 1, 1), end = new DateTime(1999, 1, 1);
+            int range = (end - start).Days;
+            Translator translator = new Translator();
             foreach (var line in lines)
             {
                 string surname = "", name = "", midname = "", gender = "";
@@ -133,25 +124,32 @@ namespace Infrastructure.Data
                     default:
                         break;
                 }
+                string phone = string.Empty;
+                for (int i = 0; i < 10; i++)
+                {
+                    phone += random.Next(0, 9).ToString();
+                }
+                string guid = translator.Bind(surname.ToLower());
                 database.User.Add(new User
                 {
-                    GUID = surname + count.ToString(),
+                    GUID = guid + count.ToString(),
                     Name = name,
                     Surname = surname,
                     Midname = midname,
                     Gender = gender == "1" ? true : false,
-                    Birthdate = Convert.ToDateTime("2000-01-25"),
+                    Birthdate = start.AddDays(random.Next(range)),
                     Country = "Россия",
                     City = "Саратов",
                     Department = "ИнПИТ",
                     Group = "ИФСТ",
                     Status = "Обучающийся",
-                    Email = "email@gmail.com",
-                    Phone = "+79993499334",
+                    Email = $"{guid}@gmail.com",
+                    Phone = "+7" + phone,
                     Role = "Студент"
                 });
                 ++count;
             }
+            #endregion
         }
     }
 }

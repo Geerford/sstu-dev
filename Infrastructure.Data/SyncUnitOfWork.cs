@@ -75,5 +75,15 @@ namespace Infrastructure.Data
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+        /// <summary>
+        /// Implements <see cref="ISyncUnitOfWork.Drop"/>.
+        /// </summary>
+        public void Drop()
+        {
+            database.Database.Delete();
+            database.SaveChanges();
+            database = new SyncContext("SyncContext");
+        }
     }
 }

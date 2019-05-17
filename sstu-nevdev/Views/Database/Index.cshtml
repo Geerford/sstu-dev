@@ -22,11 +22,12 @@
     </table>
 }
 @Html.ActionLink("Создать резевную копию", "Backup", null, new { @class = "btn btn-default" })
+@Html.ActionLink("Синхронизировать базу данных", "Sync", null, new { @class = "btn btn-default" })
 <br /><br />
-@if (Model.Status != null)
+@if (Model.IsRecovery != null)
 {
     <div class="recovery">
-        @if (Model.Status == true)
+        @if (Model.IsRecovery == true)
         {
             <div class="alert alert-success" role="alert">Восстановление прошло успешно</div>
         }
@@ -42,6 +43,19 @@
         @if (!string.IsNullOrEmpty(Model.Backup))
         {
             <div class="alert alert-success" role="alert">Резервная копия с именем @Model.Backup успешно создана</div>
+        }
+        else
+        {
+            <div class="alert alert-danger" role="alert">Неудача</div>
+        }
+    </div>
+}
+@if (Model.IsSync != null)
+{
+    <div class="recovery">
+        @if (Model.IsSync == true)
+        {
+            <div class="alert alert-success" role="alert">Синхронизация прошла успешна</div>
         }
         else
         {

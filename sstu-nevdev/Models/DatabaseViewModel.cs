@@ -21,7 +21,12 @@ namespace sstu_nevdev.Models
         /// <summary>
         /// Gets or sets the operation status.
         /// </summary>
-        public bool? Status { get; set; }
+        public bool? IsRecovery { get; set; }
+
+        /// <summary>
+        /// Gets or sets the operation status.
+        /// </summary>
+        public bool? IsSync { get; set; }
 
         /// <summary>
         /// Initializes a <see cref="DatabaseViewModel"/> class.
@@ -29,7 +34,8 @@ namespace sstu_nevdev.Models
         public DatabaseViewModel()
         {
             Backups = new Dictionary<string, DateTime>();
-            Status = null;
+            IsRecovery = null;
+            IsSync = null;
         }
     }
 }

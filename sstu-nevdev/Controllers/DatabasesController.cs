@@ -6,7 +6,7 @@ using System.Web.Http;
 
 namespace sstu_nevdev.Controllers
 {
-    [AuthenticationAPI(Roles = "SSTU_Administrator")]
+    //[AuthenticationAPI(Roles = "SSTU_Administrator")]
     public class DatabasesController : ApiController
     {
         IDatabaseService service;
@@ -36,9 +36,20 @@ namespace sstu_nevdev.Controllers
         {
             bool isExist = File.Exists(AppDomain.CurrentDomain.GetData("DataDirectory")
                             .ToString() + "\\" + item);
-            if (isExist)
+            if (isExist && service.Recovery(item))
             {
-                service.Recovery(item);
+                return Ok();
+            }
+            return BadRequest();
+        }
+
+        // POST api/databases/sync
+        [HttpPost]
+        [Route("api/databases/sync")]
+        public IHttpActionResult Sync()
+        {
+            if (service.Drop())
+            {
                 return Ok();
             }
             return BadRequest();

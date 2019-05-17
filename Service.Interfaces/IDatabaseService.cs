@@ -15,6 +15,11 @@
         /// Recovers database from backup.
         /// </summary>
         /// <param name="backupName">The database backup name.</param>
-        void Recovery(string backupName);
+        bool Recovery(string backupName);
+
+        /// <summary>
+        /// Drops synchronized database.
+        /// </summary>
+        bool Drop();
     }
 }

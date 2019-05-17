@@ -99,7 +99,7 @@
             <td>                
                 @if (item.Birthdate.Date != DateTime.Now.Date)
                 {
-                    @Html.ActionLink(item.Birthdate.ToString(), "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                    @Html.ActionLink(item.Birthdate.ToShortDateString(), "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
                 }
             </td>
             <td>

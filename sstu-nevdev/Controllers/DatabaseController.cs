@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace sstu_nevdev.Controllers
 {
-    [Authorize(Roles = "SSTU_Administrator")]
+    //[Authorize(Roles = "SSTU_Administrator")]
     public class DatabaseController : Controller
     {
         IDatabaseService service;
@@ -60,12 +60,20 @@ namespace sstu_nevdev.Controllers
         {
             bool isExist = System.IO.File.Exists(AppDomain.CurrentDomain.GetData("DataDirectory")
                             .ToString() + "\\" + backupName);
-            if (isExist)
+            if (isExist && service.Recovery(backupName))
             {
-                service.Recovery(backupName);
-                return Index(new DatabaseViewModel { Status = true });
+                return Index(new DatabaseViewModel { IsRecovery = true });
             }
-            return Index(new DatabaseViewModel { Status = false });
+            return Index(new DatabaseViewModel { IsRecovery = false });
+        }
+
+        public ActionResult Sync()
+        {
+            if (service.Drop())
+            {
+                return Index(new DatabaseViewModel { IsSync = true });
+            }
+            return Index(new DatabaseViewModel { IsSync = false });
         }
     }
 }

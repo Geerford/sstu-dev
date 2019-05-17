@@ -66,6 +66,7 @@
     <Compile Include="SyncInitializer.cs" />
     <Compile Include="SyncUnitOfWork.cs" />
     <Compile Include="UnitOfWork.cs" />
+    <Compile Include="Utilities\Translator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -85,5 +86,6 @@
       <Name>Repository.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -127,7 +127,21 @@ namespace Services.Business.Service
             List<IdentityDTO> result = new List<IdentityDTO>();
             foreach (var item in Database.Identity.GetAll())
             {
-                result.Add(GetFull(item.GUID));
+                if (item.GUID.Contains("GUEST"))
+                {
+                    result.Add(new IdentityDTO
+                    {
+                        GUID = item.GUID,
+                        ID = item.ID,
+                        Picture = item.Picture,
+                        Role = "Гость",
+                        Birthdate = DateTime.Now
+                    });
+                }
+                else
+                {
+                    result.Add(GetFull(item.GUID));
+                }
             }
             return result;
         }

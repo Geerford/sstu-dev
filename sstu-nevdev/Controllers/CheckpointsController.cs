@@ -18,6 +18,10 @@ namespace sstu_nevdev.Controllers
         }
 
         // GET api/checkpoints
+        /// <summary>
+        /// Gets all <see cref="CheckpointDTO"/> from repository.
+        /// </summary>
+        /// <returns>The collection of all <see cref="CheckpointDTO"/> from the repository.</returns>
         public IHttpActionResult Get()
         {
             IEnumerable<CheckpointDTO> items = service.GetAll();
@@ -32,6 +36,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // GET api/checkpoints/5
+        /// <summary>
+        /// Gets a <see cref="CheckpointDTO"/> object from the repository.
+        /// </summary>
+        /// <param name="id">The ID of <see cref="CheckpointDTO"/>.</param>
+        /// <returns>The <see cref="CheckpointDTO"/> with the given ID.</returns>
         public IHttpActionResult Get(int id)
         {
             CheckpointDTO item = service.Get(id);
@@ -46,6 +55,10 @@ namespace sstu_nevdev.Controllers
         }
 
         // POST api/checkpoints
+        /// <summary>
+        /// Creates the <see cref="Checkpoint"/> object in the repository.
+        /// </summary>
+        /// <param name="item">The <see cref="CheckpointDTO"/> object.</param>
         [HttpPost]
         [AuthenticationAPI(Roles = "SSTU_Deanery,SSTU_Administrator")]
         public IHttpActionResult Post([FromBody]CheckpointDTO item)
@@ -59,6 +72,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // PUT api/checkpoints/5
+        /// <summary>
+        /// Edits the <see cref="CheckpointDTO"/> object in the repository.
+        /// </summary>
+        /// <param name="id">The checkpoint id.</param>
+        /// <param name="item">The <see cref="CheckpointDTO"/> object.</param>
         [HttpPut]
         [AuthenticationAPI(Roles = "SSTU_Deanery,SSTU_Administrator")]
         public IHttpActionResult Put(int id, [FromBody]CheckpointDTO item)
@@ -75,6 +93,10 @@ namespace sstu_nevdev.Controllers
         }
 
         // DELETE api/checkpoints/5
+        /// <summary>
+        /// Deletes the <see cref="Checkpoint"/> object in the repository.
+        /// </summary>
+        /// <param name="id">The checkpoint id.</param>
         [HttpDelete]
         [AuthenticationAPI(Roles = "SSTU_Deanery,SSTU_Administrator")]
         public IHttpActionResult Delete(int id)

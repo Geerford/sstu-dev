@@ -75,10 +75,10 @@ namespace Services.Business.Service
         }
 
         /// <summary>
-        /// Implements <see cref="IDatabaseService.Drop()"/>.
+        /// Implements <see cref="IDatabaseService.Sync()"/>.
         /// </summary>
         /// <returns>The operation status.</returns>
-        public bool Drop()
+        public bool Sync()
         {
             try
             {

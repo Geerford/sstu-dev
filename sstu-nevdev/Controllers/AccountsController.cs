@@ -19,6 +19,14 @@ namespace sstu_nevdev.Controllers
             this.service = service;
         }
 
+        /// <summary>
+        /// Gets User from Active Directory.
+        /// </summary>
+        /// <param name="identityValue">The identity value. <example>"Петр Петров", 
+        /// "ivanov_ivan", etc</example>.</param>
+        /// <param name="domain">The domain.<example>"aptech.com", "sstu.com", etc. 
+        /// Can be used Environment.UserDomainName</example>.</param>
+        /// <returns>The <see cref="IHttpActionResult"/> status code.</returns>
         // GET api/accounts/identityValue=5&domain=aptech.com
         [HttpGet]
         [AuthenticationAPI(Roles = "SSTU_Deanery,SSTU_Administrator")]
@@ -31,7 +39,15 @@ namespace sstu_nevdev.Controllers
             }
             return BadRequest();
         }
-        
+
+        /// <summary>
+        /// Authorizes the user over Active Directory.
+        /// </summary>
+        /// <remarks>
+        /// Generates security keys if needs.
+        /// </remarks>
+        /// <param name="model">The <see cref="AccountRequestAPIModel"/> object.</param>
+        /// <returns>The <see cref="IHttpActionResult"/> status code.</returns>
         // POST api/accounts
         [HttpPost]
         [AllowAnonymous]

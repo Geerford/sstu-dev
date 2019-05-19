@@ -20,6 +20,6 @@
         /// <summary>
         /// Drops synchronized database.
         /// </summary>
-        bool Drop();
+        bool Sync();
     }
 }

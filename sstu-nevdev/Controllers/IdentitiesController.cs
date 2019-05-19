@@ -21,6 +21,10 @@ namespace sstu_nevdev.Controllers
         }
 
         // GET api/identities
+        /// <summary>
+        /// Gets all <see cref="IdentityDTO"/> from repository.
+        /// </summary>
+        /// <returns>The collection of all <see cref="IdentityDTO"/> from the repository.</returns>
         [AuthenticationAPI(Roles = "SSTU_Deanery,SSTU_Administrator,SSTU_Inspector")]
         public IHttpActionResult Get()
         {
@@ -38,6 +42,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // GET api/identities/5
+        /// <summary>
+        /// Gets a <see cref="IdentityDTO"/> object from the repository.
+        /// </summary>
+        /// <param name="id">The ID of <see cref="IdentityDTO"/>.</param>
+        /// <returns>The <see cref="IdentityDTO"/> with the given ID.</returns>
         public IHttpActionResult Get(int id)
         {
             IdentityDTO item = service.Get(id);
@@ -54,6 +63,10 @@ namespace sstu_nevdev.Controllers
         }
 
         // POST api/identities
+        /// <summary>
+        /// Creates the <see cref="Identity"/> object in the repository.
+        /// </summary>
+        /// <param name="item">The <see cref="Identity"/> object.</param>
         [HttpPost]
         [AuthenticationAPI(Roles = "SSTU_Deanery,SSTU_Administrator")]
         public IHttpActionResult Post([FromBody]Identity item)
@@ -67,6 +80,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // PUT api/identities/5
+        /// <summary>
+        /// Edits the <see cref="Identity"/> object in the repository.
+        /// </summary>
+        /// <param name="id">The identity id.</param>
+        /// <param name="item">The <see cref="Identity"/> object.</param>
         [HttpPut]
         [AuthenticationAPI(Roles = "SSTU_Deanery,SSTU_Administrator")]
         public IHttpActionResult Put(int id, [FromBody]Identity item)
@@ -83,6 +101,10 @@ namespace sstu_nevdev.Controllers
         }
 
         // DELETE api/identities/5
+        /// <summary>
+        /// Deletes the <see cref="Identity"/> object in the repository.
+        /// </summary>
+        /// <param name="id">The identity id.</param>
         [HttpDelete]
         [AuthenticationAPI(Roles = "SSTU_Deanery,SSTU_Administrator")]
         public IHttpActionResult Delete(int id)

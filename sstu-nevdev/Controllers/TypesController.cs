@@ -17,6 +17,10 @@ namespace sstu_nevdev.Controllers
         }
 
         // GET api/types
+        /// <summary>
+        /// Gets all <see cref="Type"/> from repository.
+        /// </summary>
+        /// <returns>The collection of all <see cref="Type"/> from the repository.</returns>
         public IHttpActionResult Get()
         {
             IEnumerable<Type> items = service.GetAll();
@@ -31,6 +35,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // GET api/types/5
+        /// <summary>
+        /// Gets a <see cref="Type"/> object from the repository.
+        /// </summary>
+        /// <param name="id">The ID of <see cref="Type"/>.</param>
+        /// <returns>The <see cref="Type"/> with the given ID.</returns>
         public IHttpActionResult Get(int id)
         {
             Type item = service.Get(id);
@@ -45,6 +54,10 @@ namespace sstu_nevdev.Controllers
         }
 
         // POST api/types
+        /// <summary>
+        /// Creates the <see cref="Type"/> object in the repository.
+        /// </summary>
+        /// <param name="item">The <see cref="Type"/> object.</param>
         [HttpPost]
         public IHttpActionResult Post([FromBody]Type item)
         {
@@ -57,6 +70,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // PUT api/types/5
+        /// <summary>
+        /// Edits the <see cref="Type"/> object in the repository.
+        /// </summary>
+        /// <param name="id">The type id.</param>
+        /// <param name="item">The <see cref="Type"/> object.</param>
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody]Type item)
         {
@@ -72,6 +90,10 @@ namespace sstu_nevdev.Controllers
         }
 
         // DELETE api/types/5
+        /// <summary>
+        /// Deletes the <see cref="Type"/> object in the repository.
+        /// </summary>
+        /// <param name="id">The type id.</param>
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {

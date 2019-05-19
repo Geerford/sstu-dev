@@ -24,6 +24,10 @@ namespace sstu_nevdev.Controllers
         }
 
         // GET api/activities
+        /// <summary>
+        /// Gets all <see cref="Activity"/> from repository.
+        /// </summary>
+        /// <returns>The collection of all <see cref="Activity"/> from the repository.</returns>
         [AuthenticationAPI(Roles = "SSTU_Deanery,SSTU_Administrator,SSTU_Inspector,SSTU_Student")]
         public IHttpActionResult Get()
         {
@@ -39,6 +43,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // GET api/activities/5
+        /// <summary>
+        /// Gets a <see cref="Activity"/> object from the repository.
+        /// </summary>
+        /// <param name="id">The ID of <see cref="Activity"/>.</param>
+        /// <returns>The <see cref="Activity"/> with the given ID.</returns>
         [AuthenticationAPI(Roles = "SSTU_Deanery,SSTU_Administrator,SSTU_Inspector,SSTU_Student")]
         public IHttpActionResult Get(int id)
         {
@@ -54,6 +63,10 @@ namespace sstu_nevdev.Controllers
         }
 
         // POST api/activities
+        /// <summary>
+        /// Creates the <see cref="Activity"/> object in the repository.
+        /// </summary>
+        /// <param name="item">The <see cref="ActivityAPIModel"/> object.</param>
         [HttpPost]
         [AllowAnonymous]
         public IHttpActionResult Post([FromBody]ActivityAPIModel item)
@@ -93,6 +106,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // PUT api/activities/5
+        /// <summary>
+        /// Edits the <see cref="Activity"/> object in the repository.
+        /// </summary>
+        /// <param name="id">The activity id.</param>
+        /// <param name="item">The <see cref="Activity"/> object.</param>
         [HttpPut]
         [AuthenticationAPI(Roles = "SSTU_Administrator")]
         public IHttpActionResult Put(int id, [FromBody]Activity item)
@@ -109,6 +127,10 @@ namespace sstu_nevdev.Controllers
         }
 
         // DELETE api/activities/5
+        /// <summary>
+        /// Deletes the <see cref="Activity"/> object in the repository.
+        /// </summary>
+        /// <param name="id">The activity id.</param>
         [HttpDelete]
         [AuthenticationAPI(Roles = "SSTU_Administrator")]
         public IHttpActionResult Delete(int id)

@@ -1,13 +1,12 @@
 ﻿using Domain.Core;
 using Infrastructure.Data.Utilities;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 
 namespace Infrastructure.Data
 {
-    internal class SyncInitializer : DropCreateDatabaseAlways<SyncContext>
+    internal class SyncInitializer : DropCreateDatabaseIfModelChanges<SyncContext>
     {
         protected override void Seed(SyncContext database)
         {

@@ -81,7 +81,11 @@ namespace sstu_nevdev.Tests.Controllers
             };
 
             //Act
-            var result = (RedirectToRouteResult)controllerWEB.Create(model);
+            var result = (RedirectToRouteResult)controllerWEB.Create(new TypeViewModel
+            {
+                Description = model.Description,
+                Status = model.Status
+            });
 
             //Assert 
             Assert.AreEqual("Index", result.RouteValues["action"]);
@@ -99,7 +103,11 @@ namespace sstu_nevdev.Tests.Controllers
             controllerWEB.ModelState.AddModelError("Error", "Что-то пошло не так");
 
             //Act
-            var result = (ViewResult)controllerWEB.Create(model);
+            var result = (ViewResult)controllerWEB.Create(new TypeViewModel
+            {
+                Description = model.Description,
+                Status = model.Status
+            });
 
             //Assert
             Assert.AreEqual("", result.ViewName);
@@ -115,7 +123,12 @@ namespace sstu_nevdev.Tests.Controllers
             };
 
             //Act
-            var result = (RedirectToRouteResult)controllerWEB.Edit(model);
+            var result = (RedirectToRouteResult)controllerWEB.Edit(new TypeViewModel
+            {
+                ID = model.ID,
+                Description = model.Description,
+                Status = model.Status
+            });
 
             //Assert 
             Assert.AreEqual("Index", result.RouteValues["action"]);
@@ -129,7 +142,12 @@ namespace sstu_nevdev.Tests.Controllers
             controllerWEB.ModelState.AddModelError("Error", "Что-то пошло не так");
 
             //Act
-            var result = (ViewResult)controllerWEB.Edit(model);
+            var result = (ViewResult)controllerWEB.Edit(new TypeViewModel
+            {
+                ID = model.ID,
+                Description = model.Description,
+                Status = model.Status
+            });
 
             //Assert
             Assert.AreEqual("", result.ViewName);

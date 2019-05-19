@@ -1,4 +1,6 @@
-﻿using Service.Interfaces;
+﻿using Domain.Core;
+using Service.DTO;
+using Service.Interfaces;
 using sstu_nevdev.App_Start;
 using sstu_nevdev.Models;
 using System.Net;
@@ -20,6 +22,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // POST api/statistics/campus
+        /// <summary>
+        /// Gets all <see cref="Activity"/> from repository by campus and time interval [start, end].
+        /// </summary>
+        /// <param name="item">The <see cref="CampusStatisticsAPIModel"/> object.</param>
+        /// <returns>The collection of all <see cref="Activity"/> with the given campus and time interval [start, end].</returns>
         [HttpPost]
         [Route("campus")]
         public IHttpActionResult GetByCampus([FromBody]CampusStatisticsAPIModel item)
@@ -37,6 +44,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // POST api/statistics/campus/row
+        /// <summary>
+        /// Gets all <see cref="Activity"/> from repository by campus, row and time interval [start, end].
+        /// </summary>
+        /// <param name="item">The <see cref="CampusRowStatisticsAPIModel"/> object.</param>
+        /// <returns>The collection of all <see cref="Activity"/> with the given campus, row and time interval [start, end].</returns>
         [HttpPost]
         [Route("campus/row")]
         public IHttpActionResult GetByCampusRow([FromBody]CampusRowStatisticsAPIModel item)
@@ -54,6 +66,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // POST api/statistics/classroom
+        /// <summary>
+        /// Gets all <see cref="Activity"/> from repository by classroom and time interval [start, end].
+        /// </summary>
+        /// <param name="item">The <see cref="ClassroomStatisticsAPIModel"/> object.</param>
+        /// <returns>The collection of all <see cref="Activity"/> with the given classroom and time interval [start, end].</returns>
         [HttpPost]
         [Route("classroom")]
         public IHttpActionResult GetByClassroom([FromBody]ClassroomStatisticsAPIModel item)
@@ -75,6 +92,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // POST api/statistics/group
+        /// <summary>
+        /// Gets all <see cref="Activity"/> from repository by group and time interval [start, end].
+        /// </summary>
+        /// <param name="item">The <see cref="GroupStatisticsAPIModel"/> object.</param>
+        /// <returns>The collection of all <see cref="Activity"/> with the given group and time interval [start, end].</returns>
         [HttpPost]
         [Route("group")]
         public IHttpActionResult GetByGroup([FromBody]GroupStatisticsAPIModel item)
@@ -92,6 +114,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // POST api/statistics/section
+        /// <summary>
+        /// Gets all <see cref="Activity"/> from repository by section and time interval [start, end].
+        /// </summary>
+        /// <param name="item">The <see cref="SectionStatisticsAPIModel"/> object.</param>
+        /// <returns>The collection of all <see cref="Activity"/> with the given section and time interval [start, end].</returns>
         [HttpPost]
         [Route("section")]
         public IHttpActionResult GetBySection([FromBody]SectionStatisticsAPIModel item)
@@ -109,6 +136,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // POST api/statistics/user
+        /// <summary>
+        /// Gets all <see cref="Activity"/> from repository by full name and time interval [start, end].
+        /// </summary>
+        /// <param name="item">The <see cref="UserStatisticsAPIModel"/> object.</param>
+        /// <returns>The collection of all <see cref="Activity"/> with the given full name and time interval [start, end].</returns>
         [HttpPost]
         [Route("user")]
         public IHttpActionResult GetByUser([FromBody]UserStatisticsAPIModel item)
@@ -127,6 +159,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // POST api/statistics/guid
+        /// <summary>
+        /// Gets all <see cref="Activity"/> from repository by GUID and time interval [start, end].
+        /// </summary>
+        /// <param name="item">The <see cref="GUIDStatisticsAPIModel"/> object.</param>
+        /// <returns>The collection of all <see cref="Activity"/> with the given full name and time interval [start, end].</returns>
         [HttpPost]
         [Route("guid")]
         public IHttpActionResult GetByUserGuid([FromBody]GUIDStatisticsAPIModel item)
@@ -144,6 +181,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // POST api/statistics/current/campus
+        /// <summary>
+        /// Gets all <see cref="IdentityDTO"/> from repository by campus.
+        /// </summary>
+        /// <param name="item">The <see cref="CurrentCampusStatisticsAPIModel"/> object.</param>
+        /// <returns>The collection of all <see cref="IdentityDTO"/> with the given campus.</returns>
         [HttpPost]
         [Route("current/campus")]
         public IHttpActionResult GetCurrentByCampus([FromBody]CurrentCampusStatisticsAPIModel item)
@@ -161,6 +203,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // POST api/statistics/current/campus/row
+        /// <summary>
+        /// Gets all <see cref="IdentityDTO"/> from repository by campus and row.
+        /// </summary>
+        /// <param name="item">The <see cref="CurrentCampusRowStatisticsAPIModel"/> object.</param>
+        /// <returns>The collection of all <see cref="IdentityDTO"/> with the given campus and row.</returns>
         [HttpPost]
         [Route("current/campus/row")]
         public IHttpActionResult GetCurrentByCampusRow([FromBody]CurrentCampusRowStatisticsAPIModel item)
@@ -178,6 +225,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // POST api/statistics/current/classroom
+        /// <summary>
+        /// Gets all <see cref="IdentityDTO"/> from repository by classroom.
+        /// </summary>
+        /// <param name="item">The <see cref="CurrentClassroomStatisticsAPIModel"/> object.</param>
+        /// <returns>The collection of all <see cref="IdentityDTO"/> with the given classroom.</returns>
         [HttpPost]
         [Route("current/classroom")]
         public IHttpActionResult GetCurrentByClassroom([FromBody]CurrentClassroomStatisticsAPIModel item)
@@ -195,6 +247,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // POST api/statistics/current/section
+        /// <summary>
+        /// Gets all <see cref="IdentityDTO"/> from repository by section.
+        /// </summary>
+        /// <param name="item">The <see cref="CurrentSectionStatisticsAPIModel"/> object.</param>
+        /// <returns>The collection of all <see cref="IdentityDTO"/> with the given section.</returns>
         [HttpPost]
         [Route("current/section")]
         public IHttpActionResult GetCurrentBySection([FromBody]CurrentSectionStatisticsAPIModel item)
@@ -212,6 +269,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // POST api/statistics/current/user
+        /// <summary>
+        /// Gets all <see cref="Activity"/> from repository by full name.
+        /// </summary>
+        /// <param name="item">The <see cref="LocationNameStatisticsAPIModel"/> object.</param>
+        /// <returns>The collection of all <see cref="Activity"/> with the given full name.</returns>
         [HttpPost]
         [Route("current/user")]
         public IHttpActionResult GetLocationByName([FromBody]LocationNameStatisticsAPIModel item)
@@ -230,6 +292,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // POST api/statistics/current/guid
+        /// <summary>
+        /// Gets all <see cref="Activity"/> from repository by GUID.
+        /// </summary>
+        /// <param name="item">The <see cref="LocationGUIDStatisticsAPIModel"/> object.</param>
+        /// <returns>The collection of all <see cref="Activity"/> with the given full name.</returns>
         [HttpPost]
         [Route("current/guid")]
         public IHttpActionResult GetLocationByGUID([FromBody]LocationGUIDStatisticsAPIModel item)
@@ -247,6 +314,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // POST api/statistics/roles
+        /// <summary>
+        /// Gets all <see cref="string"/> roles from active directory repository.
+        /// </summary>
+        /// <param name="item">The <see cref="ActiveDirectoryUsersStatisticsAPIModel"/> object.</param>
+        /// <returns>The collection of all <see cref="string"/> roles.</returns>
         [HttpPost]
         [Route("roles")]
         public IHttpActionResult GetRoles([FromBody]ActiveDirectoryUsersStatisticsAPIModel item)
@@ -264,6 +336,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // POST api/statistics/users
+        /// <summary>
+        /// Gets all <see cref="ADUserDTO"/> from active directory repository.
+        /// </summary>
+        /// <param name="item">The <see cref="ActiveDirectoryUsersStatisticsAPIModel"/> object.</param>
+        /// <returns>The collection of all <see cref="ADUserDTO"/>.</returns>
         [HttpPost]
         [Route("users")]
         public IHttpActionResult GetUsers([FromBody]ActiveDirectoryUsersStatisticsAPIModel item)
@@ -281,6 +358,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // POST api/statistics/users/role
+        /// <summary>
+        /// Gets all <see cref="ADUserDTO"/> from repository by role.
+        /// </summary>
+        /// <param name="item">The <see cref="ActiveDirectoryRolesStatisticsAPIModel"/> object.</param>
+        /// <returns>The collection of all <see cref="ADUserDTO"/> with the given.</returns>
         [HttpPost]
         [Route("users/role")]
         public IHttpActionResult GetUsersByRole([FromBody]ActiveDirectoryRolesStatisticsAPIModel item)

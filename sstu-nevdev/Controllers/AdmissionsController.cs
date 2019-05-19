@@ -17,6 +17,10 @@ namespace sstu_nevdev.Controllers
         }
 
         // GET api/admissions
+        /// <summary>
+        /// Gets all <see cref="Admission"/> from repository.
+        /// </summary>
+        /// <returns>The collection of all <see cref="Admission"/> from the repository.</returns>
         public IHttpActionResult Get()
         {
             IEnumerable<Admission> items = service.GetAll();
@@ -31,6 +35,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // GET api/admissions/5
+        /// <summary>
+        /// Gets a <see cref="Admission"/> object from the repository.
+        /// </summary>
+        /// <param name="id">The ID of <see cref="Admission"/>.</param>
+        /// <returns>The <see cref="Admission"/> with the given ID.</returns>
         public IHttpActionResult Get(int id)
         {
             Admission item = service.Get(id);
@@ -45,6 +54,10 @@ namespace sstu_nevdev.Controllers
         }
 
         // POST api/admissions
+        /// <summary>
+        /// Creates the <see cref="Admission"/> object in the repository.
+        /// </summary>
+        /// <param name="item">The <see cref="Admission"/> object.</param>
         [HttpPost]
         public IHttpActionResult Post([FromBody]Admission item)
         {
@@ -57,6 +70,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // PUT api/admissions/5
+        /// <summary>
+        /// Edits the <see cref="Admission"/> object in the repository.
+        /// </summary>
+        /// <param name="id">The admission id.</param>
+        /// <param name="item">The <see cref="Admission"/> object.</param>
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody]Admission item)
         {
@@ -72,6 +90,10 @@ namespace sstu_nevdev.Controllers
         }
 
         // DELETE api/admissions/5
+        /// <summary>
+        /// Deletes the <see cref="Admission"/> object in the repository.
+        /// </summary>
+        /// <param name="id">The admission id.</param>
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {

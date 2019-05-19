@@ -1,6 +1,8 @@
-﻿using Microsoft.Owin;
+﻿using Hangfire;
+using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
+using Service.Interfaces;
 using System;
 using static Services.Business.Service.IdentityService.Authentication;
 
@@ -21,6 +23,11 @@ namespace sstu_nevdev.App_Start
                 CookieHttpOnly = true,
                 ExpireTimeSpan = TimeSpan.FromHours(6)
             });
+
+            app.UseHangfireDashboard();
+            //app.UseHangfireServer();
+            RecurringJob.AddOrUpdate<IDatabaseService>(service => service.Sync(), Cron.Daily(2, 0));
+            RecurringJob.AddOrUpdate<IDatabaseService>(service => service.Backup(), "0 1 * 4,8,12 *");
         }
     }
 }

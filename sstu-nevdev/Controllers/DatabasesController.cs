@@ -17,6 +17,10 @@ namespace sstu_nevdev.Controllers
         }
 
         // POST api/databases/backup
+        /// <summary>
+        /// Creates a database backup. 
+        /// </summary>
+        /// <returns>The backup name.</returns>
         [HttpPost]
         [Route("api/databases/backup")]
         public IHttpActionResult Backup()
@@ -30,6 +34,10 @@ namespace sstu_nevdev.Controllers
         }
 
         // POST api/databases/recovery
+        /// <summary>
+        /// Recovers database from backup.
+        /// </summary>
+        /// <param name="backupName">The database backup name.</param>
         [HttpPost]
         [Route("api/databases/recovery")]
         public IHttpActionResult Recovery([FromBody]string item)
@@ -44,11 +52,14 @@ namespace sstu_nevdev.Controllers
         }
 
         // POST api/databases/sync
+        /// <summary>
+        /// Drops synchronized database.
+        /// </summary>
         [HttpPost]
         [Route("api/databases/sync")]
         public IHttpActionResult Sync()
         {
-            if (service.Drop())
+            if (service.Sync())
             {
                 return Ok();
             }

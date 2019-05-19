@@ -17,6 +17,10 @@ namespace sstu_nevdev.Controllers
         }
 
         // GET api/modes
+        /// <summary>
+        /// Gets all <see cref="Mode"/> from repository.
+        /// </summary>
+        /// <returns>The collection of all <see cref="Mode"/> from the repository.</returns>
         public IHttpActionResult Get()
         {
             IEnumerable<Mode> items = service.GetAll();
@@ -31,6 +35,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // GET api/modes/5
+        /// <summary>
+        /// Gets a <see cref="Mode"/> object from the repository.
+        /// </summary>
+        /// <param name="id">The ID of <see cref="Mode"/>.</param>
+        /// <returns>The <see cref="Mode"/> with the given ID.</returns>
         public IHttpActionResult Get(int id)
         {
             Mode item = service.Get(id);
@@ -45,6 +54,10 @@ namespace sstu_nevdev.Controllers
         }
 
         // POST api/modes
+        /// <summary>
+        /// Creates the <see cref="Mode"/> object in the repository.
+        /// </summary>
+        /// <param name="item">The <see cref="Mode"/> object.</param>
         [HttpPost]
         public IHttpActionResult Post([FromBody]Mode item)
         {
@@ -57,6 +70,11 @@ namespace sstu_nevdev.Controllers
         }
 
         // PUT api/modes/5
+        /// <summary>
+        /// Edits the <see cref="Mode"/> object in the repository.
+        /// </summary>
+        /// <param name="id">The mode id.</param>
+        /// <param name="item">The <see cref="Mode"/> object.</param>
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody]Mode item)
         {
@@ -72,6 +90,10 @@ namespace sstu_nevdev.Controllers
         }
 
         // DELETE api/modes/5
+        /// <summary>
+        /// Deletes the <see cref="Mode"/> object in the repository.
+        /// </summary>
+        /// <param name="id">The mode id.</param>
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {

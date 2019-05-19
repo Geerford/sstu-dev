@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace sstu_nevdev.Controllers
 {
-    //[Authorize(Roles = "SSTU_Deanery, SSTU_Administrator, SSTU_Inspector")]
+    [Authorize(Roles = "SSTU_Deanery, SSTU_Administrator, SSTU_Inspector")]
     public class IdentityController : Controller
     {
         IIdentityService service;

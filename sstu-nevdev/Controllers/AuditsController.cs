@@ -17,6 +17,10 @@ namespace sstu_nevdev.Controllers
         }
 
         // GET api/audits
+        /// <summary>
+        /// Gets all <see cref="Audit"/> from repository.
+        /// </summary>
+        /// <returns>The collection of all <see cref="Audit"/> from the repository.</returns>
         public IHttpActionResult Get()
         {
             IEnumerable<Audit> items = service.GetAll();

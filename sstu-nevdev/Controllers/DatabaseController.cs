@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace sstu_nevdev.Controllers
 {
-    //[Authorize(Roles = "SSTU_Administrator")]
+    [Authorize(Roles = "SSTU_Administrator")]
     public class DatabaseController : Controller
     {
         IDatabaseService service;
@@ -69,7 +69,7 @@ namespace sstu_nevdev.Controllers
 
         public ActionResult Sync()
         {
-            if (service.Drop())
+            if (service.Sync())
             {
                 return Index(new DatabaseViewModel { IsSync = true });
             }

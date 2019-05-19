@@ -1,13 +1,12 @@
 ﻿using Domain.Core;
 using Infrastructure.Data.Utilities;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 
 namespace Infrastructure.Data
 {
-    internal class Initializer : DropCreateDatabaseAlways<Context>
+    internal class Initializer : DropCreateDatabaseIfModelChanges<Context>
     {
         protected override void Seed(Context database)
         {

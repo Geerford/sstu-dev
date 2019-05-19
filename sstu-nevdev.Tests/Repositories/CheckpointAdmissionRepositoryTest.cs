@@ -24,36 +24,7 @@ namespace sstu_nevdev.Tests.Repositories
         {
             connection = Effort.DbConnectionFactory.CreateTransient();
             context = new Context(connection);
-            //admissionRepository = new AdmissionRepository(context);
-            //checkpointRepository = new CheckpointRepository(context);
-            //typeRepository = new TypeRepository(context);
             repository = new CheckpointAdmissionRepository(context);
-            //Admission admission = new Admission()
-            //{
-            //    ID = 1,
-            //    Description = "Description",
-            //    Role = "Role"
-            //};
-            //Checkpoint checkpoint = new Checkpoint()
-            //{
-            //    ID = 1,
-            //    Campus = 1,
-            //    Classroom = 420,
-            //    Description = "Description",
-            //    IP = "10.0.0.5",
-            //    Row = 4,
-            //    Status = "Status",
-            //    TypeID = 1
-            //};
-            //Type type = new Type()
-            //{
-            //    ID = 1,
-            //    Description = "Description",
-            //    Status = "Status"
-            //};
-            //admissionRepository.Create(admission);
-            //checkpointRepository.Create(checkpoint);
-            //typeRepository.Create(type);
         }
 
         [TestMethod]
@@ -74,8 +45,8 @@ namespace sstu_nevdev.Tests.Repositories
             //Assert
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(IEnumerable<CheckpointAdmission>));
-            Assert.AreEqual(4, result.Count);
-            Assert.AreEqual(4, result.Last().ID);
+            Assert.AreEqual(6, result.Count);
+            Assert.AreEqual(6, result.Last().ID);
             Assert.AreEqual(item, result.Last());
         }
 
@@ -89,7 +60,7 @@ namespace sstu_nevdev.Tests.Repositories
 
             //Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(4, result.Count);
             Assert.AreNotEqual(1, result[0].ID);
         }
 
@@ -102,7 +73,7 @@ namespace sstu_nevdev.Tests.Repositories
             //Assert
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(IEnumerable<CheckpointAdmission>));
-            Assert.AreEqual(3, result.Count);
+            Assert.AreEqual(5, result.Count);
         }
 
         [TestMethod]
@@ -138,7 +109,7 @@ namespace sstu_nevdev.Tests.Repositories
             //Assert
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(IEnumerable<CheckpointAdmission>));
-            Assert.AreEqual(3, result.ToList().Count);
+            Assert.AreEqual(5, result.ToList().Count);
         }
 
         [TestMethod]
@@ -162,7 +133,7 @@ namespace sstu_nevdev.Tests.Repositories
             Assert.IsNotNull(count);
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(CheckpointAdmission));
-            Assert.AreEqual(3, count);
+            Assert.AreEqual(5, count);
             Assert.AreEqual(item, result);
         }
     }

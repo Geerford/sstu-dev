@@ -109,7 +109,11 @@ namespace sstu_nevdev.Tests.Services
                     CheckpointIP = "192.168.0.1",
                     Date = DateTime.Now,
                     ModeID = 1,
-                    Mode = new Mode { Description = "Вход" },
+                    Mode =  new Mode
+                    {
+                        Description = "Отмечает событие входа в объект",
+                        Status = "Вход"
+                    },
                     Status = true
                 },
                 new Activity
@@ -119,7 +123,11 @@ namespace sstu_nevdev.Tests.Services
                     CheckpointIP = "192.168.0.1",
                     Date = DateTime.Now,
                     ModeID = 2,
-                    Mode = new Mode { Description = "Выход" },
+                    Mode = new Mode
+                    {
+                        Description = "Отмечает событие выхода из объекта",
+                        Status = "Выход"
+                    },
                     Status = true
                 }, 
                 new Activity
@@ -129,7 +137,11 @@ namespace sstu_nevdev.Tests.Services
                     CheckpointIP = "192.168.0.1",
                     Date = DateTime.Now,
                     ModeID = 1,
-                    Mode = new Mode { Description = "Вход" },
+                    Mode = new Mode
+                    {
+                        Description = "Отмечает событие входа в объект",
+                        Status = "Вход"
+                    },
                     Status = true
                 }
             };
@@ -137,20 +149,20 @@ namespace sstu_nevdev.Tests.Services
             {
                 new Mode
                 {
-                    ID = 1,
-                    Description = "Вход"
+                    Description = "Отмечает событие входа в объект",
+                    Status = "Вход"
                 },
                 new Mode
                 {
-                    ID = 2,
-                    Description = "Выход"
+                    Description = "Отмечает событие выхода из объекта",
+                    Status = "Выход"
                 },
                 new Mode
                 {
-                    ID = 3,
-                    Description = "Статистика"
+                    Description = "Собирает статистические данные передвижений субъекта",
+                    Status = "Статистика"
                 }
-            };
+        };
         }
 
         [TestMethod]

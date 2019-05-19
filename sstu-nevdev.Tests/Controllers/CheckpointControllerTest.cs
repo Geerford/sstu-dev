@@ -154,8 +154,15 @@ namespace sstu_nevdev.Tests.Controllers
                 Campus = 1,
                 Row = 4,
                 Description = "На 4 этаже, 425 аудитория",
+                Section = 1,
+                Classroom = 425,
                 Status = "Отметка",
                 TypeID = "1",
+                Type = new TypeDTO
+                {
+                    Description = "",
+                    Status = ""
+                },
                 AdmissionList = new List<CheckboxItem>(){
                     new CheckboxItem {
                         ID = 1,
@@ -164,7 +171,6 @@ namespace sstu_nevdev.Tests.Controllers
                     }
                 }
             };
-
             //Act
             var result = (RedirectToRouteResult)controllerWEB.Create(model);
 
@@ -215,8 +221,15 @@ namespace sstu_nevdev.Tests.Controllers
                 Campus = 1,
                 Row = 4,
                 Description = "На 4 этаже, 425 аудитория",
+                Section = 1,
+                Classroom = 425,
                 Status = "Отметка",
                 TypeID = "1",
+                Type = new TypeDTO
+                {
+                    Description = "",
+                    Status = ""
+                },
                 AdmissionList = new List<CheckboxItem>(){
                     new CheckboxItem {
                         ID = 1,

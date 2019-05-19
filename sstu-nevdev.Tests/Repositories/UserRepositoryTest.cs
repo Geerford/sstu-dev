@@ -33,7 +33,7 @@ namespace sstu_nevdev.Tests.Repositories
             //Assert
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(IEnumerable<User>));
-            Assert.AreEqual(192, result.Count);
+            Assert.AreEqual(193, result.Count);
         }
 
         [TestMethod]
@@ -69,7 +69,7 @@ namespace sstu_nevdev.Tests.Repositories
             //Assert
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(IEnumerable<User>));
-            Assert.AreEqual(192, result.ToList().Count);
+            Assert.AreEqual(193, result.ToList().Count);
         }
     }
 }

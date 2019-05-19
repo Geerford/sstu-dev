@@ -8,6 +8,7 @@ using sstu_nevdev.Controllers;
 using sstu_nevdev.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http.Results;
 using System.Web.Mvc;
 using RedirectToRouteResult = System.Web.Mvc.RedirectToRouteResult;
@@ -100,11 +101,11 @@ namespace sstu_nevdev.Tests.Controllers
             identityServiceMock.Setup(x => x.GetAll()).Returns(items);
 
             //Act
-            var result = ((controllerWEB.Index() as ViewResult).Model) as List<IdentityDTO>;
+            var result = ((controllerWEB.Index() as ViewResult).Model) as IEnumerable<IdentityDTO>;
 
             //Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(items, result);
+            Assert.IsTrue(items.SequenceEqual(result.Reverse()));
         }
 
         [TestMethod]

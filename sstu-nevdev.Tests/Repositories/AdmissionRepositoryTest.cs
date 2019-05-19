@@ -43,8 +43,8 @@ namespace sstu_nevdev.Tests.Repositories
             //Assert
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(IEnumerable<Admission>));
-            Assert.AreEqual(3, result.Count);
-            Assert.AreEqual(3, result.Last().ID);
+            Assert.AreEqual(4, result.Count);
+            Assert.AreEqual(4, result.Last().ID);
             Assert.AreEqual(item, result.Last());
         }
 
@@ -58,7 +58,7 @@ namespace sstu_nevdev.Tests.Repositories
 
             //Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual(2, result.Count);
             Assert.AreNotEqual(1, result[0].ID);
         }
 
@@ -71,7 +71,7 @@ namespace sstu_nevdev.Tests.Repositories
             //Assert
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(IEnumerable<Admission>));
-            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(3, result.Count);
         }
 
         [TestMethod]
@@ -107,7 +107,7 @@ namespace sstu_nevdev.Tests.Repositories
             //Assert
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(IEnumerable<Admission>));
-            Assert.AreEqual(2, result.ToList().Count);
+            Assert.AreEqual(3, result.ToList().Count);
         }
 
         [TestMethod]
@@ -131,7 +131,7 @@ namespace sstu_nevdev.Tests.Repositories
             Assert.IsNotNull(count);
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(Admission));
-            Assert.AreEqual(2, count);
+            Assert.AreEqual(3, count);
             Assert.AreEqual(item, result);
         }
     }

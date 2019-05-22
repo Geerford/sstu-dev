@@ -1,7 +1,7 @@
 ﻿@model sstu_nevdev.Models.DatabaseViewModel
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.css" rel="stylesheet" />
 <h3>Выберите резервную копию для восстановления</h3>
-@if (Model.Backups != null)
+@if (Model.Backups != null && Model.Backups.Count > 0)
 {
     <table data-toggle="table" data-sort-name="time" data-sort-order="desc">
         <thead>
@@ -33,7 +33,7 @@
         }
         else
         {
-            <div class="alert alert-danger" role="alert">Неудача</div>
+            <div class="alert alert-danger" role="alert">Не удалось восстановиться</div>
         }
     </div>
 }
@@ -46,7 +46,7 @@
         }
         else
         {
-            <div class="alert alert-danger" role="alert">Неудача</div>
+            <div class="alert alert-danger" role="alert">Не удалось создать резервную копию</div>
         }
     </div>
 }
@@ -55,11 +55,11 @@
     <div class="recovery">
         @if (Model.IsSync == true)
         {
-            <div class="alert alert-success" role="alert">Синхронизация прошла успешна</div>
+            <div class="alert alert-success" role="alert">Синхронизация прошла успешно</div>
         }
         else
         {
-            <div class="alert alert-danger" role="alert">Неудача</div>
+            <div class="alert alert-danger" role="alert">Не удалось провести синхронизацию</div>
         }
     </div>
 }

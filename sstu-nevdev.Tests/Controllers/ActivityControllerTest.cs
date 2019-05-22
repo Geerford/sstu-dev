@@ -28,7 +28,8 @@ namespace sstu_nevdev.Tests.Controllers
         private List<Mode> mods;
         private List<IdentityDTO> users;
         private readonly int id = 1;
-        
+        private readonly int page = 1;
+
         [TestInitialize]
         public void Initialize()
         {
@@ -36,7 +37,8 @@ namespace sstu_nevdev.Tests.Controllers
             checkpointServiceMock = new Mock<ICheckpointService>();
             identityServiceMock = new Mock<IIdentityService>();
             modeServiceMock = new Mock<IModeService>();
-            controllerWEB = new ActivityController(activityServiceMock.Object, modeServiceMock.Object);
+            controllerWEB = new ActivityController(activityServiceMock.Object, modeServiceMock.Object, 
+                identityServiceMock.Object, checkpointServiceMock.Object);
             controllerAPI = new ActivitiesController(activityServiceMock.Object, checkpointServiceMock.Object,
                 identityServiceMock.Object);
             items = new List<Activity>()
@@ -215,11 +217,10 @@ namespace sstu_nevdev.Tests.Controllers
             activityServiceMock.Setup(x => x.GetAll()).Returns(items);
 
             //Act
-            var result = ((controllerWEB.Index() as ViewResult).Model) as List<Activity>;
+            var result = ((controllerWEB.Index(page) as ViewResult).Model);
 
             //Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(items, result);
         }
 
         [TestMethod]
@@ -227,13 +228,17 @@ namespace sstu_nevdev.Tests.Controllers
         {
             //Arrange
             activityServiceMock.Setup(x => x.Get(id)).Returns(items[0]);
+            identityServiceMock.Setup(x => x.GetByGUID(It.IsAny<string>())).Returns(users[0]);
+            checkpointServiceMock.Setup(x => x.GetByIP(It.IsAny<string>())).Returns(checkpoints[0]);
 
             //Act
-            var result = ((controllerWEB.Details(id) as PartialViewResult).Model) as Activity;
+            var result = ((controllerWEB.Details(id) as PartialViewResult).Model) as ActivityDetailsViewModel;
 
             //Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(items[0], result);
+            Assert.AreEqual(items[0], result.Activity);
+            Assert.AreEqual(users[0], result.User);
+            Assert.AreEqual(checkpoints[0], result.Checkpoint);
         }
 
         [TestMethod]
@@ -247,13 +252,14 @@ namespace sstu_nevdev.Tests.Controllers
                 Status = "Успех",
                 Mode = "Вход"
             };
-            modeServiceMock.Setup(x => x.GetByMode(It.IsAny<string>())).Returns(mods.Where(x => x.Description.Equals(model.Mode)));
+            modeServiceMock.Setup(x => x.GetByMode(It.IsAny<string>()))
+                .Returns(mods.Where(x => x.Description.Equals(model.Mode)));
 
             //Act
-            var result = (RedirectToRouteResult)controllerWEB.Create(model);
+            var result = (ViewResult)controllerWEB.Create(model);
 
             //Assert 
-            Assert.AreEqual("Index", result.RouteValues["action"]);
+            Assert.AreEqual("", result.ViewName);
         }
 
         [TestMethod]
@@ -291,10 +297,10 @@ namespace sstu_nevdev.Tests.Controllers
             modeServiceMock.Setup(x => x.GetByMode(It.IsAny<string>())).Returns(mods.Where(x => x.Description.Equals(model.Mode)));
 
             //Act
-            var result = (RedirectToRouteResult)controllerWEB.Edit(model);
+            var result = (ViewResult)controllerWEB.Edit(model);
 
             //Assert 
-            Assert.AreEqual("Index", result.RouteValues["action"]);
+            Assert.AreEqual("", result.ViewName);
         }
 
         [TestMethod]

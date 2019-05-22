@@ -95,8 +95,7 @@ namespace Services.Business.Service
                 {
                     Database.Identity.Create(new Domain.Core.Identity
                     {
-                        GUID = item.GUID,
-                        Picture = "cat.jpg"
+                        GUID = item.GUID
                     });
                     Database.SaveSync();
                 }

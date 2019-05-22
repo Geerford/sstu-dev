@@ -1,6 +1,6 @@
 ﻿@model sstu_nevdev.Models.AdmissionViewModel
 
-<h2>Добавить</h2>
+<h2 class="title-color">Добавить</h2>
 
 @using (Html.BeginForm()) 
 {
@@ -9,7 +9,7 @@
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.Label("Описание", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Описание", htmlAttributes: new { @class = "control-label col-md-2 title-table-color" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
@@ -17,7 +17,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Роль", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Роль", htmlAttributes: new { @class = "control-label col-md-2 title-table-color" })
             <div class="col-md-10">
                 <div class="checkbox">
                     @Html.DropDownListFor(x => x.Role, Model.RoleList, "Выберите роль", new { @class = "form-control" })
@@ -29,7 +29,7 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Добавить" class="btn btn-primary" />
-                @Html.ActionLink("Вернуться", "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-light" })
+                @Html.ActionLink("Вернуться", "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
             </div>
         </div>
     </div>

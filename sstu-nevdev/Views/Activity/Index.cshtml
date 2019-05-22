@@ -1,73 +1,96 @@
-﻿@model IEnumerable<Domain.Core.Activity>
+﻿@model PagedList.IPagedList<Domain.Core.Activity>
+@using PagedList.Mvc;
+<h2 class="title-color">Список событий</h2>
+<div class="container" style="margin-bottom: 20px">
+    @using (Ajax.BeginForm("Index", new AjaxOptions { HttpMethod = "POST" }))
+    {
+        <div>
+            <input style="display: inline-block; margin-right: 10px" class="search-input form-control form-control-lg" type="text" name="query"
+                   placeholder="Введите поисковый запрос..." autocomplete="off" />
+            <input class="btn btn-default" type="submit" value="Поиск" />
+        </div>
 
-<h2>Список событий</h2>
+    }
+    @if (ViewBag.Query != null)
+    {
+        <h2 class="title-color mt-5">Поиск по запросу: @ViewBag.Query</h2>
+    }
+</div>
+@if (Model == null || Model.Count == 0)
+{
+    <p class="container">Ничего не найдено</p>
+}
+else
+{
+    <table class="table">
+        <tr class="title-table-color">
+            <th>
+                @Html.Label("Номер пользователя")
+            </th>
+            <th>
+                @Html.Label("Номер поста")
+            </th>
+            <th>
+                @Html.Label("Дата")
+            </th>
+            <th>
+                @Html.Label("Статус")
+            </th>
+            <th>
+                @Html.Label("Режим")
+            </th>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("SSTU_Administrator"))
+            {
+                <th>
+                    @Html.Label("Действия")
+                </th>
+            }
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.IdentityGUID, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                </td>
+                <td>
+                    @Html.ActionLink(item.CheckpointIP, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                </td>
+                <td>
+                    @Html.ActionLink(item.Date.ToString(), "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                </td>
+                <td>
+                    @if (item.Status)
+                    {
+                        @Html.ActionLink("Успех", "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Неудача", "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink(item.Mode.Status, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                </td>
+                @if (User.Identity.IsAuthenticated && User.IsInRole("SSTU_Administrator"))
+                {
+                    <td>
+                        @Html.ActionLink("Редактировать", "Edit", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "link" })
+                        @Html.ActionLink("Удалить", "Delete", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "link" })
+                    </td>
+                }
+            </tr>
+        }
+    </table>
+    <br />
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+}
 @if (User.Identity.IsAuthenticated && User.IsInRole("SSTU_Administrator"))
 {
     <p>
-        @Html.ActionLink("Создать", "Create", routeValues: null, htmlAttributes: new { @class = "link" })
+        @Html.ActionLink("Создать", "Create", routeValues: null, htmlAttributes: new { @class = "btn btn-default button-color" })
     </p>
+    @Html.ActionLink("Типы событий", "Index", "Mode", routeValues: null, htmlAttributes: new { @class = "btn btn-default button-color" })
 }
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.Label("Номер пользователя")
-        </th>
-        <th>
-            @Html.Label("Номер поста")
-        </th>
-        <th>
-            @Html.Label("Дата")
-        </th>
-        <th>
-            @Html.Label("Статус")
-        </th>
-        <th>
-            @Html.Label("Режим")
-        </th>
-        @if (User.Identity.IsAuthenticated && User.IsInRole("SSTU_Administrator"))
-        {
-            <th>
-                @Html.Label("Действия")
-            </th>
-        }
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.ActionLink(item.IdentityGUID, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
-            </td>
-            <td>
-                @Html.ActionLink(item.CheckpointIP, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
-            </td>
-            <td>
-                @Html.ActionLink(item.Date.ToString(), "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
-            </td>
-            <td>
-                @if (item.Status)
-                {
-                    @Html.ActionLink("Успех", "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
-                }
-                else
-                {
-                    @Html.ActionLink("Неудача", "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
-                }
-            </td>
-            <td>
-                @Html.ActionLink(item.Mode.Description, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
-            </td>
-            @if (User.Identity.IsAuthenticated && User.IsInRole("SSTU_Administrator"))
-            {
-                <td>
-                @Html.ActionLink("Редактировать", "Edit", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "link" })
-                @Html.ActionLink("Удалить", "Delete", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "link" })
-            </td>
-            }
-        </tr>
-    }
-</table>
 <div id="dialog" class="modal fade">
     <div id="content" class="modal-dialog"></div>
 </div>

@@ -1,4 +1,9 @@
-﻿body {
+﻿@import url('https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed');
+@import url('https://fonts.googleapis.com/css?family=Alegreya');
+@import url('https://fonts.googleapis.com/css?family=Exo+2');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
     font-family: 'Open Sans', sans-serif !important;
@@ -49,4 +54,108 @@ textarea {
 .footer-text, .footer-text a {
     color: gray !important;
     text-align: center;
+}
+
+/*SHARED*/
+.header {
+    box-shadow: 0 5px 10px rgb(60, 57, 80);
+    background-color: #3c3950;
+    border: 0;
+}
+
+.menu li a {
+    line-height: 3.5em;
+    text-transform: uppercase;
+    color: #fff !important;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1em;
+}
+
+.layout-font {
+    line-height: 1em;
+    padding-top: 20px;
+    text-transform: uppercase;
+    font-family: 'Alegreya', serif;
+    font-size: 33px;
+    font-weight: bold;
+    letter-spacing: 0.13em;
+    color: #fff !important;
+}
+
+.user {
+    font-weight: bold;
+    line-height: 3.5em !important;
+    color: #fff !important;
+}
+
+.user-title li a{
+    font-family: 'Roboto Condensed',sans-serif;
+    font-size: 15px;
+}
+
+.body-margin {
+    margin-top: 3rem;
+}
+
+.nav-height {
+    max-height: 100% !important;
+}
+
+@media (max-width: 768px) {
+    .layout-font {
+        padding-top: 10px;
+    }
+}
+
+/*CONTENT*/
+.title-color {
+    color: #3d4f83;
+}
+
+.title-table-color {
+    color: #705a87;
+}
+
+.button-color {
+    color: #fff;
+    background-color: #3c3950;
+    border-color: #3c3950;
+}
+    .button-color:active {
+        color: #fff;
+        background-color: #3c3950;
+        border-color: #3c3950;
+    }
+    .button-color:hover {
+        color: #fff;
+        background-color: #3c3950;
+        border-color: #3c3950;
+    }
+
+.pagination-margin {
+    display: flex;
+    justify-content: center;
+}
+
+/*DETAILS*/
+.title-details-color dt {
+    color: #705a87;
+}
+.exit-color {
+    color: #3d4f83 !important;
+    opacity: 0.8;
+}
+    .exit-color:active {
+        color: #3d4f83 !important;
+        opacity: 0.5;
+    }
+    .exit-color:hover {
+        color: #3d4f83 !important;
+        opacity: 0.5;
+    }
+
+.user-image {
+    max-height: 300px;
+    margin: auto;
+    display: block;
 }

@@ -1,6 +1,6 @@
 ﻿@model sstu_nevdev.Models.ActivityViewModel
 
-<h2>Добавить</h2>
+<h2 class="title-color">Добавить</h2>
 
 @using (Html.BeginForm()) 
 {
@@ -10,7 +10,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
-            @Html.Label("GUID пользователя", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("GUID пользователя", htmlAttributes: new { @class = "control-label col-md-2 title-table-color" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.IdentityGUID, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.IdentityGUID, "", new { @class = "text-danger" })
@@ -18,7 +18,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Номер датчика", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Номер датчика", htmlAttributes: new { @class = "control-label col-md-2 title-table-color" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.CheckpointIP, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.CheckpointIP, "", new { @class = "text-danger" })
@@ -26,7 +26,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Дата", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Дата", htmlAttributes: new { @class = "control-label col-md-2 title-table-color" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control date-line", @type = "date" } })
                 @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
@@ -34,7 +34,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Статус", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Статус", htmlAttributes: new { @class = "control-label col-md-2 title-table-color" })
             <div class="col-md-10">
                 <div class="checkbox">
                     @Html.DropDownListFor(x => x.Status, Model.StatusList, "Выберите статус", new { @class = "form-control" })
@@ -44,17 +44,16 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Режим", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Режим", htmlAttributes: new { @class = "control-label col-md-2 title-table-color" })
             <div class="col-md-10">
                 @Html.DropDownListFor(x => x.Mode, Model.ModeList, "Выберите статус", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Mode, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Добавить" class="btn btn-primary" />
-                @Html.ActionLink("Вернуться", "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-light" })
+                @Html.ActionLink("Вернуться", "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
             </div>
         </div>
     </div>

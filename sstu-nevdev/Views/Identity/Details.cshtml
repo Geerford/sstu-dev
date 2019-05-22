@@ -1,23 +1,193 @@
-﻿@model Service.DTO.IdentityDTO
+﻿@model sstu_nevdev.Models.IdentityDetailsViewModel
 
 <div class="modal-content">
-    <div class="modal-header">
-        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
-        <h4>Пользователь №@Html.DisplayFor(model => model.ID)</h4>
+    <div class="modal-header title-color">
+        <button class="close exit-color" data-dismiss="modal" area-hidden="true">X</button>
+        <h4>Пользователь №@Html.DisplayFor(model => model.User.ID)</h4>
     </div>
-    <div class="modal-body">
-        @if (Model.Picture != null)
+    <div class="modal-body title-details-color">
+        @if (Model.User.Picture != null)
         {
-            <img src="~/Content/uploads/@Model.Picture" />
+            <img src="~/Content/uploads/@Model.User.Picture" class="img-thumbnail user-image"/>
         }
         <dl class="dl-horizontal">
             <dt>
-                @Html.DisplayNameFor(model => model.GUID)
+                @Html.DisplayNameFor(model => model.User.GUID)
             </dt>
-
             <dd>
-                @Html.DisplayFor(model => model.GUID)
+                @Html.DisplayFor(model => model.User.GUID)
             </dd>
+            @if (!string.IsNullOrEmpty(Model.User.Surname))
+            {
+                <dt>
+                    @Html.Label("Фамилия")
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.User.Surname)
+                </dd>
+            }
+            @if (!string.IsNullOrEmpty(Model.User.Name))
+            {
+                <dt>
+                    @Html.Label("Имя")
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.User.Name)
+                </dd>
+            }
+            @if (!string.IsNullOrEmpty(Model.User.Midname))
+            {
+                <dt>
+                    @Html.Label("Отчество")
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.User.Midname)
+                </dd>
+            }
+            @if (Model.User.Gender != null)
+            {
+                <dt>
+                    @Html.Label("Пол")
+                </dt>
+                <dd>
+                    @if (Model.User.Gender != null)
+                    {
+                        if ((bool)Model.User.Gender)
+                        {
+                            @Html.Raw("Мужской")
+                        }
+                        else
+                        {
+                            @Html.Raw("Женский")
+                        }
+                    }
+                </dd>
+            }
+            @if (Model.User.Birthdate != DateTime.Now)
+            {
+                <dt>
+                    @Html.Label("Отчество")
+                </dt>
+                <dd>
+                    @Html.Raw(Model.User.Birthdate.ToShortDateString())
+                </dd>
+            }
+            @if (!string.IsNullOrEmpty(Model.User.Country))
+            {
+                <dt>
+                    @Html.Label("Страна")
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.User.Country)
+                </dd>
+            }
+            @if (!string.IsNullOrEmpty(Model.User.City))
+            {
+                <dt>
+                    @Html.Label("Город")
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.User.City)
+                </dd>
+            }
+            @if (!string.IsNullOrEmpty(Model.User.Phone))
+            {
+                <dt>
+                    @Html.Label("Телефон")
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.User.Phone)
+                </dd>
+            }
+            @if (!string.IsNullOrEmpty(Model.User.Email))
+            {
+                <dt>
+                    @Html.Label("Email")
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.User.Email)
+                </dd>
+            }
+            @if (!string.IsNullOrEmpty(Model.User.Department))
+            {
+                <dt>
+                    @Html.Label("Институт")
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.User.Department)
+                </dd>
+            }
+            @if (!string.IsNullOrEmpty(Model.User.Group))
+            {
+                <dt>
+                    @Html.Label("Группа")
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.User.Group)
+                </dd>
+            }
+            @if (!string.IsNullOrEmpty(Model.User.Status))
+            {
+                <dt>
+                    @Html.Label("Статус")
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.User.Status)
+                </dd>
+            }
+            @if (!string.IsNullOrEmpty(Model.User.Role))
+            {
+                <dt>
+                    @Html.Label("Роль")
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.User.Role)
+                </dd>
+            }
         </dl>
+        @if (Model.Activities != null && Model.Activities.ToList().Count > 0)
+        {
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.Label("Номер поста")
+                    </th>
+                    <th>
+                        @Html.Label("Дата")
+                    </th>
+                    <th>
+                        @Html.Label("Статус")
+                    </th>
+                    <th>
+                        @Html.Label("Режим")
+                    </th>
+                </tr>
+
+                @foreach (var item in Model.Activities)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(item.CheckpointIP, "Details", "Activity", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                        </td>
+                        <td>
+                            @Html.ActionLink(item.Date.ToString(), "Details", "Activity", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                        </td>
+                        <td>
+                            @if (item.Status)
+                            {
+                                @Html.ActionLink("Успех", "Details", "Activity", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Неудача", "Details", "Activity", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                            }
+                        </td>
+                        <td>
+                            @Html.ActionLink(item.Mode.Status, "Details", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
     </div>
 </div>

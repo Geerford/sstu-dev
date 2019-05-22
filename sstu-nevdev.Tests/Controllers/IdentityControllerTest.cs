@@ -19,18 +19,21 @@ namespace sstu_nevdev.Tests.Controllers
     public class IdentityControllerTest
     {
         private Mock<IIdentityService> identityServiceMock;
+        private Mock<IActivityService> activityServiceMock;
         private Mock<IAESService> aesServiceMock;
         private IdentityController controllerWEB;
         private IdentitiesController controllerAPI;
         private List<IdentityDTO> items;
         private readonly int id = 1;
+        private readonly int page = 1;
 
         [TestInitialize]
         public void Initialize()
         {
             identityServiceMock = new Mock<IIdentityService>();
+            activityServiceMock = new Mock<IActivityService>();
             aesServiceMock = new Mock<IAESService>();
-            controllerWEB = new IdentityController(identityServiceMock.Object);
+            controllerWEB = new IdentityController(identityServiceMock.Object, activityServiceMock.Object);
             controllerAPI = new IdentitiesController(identityServiceMock.Object, aesServiceMock.Object);
             items = new List<IdentityDTO>()
             {
@@ -101,11 +104,11 @@ namespace sstu_nevdev.Tests.Controllers
             identityServiceMock.Setup(x => x.GetAll()).Returns(items);
 
             //Act
-            var result = ((controllerWEB.Index() as ViewResult).Model) as IEnumerable<IdentityDTO>;
+            var result = ((controllerWEB.Index(page) as ViewResult).Model) as IEnumerable<IdentityDTO>;
 
             //Assert
             Assert.IsNotNull(result);
-            Assert.IsTrue(items.SequenceEqual(result.Reverse()));
+            Assert.IsTrue(items.SequenceEqual(result));
         }
 
         [TestMethod]
@@ -115,11 +118,11 @@ namespace sstu_nevdev.Tests.Controllers
             identityServiceMock.Setup(x => x.Get(id)).Returns(items[0]);
 
             //Act
-            var result = ((controllerWEB.Details(id) as PartialViewResult).Model) as IdentityDTO;
+            var result = ((controllerWEB.Details(id) as PartialViewResult).Model) as IdentityDetailsViewModel;
 
             //Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(items[0], result);
+            Assert.AreEqual(items[0], result.User);
         }
 
         [TestMethod]
@@ -131,10 +134,10 @@ namespace sstu_nevdev.Tests.Controllers
             };
 
             //Act
-            var result = (RedirectToRouteResult)controllerWEB.Create(model);
+            var result = (ViewResult)controllerWEB.Create(model);
 
             //Assert 
-            Assert.AreEqual("Index", result.RouteValues["action"]);
+            Assert.AreEqual("", result.ViewName);
         }
 
         [TestMethod]
@@ -160,10 +163,10 @@ namespace sstu_nevdev.Tests.Controllers
             };
 
             //Act
-            var result = (RedirectToRouteResult)controllerWEB.Edit(model);
+            var result = (ViewResult)controllerWEB.Edit(model);
 
             //Assert 
-            Assert.AreEqual("Index", result.RouteValues["action"]);
+            Assert.AreEqual("", result.ViewName);
         }
 
         [TestMethod]

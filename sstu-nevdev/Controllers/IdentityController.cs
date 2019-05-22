@@ -1,7 +1,10 @@
 ﻿using Domain.Core;
+using PagedList;
+using Service.DTO;
 using Service.Interfaces;
+using sstu_nevdev.App_Start;
 using sstu_nevdev.Models;
-using System.IO;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -13,40 +16,83 @@ namespace sstu_nevdev.Controllers
     public class IdentityController : Controller
     {
         IIdentityService service;
+        IActivityService activityService;
 
-        public IdentityController(IIdentityService service)
+        public IdentityController(IIdentityService service, IActivityService activityService)
         {
             this.service = service;
+            this.activityService = activityService;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View(service.GetAll().Reverse());
+            int pageSize = 50;
+            int pageNumber = (page ?? 1);
+            return View(service.GetAll().OrderBy(x => x.GUID).ToPagedList(pageNumber, pageSize));
         }
 
-        public ActionResult OneC()
+        [HttpPost]
+        public ActionResult Index(string query, int? page)
         {
-            return View(service.GetUsers1C());
+            ViewBag.Query = query;
+            string[] parsedQuery = query.Split(null);
+            List<IdentityDTO> result = new List<IdentityDTO>();
+            foreach (var item in service.GetAll())
+            {
+                foreach(var value in parsedQuery)
+                {
+                    if (Comparator.PropertiesThatContainText(item, value))
+                    {
+                        result.Add(item);
+                        break;
+                    }
+                }
+            }
+            int pageSize = 50;
+            int pageNumber = (page ?? 1);
+            return View(result.OrderBy(x => x.GUID).ToPagedList(pageNumber, pageSize));
         }
-
+        
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var item = service.Get(id);
-            if (item != null)
+            var user = service.Get(id);
+            var activities = activityService.GetAll().Where(a => a.IdentityGUID.Equals(user.GUID));
+            if (user != null)
             {
-                return PartialView(item);
+                return PartialView(new IdentityDetailsViewModel
+                {
+                    User = user,
+                    Activities = activities
+                });
             }
             return HttpNotFound();
         }
 
         [Authorize(Roles = "SSTU_Deanery, SSTU_Administrator")]
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var user = service.GetSimple(id);
+            if (user != null)
+            {
+                return View(new IdentityViewModel(user));
+            }
+            return HttpNotFound();
+        }
+
+        public ActionResult Users(int? page)
+        {
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(service.GetAll().Where(g => !g.GUID.Contains("GUEST") && g.Picture == null)
+                .OrderBy(x => x.GUID).ToPagedList(pageNumber, pageSize));
         }
 
         [HttpPost]
@@ -54,25 +100,11 @@ namespace sstu_nevdev.Controllers
         [Authorize(Roles = "SSTU_Deanery, SSTU_Administrator")]
         public ActionResult Create(IdentityViewModel model, HttpPostedFileBase filedata = null)
         {
-            if (string.IsNullOrEmpty(model.GUID))
+            if (ModelState.IsValid && filedata != null)
             {
-                ModelState.AddModelError("GUID", "GUID должен быть заполнен");
-            }
-            if (ModelState.IsValid)
-            {
-                string fileName = "";
-                if (filedata != null)
-                {
-                    string path = System.Web.HttpContext.Current.Server.MapPath("~/Content/uploads/"), fileEx = Path.GetExtension(filedata.FileName);
-                    fileName = System.Guid.NewGuid().ToString() + fileEx;
-                    filedata.SaveAs(path + fileName);
-                }
-                model.Picture = fileName;
-                service.Create(new Identity
-                {
-                    GUID = model.GUID,
-                    Picture = model.Picture
-                });
+                var user = service.GetSimple(model.ID);
+                user.Picture = service.SaveImage(filedata, null);
+                service.Edit(user);
                 return RedirectToAction("Index");
             }
             else
@@ -100,20 +132,13 @@ namespace sstu_nevdev.Controllers
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "SSTU_Deanery, SSTU_Administrator")]
         public ActionResult Edit(IdentityViewModel model, HttpPostedFileBase filedata = null)
-        {
-            if (string.IsNullOrEmpty(model.GUID))
+        {           
+            if (ModelState.IsValid && filedata != null)
             {
-                ModelState.AddModelError("GUID", "GUID должен быть заполнен");
-            }
-            if (ModelState.IsValid)
-            {
-                Identity result = service.GetSimple(model.ID);
-                if (filedata != null)
-                {
-                    result.Picture = service.SaveImage(filedata);
-                }
-                service.Edit(result);
-                return RedirectToAction("Index", "Identity");
+                var user = service.GetSimple(model.ID);
+                user.Picture = service.SaveImage(filedata, user.Picture);
+                service.Edit(user);
+                return RedirectToAction("Index");
             }
             else
             {
@@ -142,8 +167,10 @@ namespace sstu_nevdev.Controllers
         {
             try
             {
-                service.Delete(model);
-                return RedirectToAction("Index", "Identity");
+                service.SaveImage(null, model.Picture);
+                model.Picture = null;
+                service.Edit(model);
+                return RedirectToAction("Index");
             }
             catch
             {
@@ -154,6 +181,7 @@ namespace sstu_nevdev.Controllers
         protected override void Dispose(bool disposing)
         {
             service.Dispose();
+            activityService.Dispose();
             base.Dispose(disposing);
         }
     }

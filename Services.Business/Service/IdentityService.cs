@@ -303,13 +303,20 @@ namespace Services.Business.Service
         /// <summary>
         /// Implements <see cref="IIdentityService.SaveImage(HttpPostedFileBase)"/>.
         /// </summary>
-        public string SaveImage(HttpPostedFileBase data)
+        public string SaveImage(HttpPostedFileBase data, string oldFile)
         {
             string pathName = "";
+            string path = HttpContext.Current.Server.MapPath("~/Content/Uploads/");
+            if (!string.IsNullOrEmpty(oldFile))
+            {
+                if (File.Exists(path + oldFile))
+                {
+                    File.Delete(path + oldFile);
+                }
+            }
             if (data != null)
             {
-                string extension = Path.GetExtension(data.FileName),
-                    path = HttpContext.Current.Server.MapPath("~/Content/uploads/");
+                string extension = Path.GetExtension(data.FileName);
                 pathName = Guid.NewGuid().ToString() + extension;
                 data.SaveAs(path + pathName);
             }

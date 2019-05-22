@@ -121,8 +121,9 @@ namespace Service.Interfaces
         /// Saves <see cref="HttpPostedFileBase"/> to ~/Content/uploads/.
         /// </summary>
         /// <param name="data">The picture stream.</param>
+        /// <param name="oldFile">The filename, which must be deleted.</param>
         /// <returns>The path of saved picture.</returns>
-        string SaveImage(HttpPostedFileBase data);
+        string SaveImage(HttpPostedFileBase data, string oldFile);
         #endregion
         #region Sync logic
         /// <summary>

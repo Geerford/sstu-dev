@@ -1,42 +1,59 @@
-﻿@model Domain.Core.Activity
+﻿@model sstu_nevdev.Models.ActivityDetailsViewModel
 
 <div class="modal-content">
-    <div class="modal-header">
-        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
-        <h4>Событие №@Html.DisplayFor(model => model.ID)</h4>
+    <div class="modal-header title-color">
+        <button class="close exit-color" data-dismiss="modal" area-hidden="true">X</button>
+        <h4>Событие №@Html.DisplayFor(model => model.Activity.ID)</h4>
     </div>
-    <div class="modal-body">
+    <div class="modal-body title-details-color">
         <dl class="dl-horizontal">
             <dt>
                 @Html.Label("Номер пользователя")
             </dt>
-
             <dd>
-                @Html.DisplayFor(model => model.IdentityGUID)
+                @Html.DisplayFor(model => model.Activity.IdentityGUID)
             </dd>
-
+            <dt>
+                @Html.Label("Фамилия")
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.User.Surname)
+            </dd>
+            <dt>
+                @Html.Label("Имя")
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.User.Name)
+            </dd>
+            <dt>
+                @Html.Label("Институт")
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.User.Department)
+            </dd>
+            <dt>
+                @Html.Label("Роль")
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.User.Role)
+            </dd>
             <dt>
                 @Html.Label("Номер датчика")
             </dt>
-
             <dd>
-                @Html.DisplayFor(model => model.CheckpointIP)
+                @Html.DisplayFor(model => model.Activity.CheckpointIP)
             </dd>
-
             <dt>
                 @Html.Label("Дата")
             </dt>
-
             <dd>
-                @Html.DisplayFor(model => model.Date)
+                @Html.DisplayFor(model => model.Activity.Date)
             </dd>
-
             <dt>
                 @Html.Label("Статус")
             </dt>
-
             <dd>
-                @if (Model.Status)
+                @if (Model.Activity.Status)
                 {
                     @Html.DisplayName("Успех")
                 }
@@ -45,13 +62,11 @@
                     @Html.DisplayName("Неудача")
                 }
             </dd>
-
             <dt>
                 @Html.Label("Режим")
             </dt>
-
             <dd>
-                @Html.DisplayFor(model => model.Mode)
+                @Html.DisplayFor(model => model.Activity.Mode.Status)
             </dd>
         </dl>
     </div>

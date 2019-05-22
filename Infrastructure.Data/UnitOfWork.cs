@@ -266,6 +266,7 @@ namespace Infrastructure.Data
                                         dynamic auditLog = new JObject();
                                         auditLog.State = item.State.ToString();
                                         auditLog.PropertyName = propertyName;
+                                        auditLog.ID = item.GetDatabaseValues().GetValue<object>("ID");
                                         auditLog.OriginalValue = originalValue;
                                         auditLog.NewValue = currentValue;
                                         Audit audit = new Audit

@@ -1,56 +1,75 @@
-﻿@model IEnumerable<Domain.Core.Logs.Audit>
+﻿@model PagedList.IPagedList<Domain.Core.Logs.Audit>
+@using PagedList.Mvc;
 @using System.Text.RegularExpressions
-
-<div class="container">
-    @foreach (var item in Model)
+<h2 class="title-color">Журнал аудитов</h2>
+<div class="container" style="margin-bottom: 20px">
+    @using (Ajax.BeginForm("Index", new AjaxOptions { HttpMethod = "POST" }))
     {
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.Label("Аудит №")
-            </dt>
+        <div>
+            <input style="display: inline-block; margin-right: 10px" class="search-input form-control form-control-lg" type="text" name="query"
+                   placeholder="Введите поисковый запрос..." autocomplete="off" />
+            <input class="btn btn-default" type="submit" value="Поиск" />
+        </div>
 
-            <dd>
-                @item.ID
-            </dd>
-
-            <dt>
-                @Html.Label("Название сущности")
-            </dt>
-
-            <dd>
-                @item.EntityName
-            </dd>
-            <dt>
-                @Html.Label("Данные")
-            </dt>
-
-            <dd>
-                @MvcHtmlString.Create(Regex.Replace(Html.Encode(item.Logs), @",", "<br />").Replace(@"\r\n", "").Replace(@"\r\n", "<br />").Replace(@"\", "").Replace(@"}", "").Replace(@"{", "").Replace("\"", ""))
-            </dd>
-
-            <dt>
-                @Html.Label("Кем изменено")
-            </dt>
-
-            <dd>
-                @item.ModifiedBy
-            </dd>
-
-            <dt>
-                @Html.Label("Откуда изменено")
-            </dt>
-
-            <dd>
-                @item.ModifiedFrom
-            </dd>
-
-            <dt>
-                @Html.Label("Дата")
-            </dt>
-
-            <dd>
-                @item.ModifiedDate
-            </dd>
-        </dl>
+    }
+    @if (ViewBag.Query != null)
+    {
+        <h2 class="title-color mt-5">Поиск по запросу: @ViewBag.Query</h2>
     }
 </div>
+@if (Model == null || Model.Count == 0)
+{
+    <p class="container">Ничего не найдено</p>
+}
+else
+{
+    <table class="table">
+        <tr class="title-table-color">
+            <th>
+                @Html.Label("Аудит №")
+            </th>
+            <th>
+                @Html.Label("Название сущности")
+            </th>
+            <th>
+                @Html.Label("Данные")
+            </th>
+            <th>
+                @Html.Label("Кем изменено")
+            </th>
+            <th>
+                @Html.Label("Откуда изменено")
+            </th>
+            <th>
+                @Html.Label("Дата")
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.ID
+                </td>
+                <td>
+                    @item.EntityName
+                </td>
+                <td>
+                    @MvcHtmlString.Create(Regex.Replace(Html.Encode(item.Logs), @",", "<br />").Replace(@"\r\n", "").Replace(@"\r\n", "<br />").Replace(@"\", "").Replace(@"}", "").Replace(@"{", "").Replace("\"", ""))
+                </td>
+                <td>
+                    @item.ModifiedBy
+                </td>
+                <td>
+                    @item.ModifiedFrom
+                </td>
+                <td>
+                    @item.ModifiedDate
+                </td>
+            </tr>
+        }
+    </table>
+    <br />
+    <div class="pagination-margin">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    </div>
+}

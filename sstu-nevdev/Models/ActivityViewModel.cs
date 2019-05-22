@@ -1,4 +1,5 @@
 ﻿using Domain.Core;
+using Service.DTO;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
@@ -84,5 +85,26 @@ namespace sstu_nevdev.Models
         {
             return new ActivityViewModel(item);
         }
+    }
+
+    /// <summary>
+    /// Represents a activity details model for MVC.
+    /// </summary>
+    public class ActivityDetailsViewModel
+    {
+        /// <summary>
+        /// Gets or sets the activity.
+        /// </summary>
+        public Activity Activity { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user.
+        /// </summary>
+        public IdentityDTO User { get; set; }
+
+        /// <summary>
+        /// Gets or sets the checkpoint.
+        /// </summary>
+        public CheckpointDTO Checkpoint { get; set; }
     }
 }

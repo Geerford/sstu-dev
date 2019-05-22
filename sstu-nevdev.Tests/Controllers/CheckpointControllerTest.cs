@@ -6,6 +6,7 @@ using Service.Interfaces;
 using sstu_nevdev.Controllers;
 using sstu_nevdev.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http.Results;
 using System.Web.Mvc;
 using RedirectToRouteResult = System.Web.Mvc.RedirectToRouteResult;
@@ -24,6 +25,7 @@ namespace sstu_nevdev.Tests.Controllers
         private List<Type> types;
         private List<Admission> admissions;
         private readonly int id = 1;
+        private readonly int page = 1;
 
         [TestInitialize]
         public void Initialize()
@@ -121,11 +123,11 @@ namespace sstu_nevdev.Tests.Controllers
             checkpointServiceMock.Setup(x => x.GetAll()).Returns(items);
 
             //Act
-            var result = ((controllerWEB.Index() as ViewResult).Model) as List<CheckpointDTO>;
+            var result = ((controllerWEB.Index(page) as ViewResult).Model) as IEnumerable<CheckpointDTO>;
 
             //Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(items, result);
+            Assert.IsTrue(items.SequenceEqual(result));
         }
 
         [TestMethod]

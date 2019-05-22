@@ -1,6 +1,8 @@
 ﻿using Domain.Core;
+using PagedList;
 using Service.DTO;
 using Service.Interfaces;
+using sstu_nevdev.App_Start;
 using sstu_nevdev.Models;
 using System.Collections.Generic;
 using System.Net;
@@ -23,9 +25,33 @@ namespace sstu_nevdev.Controllers
             this.admissionService = admissionService;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View(checkpointService.GetAll());
+            int pageSize = 50;
+            int pageNumber = (page ?? 1);
+            return View(checkpointService.GetAll().ToPagedList(pageNumber, pageSize));
+        }
+
+        [HttpPost]
+        public ActionResult Index(string query, int? page)
+        {
+            ViewBag.Query = query;
+            string[] parsedQuery = query.Split(null);
+            List<CheckpointDTO> result = new List<CheckpointDTO>();
+            foreach (var item in checkpointService.GetAll())
+            {
+                foreach (var value in parsedQuery)
+                {
+                    if (Comparator.PropertiesThatContainText(item, value))
+                    {
+                        result.Add(item);
+                        break;
+                    }
+                }
+            }
+            int pageSize = 50;
+            int pageNumber = (page ?? 1);
+            return View(result.ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult Details(int? id)
@@ -127,8 +153,8 @@ namespace sstu_nevdev.Controllers
                     IP = model.IP,
                     Campus = (int)model.Campus,
                     Row = (int)model.Row,
-                    Classroom = (int)model.Classroom,
-                    Section = (int)model.Section,
+                    Classroom = model.Classroom,
+                    Section = model.Section,
                     Description = model.Description,
                     Status = model.Status,
                     Type = model.Type,
@@ -274,8 +300,8 @@ namespace sstu_nevdev.Controllers
                     ID = model.ID,
                     IP = model.IP,
                     Campus = (int)model.Campus,
-                    Classroom = (int)model.Classroom,
-                    Section = (int)model.Section,
+                    Classroom = model.Classroom,
+                    Section = model.Section,
                     Row = (int)model.Row,
                     Description = model.Description,
                     Status = model.Status,

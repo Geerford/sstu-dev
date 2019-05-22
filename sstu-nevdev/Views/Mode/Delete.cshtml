@@ -1,10 +1,10 @@
 ﻿@model Domain.Core.Mode
 
-<h3>Вы действительно хотите удалить это?</h3>
+<h3 class="title-color">Вы действительно хотите удалить это?</h3>
 <div>
     <h4>Type</h4>
     <hr />
-    <dl class="dl-horizontal">
+    <dl class="dl-horizontal title-details-color">
         <dt>
             @Html.DisplayNameFor(model => model.Description)
         </dt>
@@ -28,8 +28,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Удалить" class="btn btn-default" /> |
-            @Html.ActionLink("Назад", "Index")
+            <input type="submit" value="Удалить" class="btn btn-default button-color" />
+            @Html.ActionLink("Назад", "Index", null, htmlAttributes: new { @class = "btn btn-default button-color" })
         </div>
     }
 </div>

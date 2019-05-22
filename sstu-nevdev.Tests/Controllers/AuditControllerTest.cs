@@ -5,6 +5,7 @@ using Service.Interfaces;
 using sstu_nevdev.Controllers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http.Results;
 using System.Web.Mvc;
 
@@ -17,6 +18,7 @@ namespace sstu_nevdev.Tests.Controllers
         private AuditController controllerWEB;
         private AuditsController controllerAPI;
         private List<Audit> items;
+        private readonly int page = 1;
 
         [TestInitialize]
         public void Initialize()
@@ -63,11 +65,11 @@ namespace sstu_nevdev.Tests.Controllers
             auditServiceMock.Setup(x => x.GetAll()).Returns(items);
 
             //Act
-            var result = ((controllerWEB.Index() as ViewResult).Model) as List<Audit>;
+            var result = ((controllerWEB.Index(page) as ViewResult).Model) as IEnumerable<Audit>;
 
             //Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(items, result);
+            Assert.IsTrue(items.SequenceEqual(result));
         }
 
         [TestMethod]

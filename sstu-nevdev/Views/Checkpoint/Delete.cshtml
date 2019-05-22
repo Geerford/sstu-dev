@@ -1,80 +1,75 @@
 ﻿@model Service.DTO.CheckpointDTO
 
-<h3>Вы действительно хотите удалить это?</h3>
+<h3 class="title-color">Вы действительно хотите удалить это?</h3>
 <div>
     <dl class="dl-horizontal">
         <dt>
             @Html.Label("IP-адрес")
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.IP)
         </dd>
         <dt>
             @Html.Label("Корпус")
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Campus)
         </dd>
-
         <dt>
             @Html.Label("Этаж")
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Row)
         </dd>
-
-        <dt>
-            @Html.Label("Секция")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Section)
-        </dd>
-
-        <dt>
-            @Html.Label("Аудитория")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Classroom)
-        </dd>
-
+        @if (Model.Section != null)
+        {
+            <dt>
+                @Html.Label("Секция")
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Section)
+            </dd>
+        }
+        @if (Model.Classroom != null)
+        {
+            <dt>
+                @Html.Label("Аудитория")
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Classroom)
+            </dd>
+        }
         <dt>
             @Html.Label("Описание")
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Description)
         </dd>
-
         <dt>
             @Html.Label("Статус")
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Status)
         </dd>
-
         <dt>
             @Html.Label("Тип")
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Type.Status)
         </dd>
-        <dt>
-            @Html.Label("Разрешения")
-        </dt>
-        @foreach (var item in Model.Admissions)
+        @if (Model.Admissions.ToList().Count > 0)
         {
-            <dd>
-                @Html.DisplayFor(modelItem => item.Description)
-                @Html.DisplayName(" для ")
-                @Html.DisplayFor(modelItem => item.Role)
-            </dd>
+            <dt>
+                @Html.Label("Разрешения")
+            </dt>
+            foreach (var item in Model.Admissions)
+            {
+                <dd>
+                    @Html.DisplayFor(modelItem => item.Description)
+                    @Html.DisplayName(" для ")
+                    @Html.DisplayFor(modelItem => item.Role)
+                </dd>
+            }
         }
     </dl>
 
@@ -83,8 +78,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Удалить" class="btn btn-default" /> |
-            @Html.ActionLink("Назад", "Index")
+            <input type="submit" value="Удалить" class="btn btn-default button-color" />
+            @Html.ActionLink("Назад", "Index", null, htmlAttributes: new { @class = "btn btn-default button-color" })
         </div>
     }
 </div>

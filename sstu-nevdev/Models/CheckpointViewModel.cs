@@ -43,7 +43,6 @@ namespace sstu_nevdev.Models
         /// <summary>
         /// Gets or sets the classroom.
         /// </summary>
-        [Required(ErrorMessage = "Аудитория должна быть заполнена")]
         public int? Classroom { get; set; }
 
         /// <summary>

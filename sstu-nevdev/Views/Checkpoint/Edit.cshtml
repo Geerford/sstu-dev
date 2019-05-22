@@ -1,6 +1,6 @@
 ﻿@model sstu_nevdev.Models.CheckpointViewModel
 
-<h2>Редактирование</h2>
+<h2 class="title-color">Редактирование</h2>
 
 @using (Html.BeginForm())
 {
@@ -10,7 +10,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
-            @Html.Label("IP-адрес", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("IP-адрес", htmlAttributes: new { @class = "control-label col-md-2 title-table-color" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.IP, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.IP, "", new { @class = "text-danger" })
@@ -18,7 +18,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Корпус", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Корпус", htmlAttributes: new { @class = "control-label col-md-2 title-table-color" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Campus, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0" } })
                 @Html.ValidationMessageFor(model => model.Campus, "", new { @class = "text-danger" })
@@ -26,7 +26,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Этаж", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Этаж", htmlAttributes: new { @class = "control-label col-md-2 title-table-color" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Row, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0" } })
                 @Html.ValidationMessageFor(model => model.Row, "", new { @class = "text-danger" })
@@ -34,7 +34,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Секция", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Секция", htmlAttributes: new { @class = "control-label col-md-2 title-table-color" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Section, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0" } })
                 @Html.ValidationMessageFor(model => model.Section, "", new { @class = "text-danger" })
@@ -42,7 +42,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Аудитория", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Аудитория", htmlAttributes: new { @class = "control-label col-md-2 title-table-color" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Classroom, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0" } })
                 @Html.ValidationMessageFor(model => model.Classroom, "", new { @class = "text-danger" })
@@ -50,7 +50,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Описание", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Описание", htmlAttributes: new { @class = "control-label col-md-2 title-table-color" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
@@ -58,7 +58,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Статус", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Статус", htmlAttributes: new { @class = "control-label col-md-2 title-table-color" })
             <div class="col-md-10">
                 @Html.DropDownListFor(x => x.Status, Model.StatusList, "Выберите статус", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
@@ -66,7 +66,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Тип", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Тип", htmlAttributes: new { @class = "control-label col-md-2 title-table-color" })
             <div class="col-md-10">
                 @Html.DropDownListFor(x => x.TypeID, Model.TypeList, "Выберите тип", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.TypeID, "", new { @class = "text-danger" })
@@ -74,7 +74,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Разрешения", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Разрешения", htmlAttributes: new { @class = "control-label col-md-2 title-table-color" })
             <br />
             <div class="col-md-10">
                 @Html.EditorFor(model => model.AdmissionList)
@@ -84,7 +84,7 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Сохранить" class="btn btn-primary" />
-                @Html.ActionLink("Вернуться", "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-light" })
+                @Html.ActionLink("Вернуться", "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
             </div>
         </div>
     </div>

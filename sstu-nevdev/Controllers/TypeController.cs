@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace sstu_nevdev.Controllers
 {
-    //[Authorize(Roles = "SSTU_Administrator")]
+    [Authorize(Roles = "SSTU_Administrator")]
     public class TypeController : Controller
     {
         ITypeService service;
@@ -50,7 +50,7 @@ namespace sstu_nevdev.Controllers
             }
             if (string.IsNullOrEmpty(model.Status))
             {
-                ModelState.AddModelError("Status", "Выберите статус");
+                ModelState.AddModelError("Status", "Статус должен быть заполнен");
             }
             if (ModelState.IsValid)
             {
@@ -72,7 +72,12 @@ namespace sstu_nevdev.Controllers
             Type model = service.Get(id);
             if(model != null)
             {
-                return View(model);
+                return View(new TypeViewModel
+                {
+                    ID = model.ID,
+                    Description = model.Description,
+                    Status = model.Status
+                });
             }
             return HttpNotFound();
         }

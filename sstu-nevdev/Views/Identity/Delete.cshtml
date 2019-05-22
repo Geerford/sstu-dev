@@ -1,27 +1,27 @@
 ﻿@model Domain.Core.Identity
 
-<h3>Вы действительно хотите удалить?</h3>
-<div>
-    @if (Model.Picture != null)
-    {
-        <img src="~/Content/uploads/@Model.Picture" />
-    }
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.GUID)
-        </dt>
+<h3 class="title-color">Вы действительно хотите удалить фотографию этого пользователя?</h3>
+@if (Model.Picture != null)
+{
+    <img src="~/Content/uploads/@Model.Picture" class="img-thumbnail user-image" />
+}
+<dl class="dl-horizontal title-details-color">
+    <dt>
+        @Html.DisplayNameFor(model => model.GUID)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.GUID)
-        </dd>
-    </dl>
+    <dd>
+        @Html.DisplayFor(model => model.GUID)
+    </dd>
+</dl>
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        <div class="form-actions no-color">
-            <input type="submit" value="Удалить" class="btn btn-default" /> |
-            @Html.ActionLink("Назад", "Index")
-        </div>
-    }
-</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Picture)
+    @Html.HiddenFor(model => model.GUID)
+    <div class="form-actions no-color">
+        <input type="submit" value="Удалить" class="btn btn-default button-color" />
+        @Html.ActionLink("Назад", "Index", null, htmlAttributes: new { @class = "btn btn-default button-color" })
+    </div>
+}

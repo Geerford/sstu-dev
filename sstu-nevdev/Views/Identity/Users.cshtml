@@ -1,0 +1,116 @@
+﻿@model PagedList.IPagedList<Service.DTO.IdentityDTO>
+@using PagedList.Mvc;
+@if (Model == null || Model.Count == 0)
+{
+    <p class="container">Всем пользователям загружены фотографии</p>
+}
+else
+{
+    <h2 class="title-color">Список пользователей без фотографии</h2>
+    <table class="table">
+        <tr class="title-table-color">
+            <th>
+                @Html.Label("GUID")
+            </th>
+            <th>
+                @Html.Label("Имя")
+            </th>
+            <th>
+                @Html.Label("Фамилия")
+            </th>
+            <th>
+                @Html.Label("Отчество")
+            </th>
+            <th>
+                @Html.Label("Город")
+            </th>
+            <th>
+                @Html.Label("Телефон")
+            </th>
+            <th>
+                @Html.Label("Email")
+            </th>
+            <th>
+                @Html.Label("Институт")
+            </th>
+            <th>
+                @Html.Label("Группа")
+            </th>
+            <th>
+                @Html.Label("Статус")
+            </th>
+            <th>
+                @Html.Label("Роль")
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.GUID, "Create", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Name))
+                    {
+                        @Html.ActionLink(item.Name, "Create", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                    }
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Surname))
+                    {
+                        @Html.ActionLink(item.Surname, "Create", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                    }
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Midname))
+                    {
+                        @Html.ActionLink(item.Midname, "Create", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                    }
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.City))
+                    {
+                        @Html.ActionLink(item.City, "Create", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                    }
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Phone))
+                    {
+                        @Html.ActionLink(item.Phone, "Create", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                    }
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Email))
+                    {
+                        @Html.ActionLink(item.Email, "Create", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                    }
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Department))
+                    {
+                        @Html.ActionLink(item.Department, "Create", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                    }
+                </td>
+                <td>
+                    @if (item.Group != null)
+                    {
+                        @Html.ActionLink(item.Group, "Create", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                    }
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Status))
+                    {
+                        @Html.ActionLink(item.Status, "Create", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink(item.Role, "Create", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "item link" })
+                </td>
+            </tr>
+        }
+    </table>
+    <br />
+    <div class="pagination-margin">
+        @Html.PagedListPager(Model, page => Url.Action("Users", new { page }))
+    </div>
+}

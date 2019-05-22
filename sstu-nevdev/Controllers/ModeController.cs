@@ -60,7 +60,7 @@ namespace sstu_nevdev.Controllers
                 });
                 return RedirectToAction("Index", "Mode");
             }
-            return View(model);
+            return View();
         }
 
         public ActionResult Edit(int? id)

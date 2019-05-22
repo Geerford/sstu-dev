@@ -1,5 +1,7 @@
 ﻿using Domain.Core;
+using PagedList;
 using Service.Interfaces;
+using sstu_nevdev.App_Start;
 using sstu_nevdev.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,16 +15,46 @@ namespace sstu_nevdev.Controllers
     {
         IActivityService service;
         IModeService modeService;
+        IIdentityService identityService;
+        ICheckpointService checkpointService;
 
-        public ActivityController(IActivityService service, IModeService modeService)
+        public ActivityController(IActivityService service, IModeService modeService,
+            IIdentityService identityService, ICheckpointService checkpointService)
         {
             this.service = service;
             this.modeService = modeService;
+            this.identityService = identityService;
+            this.checkpointService = checkpointService;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View(service.GetAll());
+            int pageSize = 50;
+            int pageNumber = (page ?? 1);
+            return View(service.GetAll().OrderByDescending(x => x.Date)
+                .ToPagedList(pageNumber, pageSize));
+        }
+
+        [HttpPost]
+        public ActionResult Index(string query, int? page)
+        {
+            ViewBag.Query = query;
+            string[] parsedQuery = query.Split(null);
+            List<Activity> result = new List<Activity>();
+            foreach (var item in service.GetAll())
+            {
+                foreach (var value in parsedQuery)
+                {
+                    if (Comparator.PropertiesThatContainText(item, value))
+                    {
+                        result.Add(item);
+                        break;
+                    }
+                }
+            }
+            int pageSize = 50;
+            int pageNumber = (page ?? 1);
+            return View(result.OrderBy(x => x.Date).ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult Details(int? id)
@@ -31,10 +63,17 @@ namespace sstu_nevdev.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var item = service.Get(id);
-            if (item != null)
+            var activity = service.Get(id);
+            var user = identityService.GetByGUID(activity.IdentityGUID);
+            var checkpoint = checkpointService.GetByIP(activity.CheckpointIP);
+            if (activity != null && user != null && checkpoint != null)
             {
-                return PartialView(item);
+                return PartialView(new ActivityDetailsViewModel
+                {
+                    Activity = activity,
+                    User = user,
+                    Checkpoint = checkpoint
+                });
             }
             return HttpNotFound();
         }
@@ -88,6 +127,16 @@ namespace sstu_nevdev.Controllers
             if (string.IsNullOrEmpty(model.Mode))
             {
                 ModelState.AddModelError("Mode", "Выберите режим");
+            }
+            var user = identityService.GetAll().Where(x => x.GUID.Equals(model.IdentityGUID)).FirstOrDefault();
+            if (user == null)
+            {
+                ModelState.AddModelError("IdentityGUID", "Данного пользователя не существует");
+            }
+            var checkpoint = checkpointService.GetAll().Where(x => x.IP.Equals(model.CheckpointIP)).FirstOrDefault();
+            if (checkpoint == null)
+            {
+                ModelState.AddModelError("CheckpointIP", "Данного датчика не существует");
             }
             if (ModelState.IsValid)
             {
@@ -191,6 +240,16 @@ namespace sstu_nevdev.Controllers
             {
                 ModelState.AddModelError("Mode", "Выберите режим");
             }
+            var user = identityService.GetAll().Where(x => x.GUID.Equals(model.IdentityGUID)).FirstOrDefault();
+            if (user == null)
+            {
+                ModelState.AddModelError("IdentityGUID", "Данного пользователя не существует");
+            }
+            var checkpoint = checkpointService.GetAll().Where(x => x.IP.Equals(model.CheckpointIP)).FirstOrDefault();
+            if (checkpoint == null)
+            {
+                ModelState.AddModelError("CheckpointIP", "Данного датчика не существует");
+            }
             if (ModelState.IsValid)
             {
                 bool status;
@@ -245,12 +304,19 @@ namespace sstu_nevdev.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Activity model = service.Get(id);
-            if (model == null)
+            var activity = service.Get(id);
+            var user = identityService.GetByGUID(activity.IdentityGUID);
+            var checkpoint = checkpointService.GetByIP(activity.CheckpointIP);
+            if (activity == null || user == null || checkpoint == null)
             {
                 return HttpNotFound();
             }
-            return View(model);
+            return View(new ActivityDetailsViewModel
+            {
+                Activity = activity,
+                User = user,
+                Checkpoint = checkpoint
+            });
         }
 
         [HttpPost]
@@ -271,6 +337,9 @@ namespace sstu_nevdev.Controllers
         protected override void Dispose(bool disposing)
         {
             service.Dispose();
+            modeService.Dispose();
+            identityService.Dispose();
+            checkpointService.Dispose();
             base.Dispose(disposing);
         }
     }

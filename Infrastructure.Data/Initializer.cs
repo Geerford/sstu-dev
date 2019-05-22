@@ -77,22 +77,22 @@ namespace Infrastructure.Data
             database.Identity.Add(new Identity
             {
                 GUID = "milantev_sa#1516",
-                Picture = "milantev_sa#1516.jpg"
+                Picture = "milantev_sa-1516.jpg"
             });
             database.Identity.Add(new Identity
             {
                 GUID = "konyaev_yy#1517",
-                Picture = "konyaev_yy#1517.jpg"
+                Picture = "konyaev_yy-1517.jpg"
             });
             database.Identity.Add(new Identity
             {
                 GUID = "eremenko_d#1518",
-                Picture = "eremenko_d#1518.jpg"
+                Picture = "eremenko_d-1518.jpg"
             });
             database.Identity.Add(new Identity
             {
                 GUID = "abor#1519",
-                Picture = "cat.jpg"
+                Picture = "abor-1519.jpg"
             });
             #endregion
             #region GUID BINDING
@@ -114,8 +114,7 @@ namespace Infrastructure.Data
                 string guid = translator.Bind(items[0].ToLower());
                 database.Identity.Add(new Identity
                 {
-                    GUID = guid + count.ToString(),
-                    Picture = "cat.jpg"
+                    GUID = guid + count.ToString()
                 });
                 ++count;
             }

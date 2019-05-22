@@ -1,4 +1,6 @@
 ﻿using Domain.Core;
+using Service.DTO;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace sstu_nevdev.Models
@@ -48,5 +50,21 @@ namespace sstu_nevdev.Models
         {
             return new IdentityViewModel(item);
         }
+    }
+
+    /// <summary>
+    /// Represents a identity details model for MVC.
+    /// </summary>
+    public class IdentityDetailsViewModel
+    {
+        /// <summary>
+        /// Gets or sets the user.
+        /// </summary>
+        public IdentityDTO User { get; set; }
+
+        /// <summary>
+        /// Gets or sets the activities.
+        /// </summary>
+        public IEnumerable<Activity> Activities { get; set; }
     }
 }

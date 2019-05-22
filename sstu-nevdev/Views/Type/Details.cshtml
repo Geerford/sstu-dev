@@ -1,11 +1,11 @@
-﻿@model Domain.Core.Type
+﻿ @model Domain.Core.Type
 
 <div class="modal-content">
-    <div class="modal-header">
-        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+    <div class="modal-header title-color">
+        <button class="close exit-color" data-dismiss="modal" area-hidden="true">X</button>
         <h4>Тип №@Html.DisplayFor(model => model.ID)</h4>
     </div>
-    <div class="modal-body">
+    <div class="modal-body title-details-color">
         <dl class="dl-horizontal">
             <dt>
                 @Html.Label("Описание")

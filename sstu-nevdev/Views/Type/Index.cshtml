@@ -1,11 +1,9 @@
 ﻿@model IEnumerable<Domain.Core.Type>
 
-<h2>Список типов</h2>
-<p>
-    @Html.ActionLink("Создать", "Create", routeValues: null, htmlAttributes: new { @class = "link" })
-</p>
+<h2 class="title-color">Список типов</h2>
+
 <table class="table">
-    <tr>
+    <tr class="title-table-color">
         <th>
             @Html.Label("Описание")
         </th>
@@ -32,6 +30,9 @@
         </tr>
     }
 </table>
+<p>
+    @Html.ActionLink("Создать", "Create", routeValues: null, htmlAttributes: new { @class = "btn btn-default button-color" })
+</p>
 <div id="dialog" class="modal fade">
     <div id="content" class="modal-dialog"></div>
 </div>

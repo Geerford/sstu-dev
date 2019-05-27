@@ -315,7 +315,11 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\uploads\abor-1519.jpg" />
     <Content Include="Content\uploads\cat.jpg" />
+    <Content Include="Content\uploads\eremenko_d-1518.jpg" />
+    <Content Include="Content\uploads\konyaev_yy-1517.jpg" />
+    <Content Include="Content\uploads\milantev_sa-1516.jpg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="ApplicationInsights.config">

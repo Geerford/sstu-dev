@@ -42,6 +42,88 @@ namespace Services.Business.Service
             Database.Dispose();
         }
 
+
+        /// <summary>
+        /// Implements <see cref="IStatisticsService.GetStatistics(int?, int?, int?, string, string, string, DateTime?, DateTime?)"/>.
+        /// </summary>
+        public IEnumerable<IdentityDTO> GetStatistics(int? campus, int? row, int? classroom, string name, string midname, string surname, DateTime? start, DateTime? end)
+        {
+            Dictionary<string, IdentityDTO> activityDTOs = new Dictionary<string, IdentityDTO>();
+            IdentityService identityService = new IdentityService(Database, SyncDatabase);
+            //CheckpointService checkpointService = new CheckpointService(Database);
+
+            if(start == null)
+            {
+                foreach (var identity in Database.Identity.GetAll())
+                {
+                    int count = 0;
+                    foreach (var checkpoint in Database.Checkpoint.GetAll().Where(y => y.Campus == campus))
+                    {
+                        var activities = Database.Activity.GetAll().Where(x => x.IdentityGUID.Equals(identity.GUID) && x.CheckpointIP.Equals(checkpoint.IP));
+                        if (activities != null)
+                        {
+                            count += activities.ToList().Count;
+                        }
+                    }
+                    if (count % 2 != 0)
+                    {
+                        if (!activityDTOs.ContainsKey(identity.GUID))
+                        {
+                            activityDTOs.Add(identity.GUID, identityService.GetFull(identity.GUID));
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach (var checkpoint in Database.Checkpoint.GetAll().Where((
+                    y => 
+                    (y.Campus.Equals(campus) || true) 
+                    && (y.Row.Equals(row)||true)
+                    && (y.Classroom.Equals(classroom)||true)
+                )))
+                {
+                    var abs = Database.Activity.GetAll();
+                    foreach (var activity in 
+                        abs.SelectMany(a => 
+                        abs.Where(x => x.CheckpointIP == checkpoint.IP
+                        && (x.Date > start||true) && (x.Date <= end||true)))
+                        .GroupBy(z => z.IdentityGUID)
+                        .Select(z => z.First())
+                        .ToList())
+                    {
+                        if (!activityDTOs.ContainsKey(activity.IdentityGUID))
+                        {
+                            var identity = identityService.GetFull(activity.IdentityGUID);
+                            if((name == null || identity.Name.IndexOf(name, StringComparison.CurrentCultureIgnoreCase) != -1 )
+                                && (surname == null || identity.Surname.IndexOf(surname, StringComparison.CurrentCultureIgnoreCase) != -1) 
+                                && (midname == null || identity.Midname.IndexOf(midname, StringComparison.CurrentCultureIgnoreCase) != -1))
+                            {
+                                activityDTOs.Add(activity.IdentityGUID, identity);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return activityDTOs.Values.ToList();
+        }
+
+        //private IEnumerable<Domain.Core.Activity> filter(IEnumerable<Domain.Core.Activity> data, string checkpointIp, int campus, int row, int classroom, string name, string midname, string surname, DateTime start, DateTime end)
+        //{
+        //    if(campus != 0)
+        //    {
+        //        data.SelectMany(x => x.)
+        //    }
+
+        //    if(row != 0)
+        //    {
+
+        //    }
+
+        //    return data;
+        //}
+
         /// <summary>
         /// Implements <see cref="IStatisticsService.GetByCampus(int, DateTime, DateTime)"/>.
         /// </summary>

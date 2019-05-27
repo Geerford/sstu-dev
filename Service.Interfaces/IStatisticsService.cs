@@ -15,6 +15,8 @@ namespace Service.Interfaces
         /// </summary>
         void Dispose();
 
+        IEnumerable<IdentityDTO> GetStatistics(int? campus, int? row, int? classroom, string name, string midname, string surname, DateTime? start, DateTime? end);
+
         /// <summary>
         /// Gets all <see cref="Activity"/> from repository by campus and time interval [start, end].
         /// </summary>

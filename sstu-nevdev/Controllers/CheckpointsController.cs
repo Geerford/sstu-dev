@@ -7,7 +7,7 @@ using System.Web.Http;
 
 namespace sstu_nevdev.Controllers
 {
-    [AuthenticationAPI(Roles = "SSTU_Deanery,SSTU_Administrator,SSTU_Inspector")]
+    //[AuthenticationAPI(Roles = "SSTU_Deanery,SSTU_Administrator,SSTU_Inspector")]
     public class CheckpointsController : ApiController
     {
         ICheckpointService service;

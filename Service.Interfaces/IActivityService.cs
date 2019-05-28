@@ -75,5 +75,11 @@ namespace Service.Interfaces
         /// </summary>
         /// <param name="identityGUID">The user GUID.</param>
         bool IsPassed(string identityGUID);
+
+        /// <summary>
+        /// True if the user is in classroom; otherwise, false.
+        /// </summary>
+        /// <param name="identityGUID">The user GUID.</param>
+        bool IsInClassroom(string identityGUID);
     }
 }

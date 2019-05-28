@@ -31,6 +31,7 @@ namespace sstu_nevdev.Controllers
         {
             int pageSize = 50;
             int pageNumber = (page ?? 1);
+            var text = service.GetAll().OrderByDescending(x => x.Date).ToList();
             return View(service.GetAll().OrderByDescending(x => x.Date)
                 .ToPagedList(pageNumber, pageSize));
         }

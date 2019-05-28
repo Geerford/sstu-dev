@@ -40,6 +40,16 @@ namespace Infrastructure.Data
                 Description = "Собирает статистические данные передвижений субъекта",
                 Status = "Статистика"
             };
+            Mode mode4 = new Mode
+            {
+                Description = "Отмечает событие входа в аудиторию",
+                Status = "Вход в аудиторию"
+            };
+            Mode mode5 = new Mode
+            {
+                Description = "Отмечает событие выхода в аудитории",
+                Status = "Выход в аудитории"
+            };
             #endregion
             #region ADMISSIONS
             Admission admission1 = new Admission {
@@ -192,6 +202,9 @@ namespace Infrastructure.Data
                 CheckpointID = 2,
                 AdmissionID = 3
             });
+            database.SaveChanges();
+            database.Mode.Add(mode4);
+            database.Mode.Add(mode5);
             database.SaveChanges();
             #endregion
         }

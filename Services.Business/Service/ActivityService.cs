@@ -172,14 +172,14 @@ namespace Services.Business.Service
                         return 500;
                     }
                 case "Лекционный":
-                    if (IsPassed(identity.GUID))
+                    if(IsInClassroom(identity.GUID))
                     {
                         Create(new Activity
                         {
                             CheckpointIP = checkpoint.IP,
                             Date = System.DateTime.Now,
                             IdentityGUID = identity.GUID,
-                            ModeID = 3,
+                            ModeID = 5,
                             Status = true
                         });
                         return -1;
@@ -191,7 +191,7 @@ namespace Services.Business.Service
                             CheckpointIP = checkpoint.IP,
                             Date = System.DateTime.Now,
                             IdentityGUID = identity.GUID,
-                            ModeID = 1,
+                            ModeID = 4,
                             Status = true
                         });
                         return -1;
@@ -202,7 +202,7 @@ namespace Services.Business.Service
                         CheckpointIP = checkpoint.IP,
                         Date = System.DateTime.Now,
                         IdentityGUID = identity.GUID,
-                        ModeID = 2,
+                        ModeID = 3,
                         Status = true
                     });
                     return -1;
@@ -222,6 +222,23 @@ namespace Services.Business.Service
             if(activity != null && activity.Mode.Status.Equals("Вход"))
             {
                 return true; //Person in the room
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Implements <see cref="IActivityService.IsInClassroom(string)()"/>.
+        /// </summary>
+        public bool IsInClassroom(string identityGUID)
+        {
+            if (string.IsNullOrEmpty(identityGUID))
+            {
+                throw new ValidationException("Не задан ID", "");
+            }
+            Activity activity = Database.Activity.GetAll().Where(x => x.IdentityGUID == identityGUID && !x.Mode.Status.Equals("Статистика")).LastOrDefault();
+            if (activity != null && activity.Mode.Status.Equals("Вход в аудиторию"))
+            {
+                return true; //Person in the classroom
             }
             return false;
         }

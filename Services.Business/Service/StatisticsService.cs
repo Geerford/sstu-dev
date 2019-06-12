@@ -109,21 +109,6 @@ namespace Services.Business.Service
             return activityDTOs.Values.ToList();
         }
 
-        //private IEnumerable<Domain.Core.Activity> filter(IEnumerable<Domain.Core.Activity> data, string checkpointIp, int campus, int row, int classroom, string name, string midname, string surname, DateTime start, DateTime end)
-        //{
-        //    if(campus != 0)
-        //    {
-        //        data.SelectMany(x => x.)
-        //    }
-
-        //    if(row != 0)
-        //    {
-
-        //    }
-
-        //    return data;
-        //}
-
         /// <summary>
         /// Implements <see cref="IStatisticsService.GetByCampus(int, DateTime, DateTime)"/>.
         /// </summary>
@@ -324,7 +309,8 @@ namespace Services.Business.Service
             foreach(var identity in Database.Identity.GetAll())
             {
                 int count = 0;
-                foreach (var checkpoint in Database.Checkpoint.GetAll().Where(y => y.Campus == campus))
+                var type = Database.Type.GetAll().Where(x => x.Status.Equals("Статистический")).FirstOrDefault();
+                foreach (var checkpoint in Database.Checkpoint.GetAll().Where(y => y.Campus == campus && y.Type != type))
                 {
                     var activities = Database.Activity.GetAll().Where(x => x.IdentityGUID.Equals(identity.GUID) && x.CheckpointIP.Equals(checkpoint.IP));
                     if (activities != null)
@@ -350,7 +336,8 @@ namespace Services.Business.Service
             foreach (var identity in Database.Identity.GetAll())
             {
                 int count = 0;
-                foreach (var checkpoint in Database.Checkpoint.GetAll().Where(y => y.Campus == campus && y.Row == row))
+                var type = Database.Type.GetAll().Where(x => x.Status.Equals("Статистический")).FirstOrDefault();
+                foreach (var checkpoint in Database.Checkpoint.GetAll().Where(y => y.Campus == campus && y.Row == row && y.Type != type))
                 {
                     var activities = Database.Activity.GetAll().Where(x => x.IdentityGUID.Equals(identity.GUID) && x.CheckpointIP.Equals(checkpoint.IP));
                     if (activities != null)
@@ -376,7 +363,8 @@ namespace Services.Business.Service
             foreach (var identity in Database.Identity.GetAll())
             {
                 int count = 0;
-                foreach (var checkpoint in Database.Checkpoint.GetAll().Where(y => y.Classroom == classroom))
+                var type = Database.Type.GetAll().Where(x => x.Status.Equals("Статистический")).FirstOrDefault();
+                foreach (var checkpoint in Database.Checkpoint.GetAll().Where(y => y.Classroom == classroom && y.Type != type))
                 {
                     var activities = Database.Activity.GetAll().Where(x => x.IdentityGUID.Equals(identity.GUID) && x.CheckpointIP.Equals(checkpoint.IP));
                     if (activities != null)
@@ -402,7 +390,8 @@ namespace Services.Business.Service
             foreach (var identity in Database.Identity.GetAll())
             {
                 int count = 0;
-                foreach (var checkpoint in Database.Checkpoint.GetAll().Where(y => y.Section == section))
+                var type = Database.Type.GetAll().Where(x => x.Status.Equals("Статистический")).FirstOrDefault();
+                foreach (var checkpoint in Database.Checkpoint.GetAll().Where(y => y.Section == section && y.Type != type))
                 {
                     var activities = Database.Activity.GetAll().Where(x => x.IdentityGUID.Equals(identity.GUID) && x.CheckpointIP.Equals(checkpoint.IP));
                     if (activities != null)

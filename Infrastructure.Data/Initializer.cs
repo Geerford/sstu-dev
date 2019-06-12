@@ -86,23 +86,23 @@ namespace Infrastructure.Data
             #region USERS
             database.Identity.Add(new Identity
             {
-                GUID = "milantev_sa#1516",
-                Picture = "milantev_sa-1516.jpg"
+                GUID = "milantevsa1516",
+                Picture = "milantevsa1516.jpg"
             });
             database.Identity.Add(new Identity
             {
-                GUID = "konyaev_yy#1517",
-                Picture = "konyaev_yy-1517.jpg"
+                GUID = "konyaevyy1517",
+                Picture = "konyaevyy1517.jpg"
             });
             database.Identity.Add(new Identity
             {
-                GUID = "eremenko_d#1518",
-                Picture = "eremenko_d-1518.jpg"
+                GUID = "eremenkod1518",
+                Picture = "eremenkod1518.jpg"
             });
             database.Identity.Add(new Identity
             {
-                GUID = "abor#1519",
-                Picture = "abor-1519.jpg"
+                GUID = "abor1519",
+                Picture = "abor1519.jpg"
             });
             #endregion
             #region GUID BINDING

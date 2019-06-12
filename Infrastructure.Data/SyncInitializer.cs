@@ -13,7 +13,7 @@ namespace Infrastructure.Data
             #region USERS
             database.User.Add(new User
             {
-                GUID = "milantev_sa#1516",
+                GUID = "milantevsa1516",
                 Name = "Сергей",
                 Surname = "Милантьев",
                 Midname = "Андреевич",
@@ -30,7 +30,7 @@ namespace Infrastructure.Data
             });
             database.User.Add(new User
             {
-                GUID = "konyaev_yy#1517",
+                GUID = "konyaevyy1517",
                 Name = "Юрий",
                 Surname = "Коняев-Гурченко",
                 Midname = "Юрьевич",
@@ -47,7 +47,7 @@ namespace Infrastructure.Data
             });
             database.User.Add(new User
             {
-                GUID = "eremenko_d#1518",
+                GUID = "eremenkod1518",
                 Name = "Денис",
                 Surname = "Еременко",
                 Midname = "Сергеевич",
@@ -64,7 +64,7 @@ namespace Infrastructure.Data
             });
             database.User.Add(new User
             {
-                GUID = "abor#1519",
+                GUID = "abor1519",
                 Name = "Андрей",
                 Surname = "Бороздюхин",
                 Midname = "Александрович",

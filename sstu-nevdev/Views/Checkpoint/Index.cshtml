@@ -121,8 +121,12 @@ else
     <p>
         @Html.ActionLink("Создать", "Create", routeValues: null, htmlAttributes: new { @class = "btn btn-default button-color" })
     </p>
-    @Html.ActionLink("Типы датчиков", "Index", "Type", routeValues: null, htmlAttributes: new { @class = "btn btn-default button-color" })
-    @Html.ActionLink("Разрешения", "Index", "Admission", routeValues: null, htmlAttributes: new { @class = "btn btn-default button-color" })
+    <p>
+        @Html.ActionLink("Типы датчиков", "Index", "Type", routeValues: null, htmlAttributes: new { @class = "btn btn-default button-color" })
+    </p>
+    <p>
+        @Html.ActionLink("Разрешения", "Index", "Admission", routeValues: null, htmlAttributes: new { @class = "btn btn-default button-color" })
+    </p>    
 }
 <div id="dialog" class="modal fade">
     <div id="content" class="modal-dialog"></div>

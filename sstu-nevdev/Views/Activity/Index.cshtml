@@ -82,7 +82,9 @@ else
         }
     </table>
     <br />
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    <div class="pagination-margin">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    </div>
 }
 @if (User.Identity.IsAuthenticated && User.IsInRole("SSTU_Administrator"))
 {

@@ -415,6 +415,7 @@ namespace Services.Business.Service
                     domain = Environment.UserDomainName;
                     name = username;
                 }
+                //domain = "";
                 using (var context = new PrincipalContext(ContextType.Domain, domain))
                 {
                     UserPrincipal user = null;

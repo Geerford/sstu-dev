@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace sstu_nevdev.Controllers
 {
-    [AuthenticationAPI(Roles = "SSTU_Inspector,SSTU_Administrator")]
+    //[AuthenticationAPI(Roles = "SSTU_Inspector,SSTU_Administrator")]
     [RoutePrefix("api/statistics")]
     public class StatisticsAPIController : ApiController
     {

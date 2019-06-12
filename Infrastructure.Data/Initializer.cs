@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Infrastructure.Data
 {
-    internal class Initializer : DropCreateDatabaseIfModelChanges<Context>
+    internal class Initializer : DropCreateDatabaseAlways<Context>
     {
         protected override void Seed(Context database)
         {
@@ -86,23 +86,23 @@ namespace Infrastructure.Data
             #region USERS
             database.Identity.Add(new Identity
             {
-                GUID = "milantev_sa#1516",
-                Picture = "milantev_sa-1516.jpg"
+                GUID = "milantevsa1516",
+                Picture = "milantevsa1516.jpg"
             });
             database.Identity.Add(new Identity
             {
-                GUID = "konyaev_yy#1517",
-                Picture = "konyaev_yy-1517.jpg"
+                GUID = "konyaevyy1517",
+                Picture = "konyaevyy1517.jpg"
             });
             database.Identity.Add(new Identity
             {
-                GUID = "eremenko_d#1518",
-                Picture = "eremenko_d-1518.jpg"
+                GUID = "eremenkod1518",
+                Picture = "eremenkod1518.jpg"
             });
             database.Identity.Add(new Identity
             {
-                GUID = "abor#1519",
-                Picture = "abor-1519.jpg"
+                GUID = "abor1519",
+                Picture = "abor1519.jpg"
             });
             #endregion
             #region GUID BINDING
@@ -151,12 +151,23 @@ namespace Infrastructure.Data
                 Status = "Пропуск",
                 Type = type1
             });
+            database.Checkpoint.Add(new Checkpoint
+            {
+                IP = "192.168.0.16",
+                Campus = 2,
+                Row = 1,
+                Section = 3,
+                Description = "Второй корпус вход",
+                Status = "Пропуск",
+                Type = type1
+            });
+            
             database.SaveChanges();
             #endregion
             #region ACTIVITIES
             database.Activity.Add(new Activity
             {
-                IdentityGUID = "milantev_sa#1516",
+                IdentityGUID = "milantevsa1516",
                 CheckpointIP = "192.168.0.15",
                 Date = DateTime.Now,
                 Mode = mode1,
@@ -164,7 +175,7 @@ namespace Infrastructure.Data
             });
             database.Activity.Add(new Activity
             {
-                IdentityGUID = "milantev_sa#1516",
+                IdentityGUID = "milantevsa1516",
                 CheckpointIP = "192.168.0.1",
                 Date = DateTime.Now,
                 Mode = mode3,
@@ -172,10 +183,74 @@ namespace Infrastructure.Data
             });
             database.Activity.Add(new Activity
             {
-                IdentityGUID = "milantev_sa#1516",
+                IdentityGUID = "milantevsa1516",
                 CheckpointIP = "192.168.0.15",
                 Date = DateTime.Now,
                 Mode = mode2,
+                Status = true
+            });
+            database.Activity.Add(new Activity
+            {
+                IdentityGUID = "antonov1",
+                CheckpointIP = "192.168.0.16",
+                Date = DateTime.Now,
+                Mode = mode1,
+                Status = true
+            });
+            database.Activity.Add(new Activity
+            {
+                IdentityGUID = "vdovina2",
+                CheckpointIP = "192.168.0.16",
+                Date = DateTime.Now,
+                Mode = mode1,
+                Status = true
+            });
+            database.Activity.Add(new Activity
+            {
+                IdentityGUID = "grebenschikov3",
+                CheckpointIP = "192.168.0.16",
+                Date = DateTime.Now,
+                Mode = mode1,
+                Status = true
+            });
+            database.Activity.Add(new Activity
+            {
+                IdentityGUID = "dzhafarov5",
+                CheckpointIP = "192.168.0.16",
+                Date = DateTime.Now,
+                Mode = mode1,
+                Status = true
+            });
+            database.Activity.Add(new Activity
+            {
+                IdentityGUID = "kovrizhkin7",
+                CheckpointIP = "192.168.0.15",
+                Date = DateTime.Now,
+                Mode = mode1,
+                Status = true
+            });
+            database.Activity.Add(new Activity
+            {
+                IdentityGUID = "koshelev8",
+                CheckpointIP = "192.168.0.15",
+                Date = DateTime.Now,
+                Mode = mode1,
+                Status = true
+            });
+            database.Activity.Add(new Activity
+            {
+                IdentityGUID = "kurbatov9",
+                CheckpointIP = "192.168.0.15",
+                Date = DateTime.Now,
+                Mode = mode1,
+                Status = true
+            });
+            database.Activity.Add(new Activity
+            {
+                IdentityGUID = "maslennikov10",
+                CheckpointIP = "192.168.0.15",
+                Date = DateTime.Now,
+                Mode = mode1,
                 Status = true
             });
             #endregion
@@ -199,9 +274,20 @@ namespace Infrastructure.Data
             });
             database.CheckpointAdmission.Add(new CheckpointAdmission
             {
+                CheckpointID = 3,
+                AdmissionID = 1
+            });
+            database.CheckpointAdmission.Add(new CheckpointAdmission
+            {
+                CheckpointID = 2,
+                AdmissionID = 2
+            });
+            database.CheckpointAdmission.Add(new CheckpointAdmission
+            {
                 CheckpointID = 2,
                 AdmissionID = 3
             });
+
             database.SaveChanges();
             database.Mode.Add(mode4);
             database.Mode.Add(mode5);

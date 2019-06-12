@@ -8,7 +8,7 @@ using System.Web.Http;
 
 namespace sstu_nevdev.Controllers
 {
-    [AuthenticationAPI(Roles = "SSTU_Deanery,SSTU_Administrator,SSTU_Inspector,SSTU_Security")]
+    //[AuthenticationAPI(Roles = "SSTU_Deanery,SSTU_Administrator,SSTU_Inspector,SSTU_Security")]
     public class IdentitiesController : ApiController
     {
         IIdentityService service;
@@ -25,20 +25,21 @@ namespace sstu_nevdev.Controllers
         /// Gets all <see cref="IdentityDTO"/> from repository.
         /// </summary>
         /// <returns>The collection of all <see cref="IdentityDTO"/> from the repository.</returns>
-        [AuthenticationAPI(Roles = "SSTU_Deanery,SSTU_Administrator,SSTU_Inspector")]
+        //[AuthenticationAPI(Roles = "SSTU_Deanery,SSTU_Administrator,SSTU_Inspector")]
         public IHttpActionResult Get()
         {
             IEnumerable<IdentityDTO> items = service.GetAll();
-            if (items != null)
-            {
-                dynamic json = new JObject();
-                json["items"] = JToken.FromObject(items);
-                return Ok(AESService.Encrypt(json));
-            }
-            else
-            {
-                return NotFound();
-            }
+            return Ok(items);
+            //if (items != null)
+            //{
+            //    dynamic json = new JObject();
+            //    json["items"] = JToken.FromObject(items);
+            //    return Ok(AESService.Encrypt(json));
+            //}
+            //else
+            //{
+            //    return NotFound();
+            //}
         }
 
         // GET api/identities/5

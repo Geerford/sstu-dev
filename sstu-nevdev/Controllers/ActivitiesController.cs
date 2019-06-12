@@ -28,7 +28,7 @@ namespace sstu_nevdev.Controllers
         /// Gets all <see cref="Activity"/> from repository.
         /// </summary>
         /// <returns>The collection of all <see cref="Activity"/> from the repository.</returns>
-        [AuthenticationAPI(Roles = "SSTU_Deanery,SSTU_Administrator,SSTU_Inspector,SSTU_Student")]
+        //[AuthenticationAPI(Roles = "SSTU_Deanery,SSTU_Administrator,SSTU_Inspector,SSTU_Student")]
         public IHttpActionResult Get()
         {
             IEnumerable<Activity> items = activityService.GetAll();

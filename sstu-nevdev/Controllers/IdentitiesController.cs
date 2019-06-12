@@ -3,7 +3,9 @@ using Newtonsoft.Json.Linq;
 using Service.DTO;
 using Service.Interfaces;
 using sstu_nevdev.App_Start;
+using sstu_nevdev.Models;
 using System.Collections.Generic;
+using System.Web;
 using System.Web.Http;
 
 namespace sstu_nevdev.Controllers
@@ -75,6 +77,32 @@ namespace sstu_nevdev.Controllers
             {
                 service.Create(item);
                 return CreatedAtRoute("DefaultApi", new { id = item.ID }, item);
+            }
+            return BadRequest();
+        }
+
+        // POST api/identities
+        /// <summary>
+        /// Saves the <see cref="HttpPostedFileBase"/> file and assigns it to <see cref="Identity"/> object.
+        /// </summary>
+        /// <param name="item">The <see cref="IdentityAPIModel"/> object.</param>
+        [HttpPost]
+        [AuthenticationAPI(Roles = "SSTU_Deanery,SSTU_Administrator")]
+        [Route("image")]
+        public IHttpActionResult SaveImage([FromBody]IdentityAPIModel item)
+        {
+            if (item != null && item.Identity != null && item.File != null)
+            {
+                if (!string.IsNullOrEmpty(item.Identity.Picture))
+                {
+                    item.Identity.Picture = service.SaveImage(item.File, item.Identity.Picture);
+                }
+                else
+                {
+                    item.Identity.Picture = service.SaveImage(item.File, null);
+                }
+                service.Edit(item.Identity);
+                return Ok(item.Identity);
             }
             return BadRequest();
         }

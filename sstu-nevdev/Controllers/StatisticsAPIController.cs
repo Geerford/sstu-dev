@@ -3,7 +3,6 @@ using Service.DTO;
 using Service.Interfaces;
 using sstu_nevdev.App_Start;
 using sstu_nevdev.Models;
-using System;
 using System.Net;
 using System.Web.Http;
 

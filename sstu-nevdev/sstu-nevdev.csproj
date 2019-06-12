@@ -321,6 +321,7 @@
     <Content Include="Content\uploads\eremenkod1518.jpg" />
     <Content Include="Content\uploads\konyaevyy1517.jpg" />
     <Content Include="Content\uploads\milantevsa1516.jpg" />
+	<Content Include="Content\uploads\NoAvatar.jpeg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="ApplicationInsights.config">

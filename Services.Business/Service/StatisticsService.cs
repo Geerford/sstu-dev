@@ -52,12 +52,17 @@ namespace Services.Business.Service
             IdentityService identityService = new IdentityService(Database, SyncDatabase);
             //CheckpointService checkpointService = new CheckpointService(Database);
 
-            if(start == null)
+            if(start == (new DateTime(1900, 1, 1, 0,0,0)))
             {
                 foreach (var identity in Database.Identity.GetAll())
                 {
                     int count = 0;
-                    foreach (var checkpoint in Database.Checkpoint.GetAll().Where(y => y.Campus == campus))
+                    foreach (var checkpoint in Database.Checkpoint.GetAll().Where(
+                    y =>
+                    (y.Campus.Equals(campus) || campus == 0)
+                    && (y.Row.Equals(row) || row == 0)
+                    && (y.Classroom.Equals(classroom) || classroom == 0)
+                ))
                     {
                         var activities = Database.Activity.GetAll().Where(x => x.IdentityGUID.Equals(identity.GUID) && x.CheckpointIP.Equals(checkpoint.IP));
                         if (activities != null)
@@ -69,7 +74,11 @@ namespace Services.Business.Service
                     {
                         if (!activityDTOs.ContainsKey(identity.GUID))
                         {
-                            activityDTOs.Add(identity.GUID, identityService.GetFull(identity.GUID));
+                            var full = identityService.GetFull(identity.GUID);
+                            if (name == null || (full.Name + " " + full.Surname + " " + full.Midname).IndexOf(name, StringComparison.CurrentCultureIgnoreCase) != -1)
+                            {
+                                activityDTOs.Add(identity.GUID, full);
+                            }
                         }
                     }
                 }
@@ -77,10 +86,10 @@ namespace Services.Business.Service
             else
             {
                 foreach (var checkpoint in Database.Checkpoint.GetAll().Where((
-                    y => 
-                    (y.Campus.Equals(campus) || true) 
-                    && (y.Row.Equals(row)||true)
-                    && (y.Classroom.Equals(classroom)||true)
+                     y =>
+                    (y.Campus.Equals(campus) || campus == 0)
+                    && (y.Row.Equals(row) || row == 0)
+                    && (y.Classroom.Equals(classroom) || classroom == 0)
                 )))
                 {
                     var abs = Database.Activity.GetAll();
@@ -95,9 +104,7 @@ namespace Services.Business.Service
                         if (!activityDTOs.ContainsKey(activity.IdentityGUID))
                         {
                             var identity = identityService.GetFull(activity.IdentityGUID);
-                            if((name == null || identity.Name.IndexOf(name, StringComparison.CurrentCultureIgnoreCase) != -1 )
-                                && (surname == null || identity.Surname.IndexOf(surname, StringComparison.CurrentCultureIgnoreCase) != -1) 
-                                && (midname == null || identity.Midname.IndexOf(midname, StringComparison.CurrentCultureIgnoreCase) != -1))
+                            if(name == null || (identity.Name + " " + identity.Surname + " " + identity.Midname).IndexOf(name, StringComparison.CurrentCultureIgnoreCase) != -1 )
                             {
                                 activityDTOs.Add(activity.IdentityGUID, identity);
                             }
